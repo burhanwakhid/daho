@@ -1,0 +1,21 @@
+name: jwt_auth
+description: A sample command-line application.
+version: 1.0.0
+publish_to: none
+# repository: https://github.com/my_org/my_repo
+
+environment:
+  sdk: ^3.9.2
+
+# Add regular dependencies here.
+dependencies:
+  path: ^1.9.0
+  sqlite3: ^2.4.2
+  dart_jsonwebtoken: ^2.14.0
+  crypto: ^3.0.3
+  daho:
+    path: ../../../daho
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6

@@ -2,106 +2,1955 @@
 ---
 events:
   -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/uname"
+      - "/Users/burhanudin.nugroho/.amplify/bin/uname"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/uname"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/uname"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/uname"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/uname"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/uname"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/uname"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/uname"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/uname"
+      - "/opt/homebrew/bin/uname"
+      - "/opt/homebrew/sbin/uname"
+      - "/usr/local/bin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
     kind: "message-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineSystem.cmake:212 (message)"
       - "CMakeLists.txt:2 (project)"
     message: |
       The system is: Darwin - 24.6.0 - arm64
   -
-    kind: "message-v1"
+    kind: "find-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeUnixFindMake.cmake:5 (find_program)"
       - "CMakeLists.txt:2 (project)"
-    message: |
-      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
-      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
-      Build flags: 
-      Id flags:  
-      
-      The output was:
-      1
-      ld: library 'System' not found
-      cc: error: linker command failed with exit code 1 (use -v to see invocation)
-      
-      
+    mode: "program"
+    variable: "CMAKE_MAKE_PROGRAM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gmake"
+      - "make"
+      - "smake"
+    candidate_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/gmake"
+      - "/Users/burhanudin.nugroho/.amplify/bin/gmake"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/gmake"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/gmake"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/gmake"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/gmake"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/gmake"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/gmake"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/gmake"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/gmake"
+      - "/opt/homebrew/bin/gmake"
+      - "/opt/homebrew/sbin/gmake"
+      - "/usr/local/bin/gmake"
+      - "/usr/bin/gmake"
+      - "/bin/gmake"
+      - "/usr/sbin/gmake"
+      - "/sbin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/gmake"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/gmake"
+      - "/Library/Apple/usr/bin/gmake"
+      - "/usr/local/share/dotnet/gmake"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/gmake"
+      - "/usr/local/go/bin/gmake"
+      - "/Users/burhanudin.nugroho/.local/bin/gmake"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/gmake"
+      - "/opt/anaconda3/condabin/gmake"
+      - "/Users/burhanudin.nugroho/.cargo/bin/gmake"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/gmake"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/gmake"
+      - "/Users/burhanudin.nugroho/go/bin/gmake"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/make"
+      - "/Users/burhanudin.nugroho/.amplify/bin/make"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/make"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/make"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/make"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/make"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/make"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/make"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/make"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/make"
+      - "/opt/homebrew/bin/make"
+      - "/opt/homebrew/sbin/make"
+      - "/usr/local/bin/make"
+    found: "/usr/bin/make"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:64 (_cmake_find_compiler)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_C_COMPILER"
+    description: "C compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "cc"
+      - "gcc"
+      - "cl"
+      - "bcc"
+      - "xlc"
+      - "icx"
+      - "clang"
+    candidate_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/cc"
+      - "/Users/burhanudin.nugroho/.amplify/bin/cc"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/cc"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/cc"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/cc"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/cc"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/cc"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/cc"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/cc"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/cc"
+      - "/opt/homebrew/bin/cc"
+      - "/opt/homebrew/sbin/cc"
+      - "/usr/local/bin/cc"
+    found: "/usr/bin/cc"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:468 (find_file)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:506 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "/opt/homebrew/share/cmake/Modules/"
+    found: "/opt/homebrew/share/cmake/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
   -
     kind: "message-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc 
+      Compiler: /usr/bin/cc 
       Build flags: 
-      Id flags: -c 
+      Id flags:  
       
       The output was:
       0
       
       
-      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is AppleClang, found in:
-        /Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/3.28.3/CompilerIdC/CMakeCCompilerId.o
+        /Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/4.3.3/CompilerIdC/a.out
       
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerId.cmake:296 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Detecting C compiler apple sysroot: "/usr/bin/cc" "-E" "apple-sdk.c"
+        # 1 "apple-sdk.c"
+        # 1 "<built-in>" 1
+        # 1 "<built-in>" 3
+        # 466 "<built-in>" 3
+        # 1 "<command line>" 1
+        # 1 "<built-in>" 2
+        # 1 "apple-sdk.c" 2
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 1 3 4
+        # 89 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityVersions.h" 1 3 4
+        # 90 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 2 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/TargetConditionals.h" 1 3 4
+        # 91 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 2 3 4
+        # 207 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h" 1 3 4
+        # 196 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h" 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityVersions.h" 1 3 4
+        # 197 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h" 2 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h" 1 3 4
+        # 33 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h" 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityVersions.h" 1 3 4
+        # 34 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h" 2 3 4
+        # 198 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h" 2 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h" 1 3 4
+        # 34 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h" 3 4
+        # 1 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternal.h" 1 3 4
+        # 35 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityInternalLegacy.h" 2 3 4
+        # 199 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Availability.h" 2 3 4
+        # 208 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/AvailabilityMacros.h" 2 3 4
+        # 2 "apple-sdk.c" 2
+        
+        
+      Found apple sysroot: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/ar"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/strip"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/ld"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/nm"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    found: "/usr/bin/objdump"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/usr/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.amplify/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/objcopy"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/objcopy"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/objcopy"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/objcopy"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/objcopy"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/objcopy"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/objcopy"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/objcopy"
+      - "/opt/homebrew/bin/objcopy"
+      - "/opt/homebrew/sbin/objcopy"
+      - "/usr/local/bin/objcopy"
+      - "/bin/objcopy"
+      - "/usr/sbin/objcopy"
+      - "/sbin/objcopy"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/objcopy"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/objcopy"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/objcopy"
+      - "/Library/Apple/usr/bin/objcopy"
+      - "/usr/local/share/dotnet/objcopy"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/objcopy"
+      - "/usr/local/go/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.local/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/objcopy"
+      - "/opt/anaconda3/condabin/objcopy"
+      - "/Users/burhanudin.nugroho/.cargo/bin/objcopy"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/objcopy"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/objcopy"
+      - "/Users/burhanudin.nugroho/go/bin/objcopy"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/usr/bin/readelf"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/readelf"
+      - "/Users/burhanudin.nugroho/.amplify/bin/readelf"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/readelf"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/readelf"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/readelf"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/readelf"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/readelf"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/readelf"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/readelf"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/readelf"
+      - "/opt/homebrew/bin/readelf"
+      - "/opt/homebrew/sbin/readelf"
+      - "/usr/local/bin/readelf"
+      - "/bin/readelf"
+      - "/usr/sbin/readelf"
+      - "/sbin/readelf"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/readelf"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/readelf"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/readelf"
+      - "/Library/Apple/usr/bin/readelf"
+      - "/usr/local/share/dotnet/readelf"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/readelf"
+      - "/usr/local/go/bin/readelf"
+      - "/Users/burhanudin.nugroho/.local/bin/readelf"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/readelf"
+      - "/opt/anaconda3/condabin/readelf"
+      - "/Users/burhanudin.nugroho/.cargo/bin/readelf"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/readelf"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/readelf"
+      - "/Users/burhanudin.nugroho/go/bin/readelf"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/usr/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.amplify/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/dlltool"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/dlltool"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/dlltool"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/dlltool"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/dlltool"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/dlltool"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/dlltool"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/dlltool"
+      - "/opt/homebrew/bin/dlltool"
+      - "/opt/homebrew/sbin/dlltool"
+      - "/usr/local/bin/dlltool"
+      - "/bin/dlltool"
+      - "/usr/sbin/dlltool"
+      - "/sbin/dlltool"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/dlltool"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/dlltool"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/dlltool"
+      - "/Library/Apple/usr/bin/dlltool"
+      - "/usr/local/share/dotnet/dlltool"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/dlltool"
+      - "/usr/local/go/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.local/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/dlltool"
+      - "/opt/anaconda3/condabin/dlltool"
+      - "/Users/burhanudin.nugroho/.cargo/bin/dlltool"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/dlltool"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/dlltool"
+      - "/Users/burhanudin.nugroho/go/bin/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/usr/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.amplify/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/addr2line"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/addr2line"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/addr2line"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/addr2line"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/addr2line"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/addr2line"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/addr2line"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/addr2line"
+      - "/opt/homebrew/bin/addr2line"
+      - "/opt/homebrew/sbin/addr2line"
+      - "/usr/local/bin/addr2line"
+      - "/bin/addr2line"
+      - "/usr/sbin/addr2line"
+      - "/sbin/addr2line"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/addr2line"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/addr2line"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/addr2line"
+      - "/Library/Apple/usr/bin/addr2line"
+      - "/usr/local/share/dotnet/addr2line"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/addr2line"
+      - "/usr/local/go/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.local/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/addr2line"
+      - "/opt/anaconda3/condabin/addr2line"
+      - "/Users/burhanudin.nugroho/.cargo/bin/addr2line"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/addr2line"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/addr2line"
+      - "/Users/burhanudin.nugroho/go/bin/addr2line"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/usr/bin/"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/usr/bin/tapi"
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/tapi"
+      - "/Users/burhanudin.nugroho/.amplify/bin/tapi"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/tapi"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/tapi"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/tapi"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/tapi"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/tapi"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/tapi"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/tapi"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/tapi"
+      - "/opt/homebrew/bin/tapi"
+      - "/opt/homebrew/sbin/tapi"
+      - "/usr/local/bin/tapi"
+      - "/bin/tapi"
+      - "/usr/sbin/tapi"
+      - "/sbin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/tapi"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/tapi"
+      - "/Library/Apple/usr/bin/tapi"
+      - "/usr/local/share/dotnet/tapi"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/tapi"
+      - "/usr/local/go/bin/tapi"
+      - "/Users/burhanudin.nugroho/.local/bin/tapi"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/tapi"
+      - "/opt/anaconda3/condabin/tapi"
+      - "/Users/burhanudin.nugroho/.cargo/bin/tapi"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/tapi"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/tapi"
+      - "/Users/burhanudin.nugroho/go/bin/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Platform/Darwin.cmake:66 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeSystemSpecificInformation.cmake:32 (include)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_INSTALL_NAME_TOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "install_name_tool"
+    candidate_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+    searched_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/install_name_tool"
+      - "/Users/burhanudin.nugroho/.amplify/bin/install_name_tool"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/install_name_tool"
+      - "/Users/burhanudin.nugroho/.rbenv/bin/install_name_tool"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/install_name_tool"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/install_name_tool"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/install_name_tool"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/install_name_tool"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/install_name_tool"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/install_name_tool"
+      - "/opt/homebrew/bin/install_name_tool"
+      - "/opt/homebrew/sbin/install_name_tool"
+      - "/usr/local/bin/install_name_tool"
+    found: "/usr/bin/install_name_tool"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
   -
     kind: "try_compile-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga"
-      binary: "/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga"
+      source: "/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9"
+      binary: "/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
       CMAKE_OSX_ARCHITECTURES: ""
-      CMAKE_OSX_DEPLOYMENT_TARGET: "15.6"
-      CMAKE_OSX_SYSROOT: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk"
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: ""
     buildResult:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga'
+        Change Dir: '/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9'
         
-        Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_abb2d/fast
-        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_abb2d.dir/build.make CMakeFiles/cmTC_abb2d.dir/build
-        Building C object CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o
-        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mmacosx-version-min=15.6   -v -Wl,-v -MD -MT CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f959d/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f959d.dir/build.make CMakeFiles/cmTC_f959d.dir/build
+        Building C object CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -arch arm64   -v -Wl,-v -MD -MT CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c
         Apple clang version 17.0.0 (clang-1700.6.4.2)
         Target: arm64-apple-darwin24.6.0
         Thread model: posix
         InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-        cc: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
-         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.6.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=26.2 -fvisibility-inlines-hidden-static-local-var -fdefine-target-os-macros -fno-assume-unique-vtables -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +zcm -target-feature +zcz -target-feature +v8.5a -target-feature +aes -target-feature +altnzcv -target-feature +ccdp -target-feature +complxnum -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +fptoint -target-feature +fullfp16 -target-feature +jsconv -target-feature +lse -target-feature +neon -target-feature +pauth -target-feature +perfmon -target-feature +predres -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sb -target-feature +sha2 -target-feature +sha3 -target-feature +specrestrict -target-feature +ssbs -target-abi darwinpcs -debugger-tuning=lldb -fdebug-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga -target-linker-version 1230.1 -v -fcoverage-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/SubFrameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/Library/Frameworks -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c
+        clang: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=26.2 -fvisibility-inlines-hidden-static-local-var -fdefine-target-os-macros -fno-assume-unique-vtables -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +zcm -target-feature +zcz -target-feature +v8.5a -target-feature +aes -target-feature +altnzcv -target-feature +ccdp -target-feature +complxnum -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +fptoint -target-feature +fullfp16 -target-feature +jsconv -target-feature +lse -target-feature +neon -target-feature +pauth -target-feature +perfmon -target-feature +predres -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sb -target-feature +sha2 -target-feature +sha3 -target-feature +specrestrict -target-feature +ssbs -target-abi darwinpcs -debugger-tuning=lldb -fdebug-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9 -target-linker-version 1230.1 -v -fcoverage-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9 -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/SubFrameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c
         clang -cc1 version 17.0.0 (clang-1700.6.4.2) default target arm64-apple-darwin24.6.0
-        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/local/include"
-        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/Library/Frameworks"
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
+        ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
         #include "..." search starts here:
         #include <...> search starts here:
+         /usr/local/include
          /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include
-         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
          /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
-         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks (framework directory)
-         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/SubFrameworks (framework directory)
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
+         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/SubFrameworks (framework directory)
         End of search list.
-        Linking C executable cmTC_abb2d
-        /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_abb2d.dir/link.txt --verbose=1
-        /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mmacosx-version-min=15.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names  -v -Wl,-v CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -o cmTC_abb2d 
+        Linking C executable cmTC_f959d
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f959d.dir/link.txt --verbose=1
         Apple clang version 17.0.0 (clang-1700.6.4.2)
         Target: arm64-apple-darwin24.6.0
         Thread model: posix
         InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.6.0 26.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_abb2d -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 26.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_f959d -L/usr/local/lib -v CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a
         @(#)PROGRAM:ld PROJECT:ld-1230.1
         BUILD 10:14:01 Jan  9 2026
         configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em armv8m.main armv8.1m.main
@@ -109,72 +1958,86 @@ events:
         LTO support using: LLVM version 17.0.0 (static support for 29, runtime is 29)
         TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.3.8)
         Library search paths:
-        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib
-        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/swift
+        	/usr/local/lib
+        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib
+        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift
         Framework search paths:
-        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks
+        	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks
+        /usr/bin/cc  -arch arm64  -v -Wl,-v CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -o cmTC_f959d
         
       exitCode: 0
   -
     kind: "message-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:122 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Effective list of requested architectures (possibly empty)  : ""
+      Effective list of architectures found in the ABI info binary: "arm64"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:217 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit include dir info: rv=done
         found start of include info
         found start of implicit include info
+          add: [/usr/local/include]
           add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include]
-          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include]
+          add: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
           add: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
         end of search list found
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
         collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include]
-        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include]
+        collapse include dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
         collapse include dir [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include] ==> [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
-        implicit include dirs: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
+        implicit include dirs: [/usr/local/include;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include;/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
       
       
   -
     kind: "message-v1"
     backtrace:
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:159 (message)"
-      - "/opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
       - "CMakeLists.txt:2 (project)"
     message: |
       Parsed C implicit link information:
-        link line regex: [^( *|.*[/\\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: '/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga']
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
+        ignore line: [Change Dir: '/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9']
         ignore line: []
-        ignore line: [Run Build Command(s): /opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_abb2d/fast]
-        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_abb2d.dir/build.make CMakeFiles/cmTC_abb2d.dir/build]
-        ignore line: [Building C object CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc   -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mmacosx-version-min=15.6   -v -Wl -v -MD -MT CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f959d/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_f959d.dir/build.make CMakeFiles/cmTC_f959d.dir/build]
+        ignore line: [Building C object CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -arch arm64   -v -Wl -v -MD -MT CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -MF CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o.d -o CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Apple clang version 17.0.0 (clang-1700.6.4.2)]
         ignore line: [Target: arm64-apple-darwin24.6.0]
         ignore line: [Thread model: posix]
         ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
-        ignore line: [cc: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
-        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.6.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=26.2 -fvisibility-inlines-hidden-static-local-var -fdefine-target-os-macros -fno-assume-unique-vtables -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +zcm -target-feature +zcz -target-feature +v8.5a -target-feature +aes -target-feature +altnzcv -target-feature +ccdp -target-feature +complxnum -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +fptoint -target-feature +fullfp16 -target-feature +jsconv -target-feature +lse -target-feature +neon -target-feature +pauth -target-feature +perfmon -target-feature +predres -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sb -target-feature +sha2 -target-feature +sha3 -target-feature +specrestrict -target-feature +ssbs -target-abi darwinpcs -debugger-tuning=lldb -fdebug-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga -target-linker-version 1230.1 -v -fcoverage-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-iSaxga -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/SubFrameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/Library/Frameworks -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/Cellar/cmake/3.28.3/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [clang: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
+        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCCompilerABI.c -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=26.2 -fvisibility-inlines-hidden-static-local-var -fdefine-target-os-macros -fno-assume-unique-vtables -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +zcm -target-feature +zcz -target-feature +v8.5a -target-feature +aes -target-feature +altnzcv -target-feature +ccdp -target-feature +complxnum -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +fptoint -target-feature +fullfp16 -target-feature +jsconv -target-feature +lse -target-feature +neon -target-feature +pauth -target-feature +perfmon -target-feature +predres -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sb -target-feature +sha2 -target-feature +sha3 -target-feature +specrestrict -target-feature +ssbs -target-abi darwinpcs -debugger-tuning=lldb -fdebug-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9 -target-linker-version 1230.1 -v -fcoverage-compilation-dir=/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/CMakeScratch/TryCompile-v2Gnh9 -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17 -dependency-file CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/SubFrameworks -internal-iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fskip-odr-check-in-gmf -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -x c /opt/homebrew/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [clang -cc1 version 17.0.0 (clang-1700.6.4.2) default target arm64-apple-darwin24.6.0]
-        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/local/include"]
-        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/Library/Frameworks"]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"]
+        ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"]
         ignore line: [#include "..." search starts here:]
         ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/local/include]
         ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/include]
-        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/include]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include]
         ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
-        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks (framework directory)]
-        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/SubFrameworks (framework directory)]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)]
+        ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/SubFrameworks (framework directory)]
         ignore line: [End of search list.]
-        ignore line: [Linking C executable cmTC_abb2d]
-        ignore line: [/opt/homebrew/Cellar/cmake/3.28.3/bin/cmake -E cmake_link_script CMakeFiles/cmTC_abb2d.dir/link.txt --verbose=1]
-        ignore line: [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mmacosx-version-min=15.6 -Wl -search_paths_first -Wl -headerpad_max_install_names  -v -Wl -v CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -o cmTC_abb2d ]
+        ignore line: [Linking C executable cmTC_f959d]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f959d.dir/link.txt --verbose=1]
         ignore line: [Apple clang version 17.0.0 (clang-1700.6.4.2)]
         ignore line: [Target: arm64-apple-darwin24.6.0]
         ignore line: [Thread model: posix]
         ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
-        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.6.0 26.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_abb2d -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a]
+        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 26.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_f959d -L/usr/local/lib -v CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a]
           arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld] ==> ignore
           arg [-demangle] ==> ignore
           arg [-lto_library] ==> ignore, skip following value
@@ -184,31 +2047,213 @@ events:
           arg [arm64] ==> ignore
           arg [-platform_version] ==> ignore
           arg [macos] ==> ignore
-          arg [15.6.0] ==> ignore
+          arg [15.0.0] ==> ignore
           arg [26.2] ==> ignore
           arg [-syslibroot] ==> ignore
-          arg [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk] ==> ignore
+          arg [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk] ==> ignore
           arg [-mllvm] ==> ignore
           arg [-enable-linkonceodr-outlining] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_abb2d] ==> ignore
-          arg [-search_paths_first] ==> ignore
-          arg [-headerpad_max_install_names] ==> ignore
+          arg [cmTC_f959d] ==> ignore
+          arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_abb2d.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_f959d.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lSystem] ==> lib [System]
           arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a] ==> lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a]
-        Library search paths: [;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/swift]
-        Framework search paths: [;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks]
+        linker tool for 'C': /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld
+        Library search paths: [;/usr/local/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift]
+        Framework search paths: [;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks]
         remove lib [System]
         remove lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/17/lib/darwin/libclang_rt.osx.a]
-        collapse library dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib]
-        collapse library dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/swift] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/swift]
-        collapse framework dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/usr/local/lib] ==> [/usr/local/lib]
+        collapse library dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib]
+        collapse library dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift]
+        collapse framework dir [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks] ==> [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks]
         implicit libs: []
         implicit objs: []
-        implicit dirs: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/usr/lib/swift]
-        implicit fwks: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks]
+        implicit dirs: [/usr/local/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift]
+        implicit fwks: [/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks]
       
       
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the C compiler's linker: "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" "-v"
+      @(#)PROGRAM:ld PROJECT:ld-1230.1
+      BUILD 10:14:01 Jan  9 2026
+      configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em armv8m.main armv8.1m.main
+      will use ld-classic for: armv6 armv7 armv7s i386 armv6m armv7k armv7m armv7em
+      LTO support using: LLVM version 17.0.0 (static support for 29, runtime is 29)
+      TAPI support using: Apple TAPI version 17.0.0 (tapi-1700.3.8)
+  -
+    kind: "find-v1"
+    backtrace:
+      - "CMakeLists.txt:15 (find_library)"
+    mode: "library"
+    variable: "H2O_EVLOOP_LIB"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "h2o-evloop"
+    candidate_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/"
+      - "/opt/homebrew/lib/"
+      - "/opt/homebrew/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/opt/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/"
+      - "/Library/Frameworks/"
+      - "/System/Library/Frameworks/"
+      - "/opt/homebrew/lib/"
+    searched_directories:
+      - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin/"
+      - "/Users/burhanudin.nugroho/.amplify/bin/"
+      - "/Users/burhanudin.nugroho/.rbenv/shims/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools/"
+      - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/Library/Apple/usr/bin/"
+      - "/usr/local/share/dotnet/"
+      - "/Users/burhanudin.nugroho/.dotnet/tools/"
+      - "/usr/local/go/bin/"
+      - "/Users/burhanudin.nugroho/.local/bin/"
+      - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin/"
+      - "/opt/anaconda3/condabin/"
+      - "/Users/burhanudin.nugroho/.cargo/bin/"
+      - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/"
+      - "/Users/burhanudin.nugroho/.pub-cache/bin/"
+      - "/Users/burhanudin.nugroho/go/bin/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/"
+    found: "/opt/homebrew/lib/libh2o-evloop.dylib"
+    search_context:
+      ENV{PATH}:
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/usr/local/share/dotnet"
+        - "~/.dotnet/tools"
+        - "/usr/local/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin/cache/dart-sdk/bin/"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/burhanudin.nugroho/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/burhanudin.nugroho/.nvm/versions/node/v22.19.0/bin"
+        - "/Users/burhanudin.nugroho/.local/bin"
+        - "/Users/burhanudin.nugroho/.sdkman/candidates/java/current/bin"
+        - "/Users/burhanudin.nugroho/.amplify/bin"
+        - "/opt/anaconda3/condabin"
+        - "/Users/burhanudin.nugroho/.rbenv/shims"
+        - "/Users/burhanudin.nugroho/.rbenv/bin"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/cmdline-tools"
+        - "/Users/burhanudin.nugroho/Library/Android/sdk/platform-tools"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Users/burhanudin.nugroho/.cargo/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/Users/burhanudin.nugroho/Documents/development/flutter/bin"
+        - "/Users/burhanudin.nugroho/.pub-cache/bin"
+        - "/bin"
+        - "/Users/burhanudin.nugroho/go/bin"
+        - "/usr/local/share/dotnet"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
 ...
