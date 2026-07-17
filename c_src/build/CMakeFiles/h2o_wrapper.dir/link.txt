@@ -1,1 +1,0 @@
-/usr/bin/cc  -arch arm64 -dynamiclib -Wl,-headerpad_max_install_names -o libh2o_wrapper.dylib -install_name @rpath/libh2o_wrapper.dylib CMakeFiles/h2o_wrapper.dir/h2o_wrapper.c.o CMakeFiles/h2o_wrapper.dir/include/dart_api_dl.c.o  /opt/homebrew/lib/libh2o-evloop.dylib

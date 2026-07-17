@@ -1,0 +1,20 @@
+name: daho_cli
+description: Command-line interface for the Daho HTTP framework — scaffold, build, and run Daho servers.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+
+# Installs the `daho` command via `dart pub global activate daho_cli`.
+executables:
+  daho:
+
+dependencies:
+  args: ^2.5.0
+  path: ^1.9.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6

@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install H2O and CMake
+        run: brew install h2o cmake
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies (workspace)
+        run: dart pub get
+
+      - name: Build native library
+        run: |
+          cd packages/daho/c_src
+          mkdir -p build && cd build
+          cmake ..
+          cmake --build .
+
+      - name: Verify formatting
+        run: >
+          dart format --output=none --set-exit-if-changed
+          packages/daho/lib packages/daho/test
+          packages/daho_cli/bin packages/daho_cli/lib
+
+      - name: Analyze
+        run: >
+          dart analyze --fatal-infos
+          packages/daho/lib packages/daho/test packages/daho_cli
+
+      - name: Run framework tests
+        run: dart test
+        working-directory: packages/daho

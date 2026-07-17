@@ -1,39 +1,40 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Daho (monorepo)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
+A fast, minimal HTTP framework for Dart, backed by a native [H2O](https://h2o.examp1e.net/) server over FFI — with an Express/Fiber-style API and multi-core support.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
+This repository is a [pub workspace](https://dart.dev/tools/pub/workspaces) containing:
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+| Package | Description |
+| --- | --- |
+| [`packages/daho`](packages/daho) | The framework library. |
+| [`packages/daho_cli`](packages/daho_cli) | The `daho` command-line tool (build / run / doctor). |
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+```bash
+# 1. Toolchain
+brew install h2o cmake          # macOS
 
-## Usage
+# 2. Resolve the workspace
+dart pub get
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+# 3. Build the native library and run an example
+cd packages/daho
+dart run ../daho_cli/bin/daho.dart doctor          # verify toolchain
+dart run ../daho_cli/bin/daho.dart run example/routing.dart
 ```
 
-## Additional information
+Once published, the CLI installs as a global `daho` command:
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```bash
+dart pub global activate daho_cli
+daho doctor
+daho run
+```
+
+See [`packages/daho/README.md`](packages/daho/README.md) for the framework docs
+and roadmap.
+
+## License
+
+MIT
