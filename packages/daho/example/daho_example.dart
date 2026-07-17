@@ -17,7 +17,10 @@ void setupRoutes(Daho app) {
 
   // 2. O(1) ROUTE & COMPILED MIDDLEWARE (Jalur Cepat Dart)
   app.get('/json', (req, res) {
-    return res.json({"message": "Hello World"});
+    return res.json({
+      "status": "success",
+      "pesan": "Hello World! Diproses oleh mesin Cluster.",
+    });
   });
   app.get('/coba', (req, res) {
     return res.ok({
