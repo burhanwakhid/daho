@@ -1,3 +1,0 @@
-/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/h2o_wrapper.dir
-/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/edit_cache.dir
-/Users/burhanudin.nugroho/Documents/development/dart/daho/c_src/build/CMakeFiles/rebuild_cache.dir
