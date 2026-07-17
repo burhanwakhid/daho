@@ -1,0 +1,96 @@
+name: Benchmark
+
+# Manual benchmark to check how Daho behaves on Linux — in particular whether
+# load is distributed across worker Isolates (SO_REUSEPORT load-balances in the
+# Linux kernel, unlike macOS where a single worker tends to receive everything).
+on:
+  workflow_dispatch:
+    inputs:
+      connections:
+        description: 'Concurrent keep-alive connections'
+        default: '100'
+      duration:
+        description: 'Load duration (seconds)'
+        default: '15'
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install H2O, CMake and ab
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libh2o-evloop-dev cmake apache2-utils
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Build native library
+        run: |
+          cd packages/daho/c_src
+          mkdir -p build && cd build
+          cmake ..
+          cmake --build .
+
+      - name: Run benchmark
+        working-directory: packages/daho
+        env:
+          DAHO_PROFILE: '1'
+        run: |
+          CONN='${{ github.event.inputs.connections }}'
+          DUR='${{ github.event.inputs.duration }}'
+          CORES=$(nproc)
+
+          echo "Cores: $CORES | connections: $CONN | duration: ${DUR}s"
+
+          # Start the server (background) and wait for it to be ready.
+          dart run example/daho_example.dart > /tmp/server.log 2>&1 &
+          SRV=$!
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8081/json >/dev/null && break
+            sleep 1
+          done
+          curl -s http://127.0.0.1:8081/json || { cat /tmp/server.log; exit 1; }
+          echo
+
+          # Load test (keep-alive).
+          ab -k -c "$CONN" -n 5000000 -t "$DUR" \
+            http://127.0.0.1:8081/json > /tmp/ab.log 2>&1 || true
+
+          # Let the last profiler interval flush, then stop the server.
+          sleep 3
+          kill -9 "$SRV" 2>/dev/null || true
+          pkill -9 -f daho_example.dart 2>/dev/null || true
+
+          WORKERS=$(grep -o 'daho-prof w[0-9]*' /tmp/server.log \
+            | sort -u | wc -l | tr -d ' ')
+
+          {
+            echo "## Daho benchmark (Linux)"
+            echo ""
+            echo "- Cores (nproc): **$CORES**"
+            echo "- Connections: $CONN, duration: ${DUR}s"
+            echo "- **Distinct workers that served traffic: $WORKERS / $CORES**"
+            echo ""
+            echo "If this is > 1, SO_REUSEPORT is distributing across workers on"
+            echo "Linux (the macOS single-worker limitation does not apply here)."
+            echo ""
+            echo "### Server-side profiler (per worker, tail)"
+            echo '```'
+            grep 'daho-prof' /tmp/server.log | tail -30
+            echo '```'
+            echo "### ab (client side)"
+            echo '```'
+            grep -E 'Requests per second|Time per request|Complete requests|Failed requests|Non-2xx' /tmp/ab.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "Distinct workers that served: $WORKERS / $CORES"
+          grep -E 'Requests per second|Complete requests|Failed requests' /tmp/ab.log

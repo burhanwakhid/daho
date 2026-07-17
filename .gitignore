@@ -23,3 +23,4 @@ pubspec.lock
 
 # Claude Code local settings
 .claude/
+*.exe

@@ -8,6 +8,7 @@ import 'package:ffi/ffi.dart';
 import '../config.dart';
 import '../dispatcher.dart';
 import '../pool.dart';
+import '../profiler.dart';
 import '../request.dart';
 import '../router.dart';
 import 'bindings.dart';
@@ -68,6 +69,10 @@ Future<void> _processRequest(
   String ip,
   int workerId,
 ) async {
+  final profileStart = Profiler.enabled
+      ? DateTime.now().microsecondsSinceEpoch
+      : 0;
+
   final uri = Uri.parse(rawPath);
   final contentType = headers['content-type'] ?? '';
 
@@ -130,6 +135,11 @@ Future<void> _processRequest(
     responseBytes,
     workerId,
   );
+
+  if (Profiler.enabled) {
+    final micros = DateTime.now().microsecondsSinceEpoch - profileStart;
+    Profiler.forWorker(workerId).record(micros);
+  }
 }
 
 /// Resolves the effective client IP. When [DahoConfig.trustProxy] is enabled,
