@@ -1,5 +1,5 @@
-name: jwt_auth
-description: A sample command-line application.
+name: jwt_rest_api
+description: JWT-authenticated REST API example using Daho with SQLite and layered architecture.
 version: 1.0.0
 publish_to: none
 # repository: https://github.com/my_org/my_repo
@@ -14,7 +14,7 @@ dependencies:
   dart_jsonwebtoken: ^2.14.0
   crypto: ^3.0.3
   daho:
-    path: ../../../daho
+    path: ../../../
 
 dev_dependencies:
   lints: ^6.0.0

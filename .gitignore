@@ -24,3 +24,8 @@ pubspec.lock
 # Claude Code local settings
 .claude/
 *.exe
+
+# Node.js (VitePress docs)
+node_modules/
+.vitepress/dist/
+.vitepress/cache/
