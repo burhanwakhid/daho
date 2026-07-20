@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/daho/',
   title: 'Daho',
   description: 'Fast HTTP framework for Dart backed by native H2O server',
   head: [
