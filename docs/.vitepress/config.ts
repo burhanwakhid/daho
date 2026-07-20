@@ -53,7 +53,7 @@ export default defineConfig({
       ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/nicholasnbg/daho' },
+      { icon: 'github', link: 'https://github.com/burhanwakhid/daho' },
     ],
     footer: {
       message: 'Released under the MIT License.',
@@ -62,7 +62,7 @@ export default defineConfig({
       provider: 'local',
     },
     editLink: {
-      pattern: 'https://github.com/nicholasnbg/daho/edit/main/packages/daho/site/:path',
+      pattern: 'https://github.com/burhanwakhid/daho/edit/main/docs/:path',
     },
   },
 })

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'packages/daho/site/**'
+      - 'docs/**'
   workflow_dispatch:
 
 permissions:
@@ -30,20 +30,20 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: packages/daho/site/package-lock.json
+          cache-dependency-path: docs/package-lock.json
 
       - name: Install dependencies
-        working-directory: packages/daho/site
+        working-directory: docs
         run: npm install
 
       - name: Build with VitePress
-        working-directory: packages/daho/site
+        working-directory: docs
         run: npm run docs:build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: packages/daho/site/.vitepress/dist
+          path: docs/.vitepress/dist
 
   deploy:
     environment:
