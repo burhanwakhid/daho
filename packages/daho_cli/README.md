@@ -1,6 +1,6 @@
 # daho_cli
 
-Command-line tool for the [Daho](../daho) HTTP framework.
+Command-line tool for the [Daho](https://pub.dev/packages/daho) HTTP framework.
 
 ```bash
 dart pub global activate daho_cli

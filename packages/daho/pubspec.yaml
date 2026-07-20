@@ -1,8 +1,12 @@
 name: daho
-description: A fast, minimal HTTP framework for Dart backed by a native H2O server over FFI, with an Express/Fiber-style API and multi-core support.
+description: >-
+  A fast, minimal HTTP framework for Dart backed by a native H2O server
+  over FFI, with an Express/Fiber-style API and multi-core support.
 version: 0.1.0
-# repository: https://github.com/my_org/daho
-resolution: workspace
+homepage: https://burhanwakhid.github.io/daho/
+repository: https://github.com/burhanwakhid/daho
+issue_tracker: https://github.com/burhanwakhid/daho/issues
+
 environment:
   sdk: ^3.9.2
 

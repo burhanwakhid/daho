@@ -1,0 +1,7 @@
+# Exclude CI/CD and dev files from published package
+.github/
+.mimocode/
+.micode/
+.claude/
+BENCHMARK.md
+tool/
