@@ -62,7 +62,7 @@ export default defineConfig({
       provider: 'local',
     },
     editLink: {
-      pattern: 'https://github.com/burhanwakhid/daho/edit/main/docs/:path',
+      pattern: 'https://github.com/burhanwakhid/daho/edit/master/docs/:path',
     },
   },
 })
