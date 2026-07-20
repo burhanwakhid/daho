@@ -1,15 +1,34 @@
-import 'dart:isolate';
+/// JWT-authenticated REST API example using Daho.
+///
+/// Demonstrates:
+/// - JWT authentication with Bearer tokens
+/// - SQLite database with WAL mode
+/// - Layered architecture: Entity → DTO → Repository → Service → Handler
+/// - Route groups with scoped middleware
+/// - DahoConfig with custom body limit
+///
+/// Endpoints:
+///   POST /auth/register   — Register a new user
+///   POST /auth/login      — Login and receive a JWT token
+///   GET  /api/profile     — Get current user profile (auth required)
+///   GET  /api/users       — List all users (auth required)
+///   GET  /api/todos       — List all todos (auth required)
+///   GET  /ping            — Health check (fast path, no Dart)
+library;
+
 import 'dart:convert';
+import 'dart:isolate';
 
-import 'package:daho/daho.dart';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:crypto/crypto.dart';
+import 'package:daho/daho.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
+import 'package:sqlite3/sqlite3.dart';
 
-// =====================================================================
-// 1. KONFIGURASI & CORE DATABASE
-// =====================================================================
-const String JWT_SECRET = 'daho_super_secret_key_2026';
+// =============================================================================
+// 1. CONFIGURATION & DATABASE
+// =============================================================================
+
+const String jwtSecret = 'daho_super_secret_key_2026';
 
 class AppDatabase {
   static late final Database db;
@@ -20,7 +39,7 @@ class AppDatabase {
     db.execute('PRAGMA synchronous = NORMAL;');
     _runMigrations();
     _seedData();
-    print('📦 Database SQLite siap di Worker-${Isolate.current.debugName}');
+    print('Database ready on Worker-${Isolate.current.debugName}');
   }
 
   static void _runMigrations() {
@@ -48,17 +67,17 @@ class AppDatabase {
 
   static void _seedData() {
     db.execute('''
-      INSERT OR IGNORE INTO todos (id, user_id, title, is_completed) VALUES 
-        (1, 1, 'Mempelajari arsitektur Pointer FFI di C', 1),
-        (2, 1, 'Membangun Core Daho Framework', 1),
-        (3, 1, 'Menerapkan Controller-Service-Repository Pattern', 1);
+      INSERT OR IGNORE INTO todos (id, user_id, title, is_completed) VALUES
+        (1, 1, 'Learn FFI pointer architecture in C', 1),
+        (2, 1, 'Build Daho Framework core', 1),
+        (3, 1, 'Implement Controller-Service-Repository pattern', 1);
     ''');
   }
 }
 
-// =====================================================================
-// 2. ENTITY LAYER (Domain Model - Murni representasi Database)
-// =====================================================================
+// =============================================================================
+// 2. ENTITY LAYER — Pure database representation
+// =============================================================================
 
 class User {
   final int id;
@@ -108,9 +127,9 @@ class Todo {
   );
 }
 
-// =====================================================================
-// 3. DTO LAYER (Bentuk data yang masuk/keluar dari API)
-// =====================================================================
+// =============================================================================
+// 3. DTO LAYER — API input/output shapes
+// =============================================================================
 
 class RegisterRequestDto {
   final String name, email, password;
@@ -183,7 +202,6 @@ class TodoResponseDto {
   };
 }
 
-// DTO Khusus untuk balikan proses Login (User + Token)
 class AuthResponseDto {
   final UserResponseDto user;
   final String token;
@@ -191,9 +209,9 @@ class AuthResponseDto {
   Map<String, dynamic> toMap() => {"user": user.toMap(), "token": token};
 }
 
-// =====================================================================
-// 4. REPOSITORY LAYER (Akses DB murni -> Mengembalikan ENTITY OBJECT)
-// =====================================================================
+// =============================================================================
+// 4. REPOSITORY LAYER — Raw DB access, returns entities
+// =============================================================================
 
 class UserRepository {
   void createUser(RegisterRequestDto dto, String hashedPassword) {
@@ -213,9 +231,10 @@ class UserRepository {
   }
 
   User? findById(String id) {
-    final results = AppDatabase.db.select('SELECT * FROM users WHERE id = ?', [
-      id,
-    ]);
+    final results = AppDatabase.db.select(
+      'SELECT * FROM users WHERE id = ?',
+      [id],
+    );
     return results.isEmpty ? null : User.fromMap(results.first);
   }
 
@@ -236,16 +255,16 @@ class TodoRepository {
   }
 }
 
-// =====================================================================
-// 5. SERVICE LAYER (Business Logic -> Mengembalikan DTO OBJECT)
-// =====================================================================
+// =============================================================================
+// 5. SERVICE LAYER — Business logic, returns DTOs
+// =============================================================================
 
 class UserService {
   final UserRepository _userRepo;
   UserService(this._userRepo);
 
   String _hashPassword(String password) {
-    final bytes = utf8.encode("${password}garam_daho");
+    final bytes = utf8.encode('${password}daho_salt');
     return sha256.convert(bytes).toString();
   }
 
@@ -254,16 +273,16 @@ class UserService {
       _userRepo.createUser(dto, _hashPassword(dto.password));
     } catch (e) {
       if (e.toString().contains('UNIQUE')) {
-        throw Exception("Email sudah terdaftar!");
+        throw Exception('Email already registered');
       }
-      throw Exception("Terjadi kesalahan server");
+      throw Exception('Server error');
     }
   }
 
   AuthResponseDto login(LoginRequestDto dto) {
     final user = _userRepo.findByEmail(dto.email);
     if (user == null || user.password != _hashPassword(dto.password)) {
-      throw Exception("Email atau password salah!");
+      throw Exception('Invalid email or password');
     }
 
     final jwt = JWT({
@@ -272,7 +291,7 @@ class UserService {
           DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch ~/
           1000,
     });
-    final token = jwt.sign(SecretKey(JWT_SECRET));
+    final token = jwt.sign(SecretKey(jwtSecret));
 
     return AuthResponseDto(
       UserResponseDto.fromEntity(user, includeEmail: true),
@@ -307,22 +326,21 @@ class TodoService {
   }
 }
 
-// =====================================================================
+// =============================================================================
 // 6. HTTP HANDLERS
-// =====================================================================
+// =============================================================================
 
 class AuthHandler {
   final UserService _userService;
-
   AuthHandler(this._userService);
 
   DahoResponse register(DahoRequest req, DahoResponse res) {
     final dto = RegisterRequestDto.fromJson(req.body);
-    if (dto == null) return res.badRequest({"error": "Data tidak lengkap!"});
+    if (dto == null) return res.badRequest({"error": "Missing required fields"});
 
     try {
       _userService.register(dto);
-      return res.ok({"status": "success", "message": "Registrasi berhasil."});
+      return res.ok({"status": "success", "message": "Registration successful"});
     } catch (e) {
       return res.badRequest({
         "error": e.toString().replaceAll("Exception: ", ""),
@@ -333,7 +351,7 @@ class AuthHandler {
   DahoResponse login(DahoRequest req, DahoResponse res) {
     final dto = LoginRequestDto.fromJson(req.body);
     if (dto == null) {
-      return res.badRequest({"error": "Email dan password wajib diisi!"});
+      return res.badRequest({"error": "Email and password are required"});
     }
 
     try {
@@ -349,7 +367,6 @@ class AuthHandler {
 
 class UserHandler {
   final UserService _userService;
-
   UserHandler(this._userService);
 
   DahoResponse getProfile(DahoRequest req, DahoResponse res) {
@@ -357,7 +374,7 @@ class UserHandler {
       req.params['user_id'] ?? '',
     );
     if (userObj == null) {
-      return res.notFound({"error": "User tidak ditemukan!"});
+      return res.notFound({"error": "User not found"});
     }
     return res.ok({"status": "success", "data": userObj.toMap()});
   }
@@ -374,7 +391,6 @@ class UserHandler {
 
 class TodoHandler {
   final TodoService _todoService;
-
   TodoHandler(this._todoService);
 
   Future<DahoResponse> fetchAllTodos(DahoRequest req, DahoResponse res) async {
@@ -387,10 +403,12 @@ class TodoHandler {
   }
 }
 
-// =====================================================================
+// =============================================================================
 // 7. MIDDLEWARE & ENTRY POINT
-// =====================================================================
+// =============================================================================
 
+/// JWT authentication middleware. Verifies the Bearer token and injects
+/// the user ID into `req.params['user_id']` for downstream handlers.
 Future<void> jwtAuthMiddleware(
   DahoRequest req,
   DahoResponse res,
@@ -398,23 +416,24 @@ Future<void> jwtAuthMiddleware(
 ) async {
   final authHeader = req.headers['authorization'];
   if (authHeader == null || !authHeader.startsWith('Bearer ')) {
-    res.unauthorized({"error": "Token Bearer tidak ditemukan!"});
+    res.unauthorized({"error": "Bearer token not provided"});
     return;
   }
   try {
-    final jwt = JWT.verify(authHeader.substring(7), SecretKey(JWT_SECRET));
+    final jwt = JWT.verify(authHeader.substring(7), SecretKey(jwtSecret));
     req.params['user_id'] = jwt.payload['user_id'].toString();
     await next();
   } on JWTException catch (e) {
-    res.unauthorized({"error": "Token tidak valid: ${e.message}"});
+    res.unauthorized({"error": "Invalid token: ${e.message}"});
     return;
   }
 }
 
+/// Route setup — must be a top-level function (Isolate constraint).
 void setupRoutes(Daho app) {
   AppDatabase.init();
 
-  // 2. Dependency Injection (Manual Setup)
+  // Manual dependency injection
   final userRepository = UserRepository();
   final todoRepository = TodoRepository();
 
@@ -425,32 +444,25 @@ void setupRoutes(Daho app) {
   final userHandler = UserHandler(userService);
   final todoHandler = TodoHandler(todoService);
 
-  // 3. Routing (Memanggil method class, tanpa tanda kurung)
+  // Public routes (no auth)
   final authGroup = app.group('/auth');
   authGroup.post('/register', authHandler.register);
   authGroup.post('/login', authHandler.login);
 
+  // Protected routes (JWT middleware)
   final apiGroup = app.group('/api');
   apiGroup.use(jwtAuthMiddleware);
   apiGroup.get('/profile', userHandler.getProfile);
   apiGroup.get('/users', userHandler.fetchAllUsers);
   apiGroup.get('/todos', todoHandler.fetchAllTodos);
 
+  // Native fast path — served entirely in C, never touches Dart
   app.fastPath('/ping', '{"message": "pong"}', contentType: 'application/json');
-
-  app.get('/json', (req, res) {
-    return res.ok({
-      "status": "success",
-      "pesan": "Hello World! Diproses oleh mesin Cluster.",
-    });
-  });
 }
 
 void main() {
-  // Gaya Express/Fiber: buat instance app dengan config, lalu listen().
   final app = Daho(
-    // Konfigurasi global mirip fiber.Config.
-    // Batasi upload maksimum 10MB (default 4MB, sama seperti Fiber).
+    // Set a 10 MB body limit (default is 4 MB)
     config: const DahoConfig(bodyLimit: 10 * 1024 * 1024),
   );
 
@@ -458,8 +470,10 @@ void main() {
     8081,
     routes: setupRoutes,
     onStart: () {
-      print("🚀 Daho API (Controller - Service - Repository Pattern)");
-      print("-----------------------------------------------------");
+      print('JWT REST API running at http://127.0.0.1:8081');
+      print('---');
+      print('Public:  POST /auth/register, POST /auth/login');
+      print('Protected: GET /api/profile, /api/users, /api/todos');
     },
   );
 }

@@ -4,6 +4,7 @@ name: Benchmark
 # load is distributed across worker Isolates (SO_REUSEPORT load-balances in the
 # Linux kernel, unlike macOS where a single worker tends to receive everything).
 on:
+  # Manual run (only available once this file is on the default branch).
   workflow_dispatch:
     inputs:
       connections:
@@ -12,6 +13,10 @@ on:
       duration:
         description: 'Load duration (seconds)'
         default: '15'
+  # Also run on pull requests so the benchmark can be exercised from a feature
+  # branch before it is merged to the default branch. Remove this if per-PR
+  # benchmark runs become too noisy/expensive.
+  pull_request:
 
 jobs:
   benchmark:
@@ -44,8 +49,9 @@ jobs:
         env:
           DAHO_PROFILE: '1'
         run: |
-          CONN='${{ github.event.inputs.connections }}'
-          DUR='${{ github.event.inputs.duration }}'
+          # inputs are only set on workflow_dispatch; default them otherwise.
+          CONN='${{ github.event.inputs.connections }}'; CONN="${CONN:-100}"
+          DUR='${{ github.event.inputs.duration }}'; DUR="${DUR:-15}"
           CORES=$(nproc)
 
           echo "Cores: $CORES | connections: $CONN | duration: ${DUR}s"
