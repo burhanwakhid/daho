@@ -1,0 +1,347 @@
+/**
+ * Daho documentation theme
+ * ------------------------------------------------------------------
+ * Brand identity: a deep indigo → violet core (Dart-ish, calm, modern)
+ * paired with a warm "native fire" amber accent that nods to Daho's
+ * 🔥 startup banner and its C/H2O speed story.
+ */
+
+/* -------------------------------------------------------------------------- */
+/* Brand palette                                                              */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --vp-c-brand-1: #4f46e5; /* indigo-600 */
+  --vp-c-brand-2: #6366f1; /* indigo-500 */
+  --vp-c-brand-3: #818cf8; /* indigo-400 */
+  --vp-c-brand-soft: rgba(99, 102, 241, 0.14);
+
+  --daho-flame-1: #f97316; /* orange-500 */
+  --daho-flame-2: #fb923c; /* orange-400 */
+  --daho-violet: #7c3aed; /* violet-600 */
+
+  /* Fancy gradient reused across hero + accents */
+  --daho-gradient: linear-gradient(
+    120deg,
+    #6366f1 0%,
+    #7c3aed 45%,
+    #f97316 100%
+  );
+  --daho-gradient-soft: linear-gradient(
+    120deg,
+    rgba(99, 102, 241, 0.16),
+    rgba(124, 58, 237, 0.14),
+    rgba(249, 115, 22, 0.12)
+  );
+}
+
+.dark {
+  --vp-c-brand-1: #818cf8;
+  --vp-c-brand-2: #a5b4fc;
+  --vp-c-brand-3: #6366f1;
+  --vp-c-brand-soft: rgba(129, 140, 248, 0.18);
+}
+
+/* Buttons ------------------------------------------------------------------ */
+
+:root {
+  --vp-button-brand-bg: var(--vp-c-brand-1);
+  --vp-button-brand-hover-bg: var(--vp-c-brand-2);
+  --vp-button-brand-active-bg: var(--vp-c-brand-1);
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-hover-border: transparent;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hero — the "cantik" centerpiece                                            */
+/* -------------------------------------------------------------------------- */
+
+:root {
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: var(--daho-gradient);
+
+  --vp-home-hero-image-background-image: var(--daho-gradient);
+  --vp-home-hero-image-filter: blur(72px);
+}
+
+.dark {
+  --vp-home-hero-image-filter: blur(84px) brightness(1.1);
+}
+
+/* Ambient glow behind the whole hero block */
+.VPHome {
+  position: relative;
+  overflow: hidden;
+}
+
+.VPHome::before {
+  content: '';
+  position: absolute;
+  top: -18%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  max-width: 120vw;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(99, 102, 241, 0.18),
+    rgba(124, 58, 237, 0.1) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.dark .VPHome::before {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(99, 102, 241, 0.28),
+    rgba(124, 58, 237, 0.16) 40%,
+    transparent 70%
+  );
+}
+
+.VPHero .name {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.VPHero .text {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.VPHero .tagline {
+  font-size: 19px;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Feature cards                                                              */
+/* -------------------------------------------------------------------------- */
+
+.VPFeature {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 16px;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-2);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -18px rgba(99, 102, 241, 0.45);
+}
+
+.VPFeature .icon {
+  border-radius: 12px;
+  background: var(--daho-gradient-soft) !important;
+  font-size: 24px;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Custom homepage sections (rendered from index.md markdown/HTML)            */
+/* -------------------------------------------------------------------------- */
+
+.daho-section {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.daho-section-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 12px 0 6px;
+  background: var(--daho-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.daho-section-subtitle {
+  text-align: center;
+  color: var(--vp-c-text-2);
+  font-size: 16px;
+  max-width: 560px;
+  margin: 0 auto 8px;
+}
+
+/* Step cards (install / quickstart) */
+.daho-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.daho-step {
+  position: relative;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  background: var(--vp-c-bg-soft);
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.daho-step:hover {
+  border-color: var(--vp-c-brand-2);
+  transform: translateY(-3px);
+}
+
+.daho-step .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  background: var(--daho-gradient);
+  margin-bottom: 12px;
+}
+
+.daho-step h4 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.daho-step p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--vp-c-text-2);
+  line-height: 1.55;
+}
+
+.daho-step code {
+  font-size: 12.5px;
+}
+
+/* Stat / metric row */
+.daho-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 28px auto 0;
+}
+
+@media (max-width: 720px) {
+  .daho-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.daho-stat {
+  text-align: center;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 14px;
+  padding: 24px 16px;
+  background: var(--vp-c-bg-soft);
+}
+
+.daho-stat .value {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: var(--daho-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.daho-stat .label {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+}
+
+/* Call-to-action band */
+.daho-cta {
+  margin: 8px auto 0;
+  text-align: center;
+  border-radius: 18px;
+  padding: 40px 24px;
+  background: var(--daho-gradient-soft);
+  border: 1px solid var(--vp-c-divider);
+}
+
+.daho-cta h3 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  border: 0;
+  padding: 0;
+}
+
+.daho-cta p {
+  color: var(--vp-c-text-2);
+  margin: 0 0 20px;
+}
+
+.daho-cta-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.daho-cta-buttons a {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 22px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.daho-cta-buttons a:hover {
+  transform: translateY(-2px);
+}
+
+.daho-cta-buttons .primary {
+  color: #fff;
+  background: var(--daho-gradient);
+  box-shadow: 0 10px 24px -10px rgba(124, 58, 237, 0.6);
+}
+
+.daho-cta-buttons .secondary {
+  color: var(--vp-c-text-1);
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Content niceties                                                           */
+/* -------------------------------------------------------------------------- */
+
+/* Slightly rounder, softer code blocks */
+.vp-doc div[class*='language-'] {
+  border-radius: 12px;
+}
+
+/* Inline code accent */
+.vp-doc :not(pre) > code {
+  color: var(--vp-c-brand-1);
+}
+
+/* Nicer tables */
+.vp-doc table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vp-doc tr:nth-child(2n) {
+  background-color: var(--vp-c-bg-soft);
+}
