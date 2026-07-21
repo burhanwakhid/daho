@@ -1,5 +1,24 @@
 # Getting Started
 
+Daho is a fast, minimal HTTP framework for Dart. Its request pipeline runs on a native [H2O](https://h2o.examp1e.net/) C server connected over Dart FFI, wrapped in an Express/Fiber-style API you already know. This page gets you from an empty directory to a running server.
+
+## Why Daho?
+
+Most Dart HTTP servers run entirely on the Dart VM's event loop. Daho takes a different approach: it pushes the hot path — connection accept, HTTP parsing, and file serving — down into H2O, a battle-tested C server, and only calls into Dart for your route logic.
+
+That buys you a few things:
+
+- **Native performance.** ~96k req/s on a single worker, with I/O and parsing handled in C. See [Performance](/guide/performance).
+- **True multi-core.** One worker Isolate per CPU core, each with its own native server, sharing the socket via `SO_REUSEPORT`. Scaling is linear with cores on Linux.
+- **A familiar API.** `app.get()`, route groups, and layered middleware — if you've used Express or Fiber, there's nothing new to learn.
+- **Batteries included.** Body parsing (JSON, urlencoded, multipart), cookies, CORS, gzip, logging, security headers, graceful shutdown, and an in-process test harness.
+
+The trade-off: the native core means Daho runs on **macOS and Linux** (Windows via WSL2 or Docker), and the library is compiled once per platform. The CLI handles that build for you.
+
+::: warning Status
+Daho is experimental. APIs may change before a stable release.
+:::
+
 ## Prerequisites
 
 - **Dart SDK** `^3.9`
@@ -145,5 +164,10 @@ daho doctor
 
 - [Routing](/guide/routing) — HTTP methods, parameters, route groups
 - [Middleware](/guide/middleware) — Built-in and custom middleware
+- [Request & Response](/guide/request-response) — the request and response API
 - [Configuration](/guide/configuration) — DahoConfig options
+- [Error Handling](/guide/error-handling) — error and not-found handlers
+- [CLI](/guide/cli) — the `daho` command-line tool
+- [Deployment](/guide/deployment) — ship to production with Docker
+- [Performance](/guide/performance) — benchmarks and tuning
 - [Examples](/guide/examples) — Progressive examples from basic to advanced
