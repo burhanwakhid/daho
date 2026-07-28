@@ -2,7 +2,7 @@ name: daho_cli
 description: >-
   Command-line interface for the Daho HTTP framework — scaffold, build,
   and run Daho servers with native H2O performance.
-version: 0.1.0
+version: 0.1.1
 homepage: https://burhanwakhid.github.io/daho/
 repository: https://github.com/burhanwakhid/daho
 issue_tracker: https://github.com/burhanwakhid/daho/issues
