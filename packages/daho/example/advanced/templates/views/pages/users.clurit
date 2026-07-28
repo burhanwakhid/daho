@@ -1,0 +1,50 @@
+@extends('layouts.main')
+
+@section('content')
+    <h1>Users</h1>
+
+    @if($users != null && $users.isNotEmpty)
+        <p>Found {{ $users.length }} users:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($users as $user)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td><strong>{{ $user['name'] }}</strong></td>
+                        <td>{{ $user['email'] }}</td>
+                        <td>
+                            @if($user['role'] == 'admin')
+                                <span style="color: #dc2626; font-weight: bold;">Admin</span>
+                            @else
+                                <span style="color: #6b7280;">User</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <div class="alert alert-success">
+            Loop completed! Processed {{ $users.length }} users.
+        </div>
+    @else
+        <div class="alert alert-warning">
+            No users found.
+        </div>
+    @endif
+@endsection
+
+@push('scripts')
+    <script>
+        console.log('Users page loaded with {{ $users.length }} users');
+    </script>
+@endpush

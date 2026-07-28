@@ -1,0 +1,32 @@
+@extends('layouts.main')
+
+@section('content')
+    <h1>About Daho</h1>
+
+    <div class="card">
+        <h2>{{ $description ?? 'Daho Framework' }}</h2>
+        <p>Daho is a fast, minimal HTTP framework for Dart backed by a native H2O server.</p>
+    </div>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Native Core</strong> — H2O server via FFI for maximum performance</li>
+        <li><strong>Multi-core</strong> — One worker Isolate per CPU core</li>
+        <li><strong>Express-style API</strong> — Familiar routing and middleware patterns</li>
+        <li><strong>Template Engine</strong> — Clurit with Blade-like syntax</li>
+        <li><strong>Authentication</strong> — JWT, sessions, OAuth2 with daho_auth</li>
+    </ul>
+
+    <h2>Architecture</h2>
+    <div class="card">
+        <p>Daho uses a multi-worker architecture:</p>
+        <ul>
+            <li>H2O handles TCP/HTTP in C (fast)</li>
+            <li>Dart handles business logic</li>
+            <li>Workers share socket via SO_REUSEPORT</li>
+            <li>Lock-free ring buffer for async responses</li>
+        </ul>
+    </div>
+
+    @include('partials.links')
+@endsection

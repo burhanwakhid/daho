@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:path/path.dart' as p;
 
+import '../auth_templates.dart';
 import '../templates.dart';
 
 /// `daho create <name>` — scaffolds a new Daho server project.
@@ -20,6 +21,11 @@ class CreateCommand extends Command<int> {
         abbr: 'f',
         negatable: false,
         help: 'Create into a non-empty directory, overwriting files.',
+      )
+      ..addFlag(
+        'auth',
+        negatable: false,
+        help: 'Include daho_auth with JWT, sessions, OAuth2, and PostgreSQL.',
       );
   }
 
@@ -67,33 +73,65 @@ class CreateCommand extends Command<int> {
       }
     }
 
+    final useAuth = argResults!.flag('auth');
+
     _write(
       targetDir,
       'pubspec.yaml',
-      pubspecTemplate(projectName, localPath: localPath),
+      useAuth
+          ? authPubspecTemplate(
+              projectName,
+              localPath: localPath,
+              dahoAuthLocalPath: siblingDahoAuthPath(localPath),
+            )
+          : pubspecTemplate(projectName, localPath: localPath),
     );
     _write(
       targetDir,
       p.join('bin', 'server.dart'),
-      serverTemplate(projectName),
+      useAuth ? authServerTemplate(projectName) : serverTemplate(projectName),
     );
     _write(
       targetDir,
       p.join('lib', 'routes.dart'),
-      routesTemplate(projectName),
+      useAuth ? authRoutesTemplate(projectName) : routesTemplate(projectName),
     );
     _write(targetDir, 'analysis_options.yaml', analysisOptionsTemplate());
     _write(targetDir, '.gitignore', gitignoreTemplate());
-    _write(targetDir, 'Dockerfile', dockerfileTemplate(projectName));
     _write(targetDir, 'README.md', readmeTemplate(projectName));
 
-    stdout.writeln('✅ Created Daho project in ./$projectName\n');
+    if (useAuth) {
+      _write(targetDir, 'Dockerfile', authDockerfileTemplate(projectName));
+      _write(targetDir, 'docker-compose.yml', dockerComposeTemplate(projectName));
+      _write(targetDir, '.env.example', envTemplate);
+      _write(targetDir, 'lib/env.dart', envLoaderTemplate());
+      _write(targetDir, 'lib/auth.dart', authConfigTemplate('all'));
+      _write(targetDir, 'bin/migrate.dart', migrateTemplate(projectName));
+
+      // Migrations
+      final migrationsDir = Directory(p.join(targetDir.path, 'migrations'));
+      migrationsDir.createSync(recursive: true);
+      writeAuthMigrations(
+        (filename, content) => _write(targetDir, p.join('migrations', filename), content),
+      );
+    } else {
+      _write(targetDir, 'Dockerfile', dockerfileTemplate(projectName));
+    }
+
+    stdout.writeln('\nCreated Daho project in ./$projectName\n');
     stdout.writeln('Next steps:');
     stdout.writeln('  cd $projectName');
     stdout.writeln('  dart pub get');
-    stdout.writeln(
-      '  daho run          # or: docker build -t $projectName . && docker run --rm -p 8080:8080 $projectName',
-    );
+    if (useAuth) {
+      stdout.writeln('  cp .env.example .env   # fill in secrets');
+      stdout.writeln('  docker-compose up -d   # start PostgreSQL');
+      stdout.writeln('  daho auth setup-db     # run migrations');
+      stdout.writeln('  daho run');
+    } else {
+      stdout.writeln(
+        '  daho run          # or: docker build -t $projectName . && docker run --rm -p 8080:8080 $projectName',
+      );
+    }
     return 0;
   }
 

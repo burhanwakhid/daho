@@ -1,0 +1,39 @@
+@extends('layouts.main')
+
+@section('content')
+    <h1>Welcome to Daho + Clurit!</h1>
+
+    <div class="alert alert-info">
+        This page is rendered using the Clurit template engine with Blade-like syntax.
+    </div>
+
+    <h2>Hello, {{ $name ?? 'Guest' }}!</h2>
+    <p>This demonstrates template rendering with dynamic data.</p>
+
+    @if($items != null && $items.isNotEmpty)
+        <h2>Technologies</h2>
+        <div class="card">
+            <ul>
+                @foreach($items as $item)
+                    <li>
+                        <strong>{{ $item }}</strong>
+                        @if($loop->first)
+                            <span style="color: #2563eb;"> (First!)</span>
+                        @endif
+                        @if($loop->last)
+                            <span style="color: #059669;"> (Last!)</span>
+                        @endif
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @else
+        <p>No items to display.</p>
+    @endif
+
+    @include('partials.cta')
+@endsection
+
+@section('footer')
+    <p>Powered by Daho + Clurit Template Engine</p>
+@endsection
