@@ -1,3 +1,7 @@
+## 0.1.3+1
+
+- Fix: `envTemplate`'s generated `.env.example` hardcoded `DATABASE_URL=.../daho_app`, but `dockerComposeTemplate` creates the Postgres database as `POSTGRES_DB: $name` (the actual project name) — for any project not literally named `daho_app`, `docker-compose up -d` created a database that `.env`'s `DATABASE_URL` didn't point at, so `daho auth setup-db` always failed with `database "<name>" does not exist`. `envTemplate` now takes the project name and uses it as the database name, matching `docker-compose.yml`.
+
 ## 0.1.3
 
 - Fix: `daho build` ran its own `findH2oHeader()`/`findH2oLib()` pre-flight check *before* invoking CMake, and on Linux `findH2oLib()` only recognized a shared `libh2o-evloop.so` — never the static `libh2o-evloop.a` that the 0.1.2 from-source build (and generated Dockerfiles) actually produce. It reported "H2O not found" and bailed out before CMake — which finds `.a` files just fine — ever ran. `findH2oLib()` now also checks for `.a`, and `daho build` no longer duplicates this check at all; it lets CMake's own `find_library` (the single source of truth already used by `c_src/CMakeLists.txt`) decide, only printing the install hint if the actual `cmake` configure step fails.

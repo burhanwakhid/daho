@@ -227,9 +227,14 @@ String authConfigTemplate(String provider) {
   return buffer.toString();
 }
 
-const String envTemplate = '''
+/// [name] must match the database name docker-compose actually creates
+/// (`dockerComposeTemplate`'s `POSTGRES_DB: $name`) — a mismatched
+/// hardcoded default here previously caused `daho auth setup-db` to fail
+/// with `database "daho_app" does not exist` for any project not literally
+/// named `daho_app`.
+String envTemplate(String name) => '''
 # Database
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/daho_app
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/$name
 # For a remote/production Postgres, also set sslMode: SslMode.require on the
 # AuthDatabase in bin/migrate.dart and lib/routes.dart (defaults to
 # SslMode.disable so a plain local Postgres works out of the box).

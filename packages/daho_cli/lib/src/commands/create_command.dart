@@ -107,7 +107,7 @@ class CreateCommand extends Command<int> {
         'docker-compose.yml',
         dockerComposeTemplate(projectName),
       );
-      _write(targetDir, '.env.example', envTemplate);
+      _write(targetDir, '.env.example', envTemplate(projectName));
       _write(targetDir, 'lib/env.dart', envLoaderTemplate());
       _write(targetDir, 'lib/auth.dart', authConfigTemplate('all'));
       _write(targetDir, 'bin/migrate.dart', migrateTemplate(projectName));

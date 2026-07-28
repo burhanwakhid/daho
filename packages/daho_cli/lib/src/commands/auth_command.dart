@@ -101,7 +101,11 @@ class AuthAddCommand extends Command<int> {
     );
 
     // 4. Generate .env template
-    _writeIfAbsent(p.join(projectRoot, '.env.example'), envTemplate, force);
+    _writeIfAbsent(
+      p.join(projectRoot, '.env.example'),
+      envTemplate(projectName),
+      force,
+    );
 
     // 5. Generate bin/migrate.dart — `daho auth setup-db` shells out to it.
     final binDir = Directory(p.join(projectRoot, 'bin'));
