@@ -38,10 +38,7 @@ void main() {
 
     test('does not escape in raw mode', () {
       final node = EchoNode('\$html', escaped: false);
-      expect(
-        node.compile({'html': '<b>Bold</b>'}),
-        '<b>Bold</b>',
-      );
+      expect(node.compile({'html': '<b>Bold</b>'}), '<b>Bold</b>');
     });
 
     test('handles null value', () {
@@ -61,24 +58,23 @@ void main() {
 
     test('handles list value', () {
       final node = EchoNode('\$items', escaped: true);
-      expect(node.compile({'items': [1, 2, 3]}), '1, 2, 3');
+      expect(
+        node.compile({
+          'items': [1, 2, 3],
+        }),
+        '1, 2, 3',
+      );
     });
   });
 
   group('IfNode', () {
     test('renders then body when condition is truthy', () {
-      final node = IfNode(
-        condition: '\$show',
-        thenBody: [TextNode('Visible')],
-      );
+      final node = IfNode(condition: '\$show', thenBody: [TextNode('Visible')]);
       expect(node.compile({'show': true}), 'Visible');
     });
 
     test('does not render then body when condition is falsy', () {
-      final node = IfNode(
-        condition: '\$show',
-        thenBody: [TextNode('Visible')],
-      );
+      final node = IfNode(condition: '\$show', thenBody: [TextNode('Visible')]);
       expect(node.compile({'show': false}), '');
     });
 
@@ -115,7 +111,12 @@ void main() {
         thenBody: [TextNode('Has items')],
         elseBody: [TextNode('No items')],
       );
-      expect(node.compile({'items': [1, 2, 3]}), 'Has items');
+      expect(
+        node.compile({
+          'items': [1, 2, 3],
+        }),
+        'Has items',
+      );
     });
 
     test('handles non-empty string condition', () {
@@ -142,7 +143,11 @@ void main() {
       final node = ForeachNode(
         iterableExpr: '\$items',
         variable: 'item',
-        body: [TextNode('Item: '), EchoNode('\$item', escaped: true), TextNode('\n')],
+        body: [
+          TextNode('Item: '),
+          EchoNode('\$item', escaped: true),
+          TextNode('\n'),
+        ],
       );
       final result = node.compile({
         'items': ['A', 'B', 'C'],
@@ -156,9 +161,7 @@ void main() {
       final node = ForeachNode(
         iterableExpr: '\$items',
         variable: 'item',
-        body: [
-          EchoNode('\$item', escaped: true),
-        ],
+        body: [EchoNode('\$item', escaped: true)],
       );
       final result = node.compile({
         'items': ['A', 'B'],

@@ -231,10 +231,9 @@ class UserRepository {
   }
 
   User? findById(String id) {
-    final results = AppDatabase.db.select(
-      'SELECT * FROM users WHERE id = ?',
-      [id],
-    );
+    final results = AppDatabase.db.select('SELECT * FROM users WHERE id = ?', [
+      id,
+    ]);
     return results.isEmpty ? null : User.fromMap(results.first);
   }
 
@@ -336,11 +335,15 @@ class AuthHandler {
 
   DahoResponse register(DahoRequest req, DahoResponse res) {
     final dto = RegisterRequestDto.fromJson(req.body);
-    if (dto == null) return res.badRequest({"error": "Missing required fields"});
+    if (dto == null)
+      return res.badRequest({"error": "Missing required fields"});
 
     try {
       _userService.register(dto);
-      return res.ok({"status": "success", "message": "Registration successful"});
+      return res.ok({
+        "status": "success",
+        "message": "Registration successful",
+      });
     } catch (e) {
       return res.badRequest({
         "error": e.toString().replaceAll("Exception: ", ""),

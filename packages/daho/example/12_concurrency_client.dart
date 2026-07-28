@@ -59,9 +59,7 @@ void main() async {
   // Wait for everything to finish
   await Future.wait([slowRequest, ...fastRequests]);
 
-  print(
-    '\nAll done. Total time: ${stopwatch.elapsedMilliseconds}ms',
-  );
+  print('\nAll done. Total time: ${stopwatch.elapsedMilliseconds}ms');
   print('(If fast requests finished in ~0ms while slow took 5000ms,');
   print(' the server handled them concurrently!)');
 

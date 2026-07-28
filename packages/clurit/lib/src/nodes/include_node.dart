@@ -6,11 +6,7 @@ class IncludeNode extends Node {
   final Map<String, dynamic>? data;
   final Node Function(String template, Map<String, dynamic>? data) resolver;
 
-  IncludeNode({
-    required this.template,
-    this.data,
-    required this.resolver,
-  });
+  IncludeNode({required this.template, this.data, required this.resolver});
 
   @override
   String compile(Map<String, dynamic> context) {

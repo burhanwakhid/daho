@@ -53,18 +53,12 @@ void setupRoutes(Daho app) {
 
   // GET /dashboard/profile
   dashboard.get('/profile', (req, res) {
-    return res.ok({
-      'username': 'ada',
-      'role': 'admin',
-    });
+    return res.ok({'username': 'ada', 'role': 'admin'});
   });
 
   // GET /dashboard/settings
   dashboard.get('/settings', (req, res) {
-    return res.ok({
-      'theme': 'dark',
-      'notifications': true,
-    });
+    return res.ok({'theme': 'dark', 'notifications': true});
   });
 }
 

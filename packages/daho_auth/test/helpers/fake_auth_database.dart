@@ -56,8 +56,7 @@ class FakeAuthDatabase extends AuthDatabase {
     if (s.contains('FROM oauth_accounts')) {
       return oauthAccounts
           .where(
-            (r) =>
-                r['provider'] == p['p'] && r['provider_user_id'] == p['pid'],
+            (r) => r['provider'] == p['p'] && r['provider_user_id'] == p['pid'],
           )
           .toList();
     }

@@ -14,7 +14,11 @@ void main() {
     });
 
     test('create persists a row and returns a matching Session', () async {
-      final session = await store.create('u1', const Duration(days: 1), data: {'k': 'v'});
+      final session = await store.create(
+        'u1',
+        const Duration(days: 1),
+        data: {'k': 'v'},
+      );
 
       expect(db.sessions, hasLength(1));
       expect(session.userId, 'u1');
@@ -52,15 +56,18 @@ void main() {
       expect(await store.load(b.id), isNotNull);
     });
 
-    test('destroyAllForUser removes every session for that user, not others', () async {
-      await store.create('u1', const Duration(days: 1));
-      await store.create('u1', const Duration(days: 1));
-      final other = await store.create('u2', const Duration(days: 1));
+    test(
+      'destroyAllForUser removes every session for that user, not others',
+      () async {
+        await store.create('u1', const Duration(days: 1));
+        await store.create('u1', const Duration(days: 1));
+        final other = await store.create('u2', const Duration(days: 1));
 
-      await store.destroyAllForUser('u1');
+        await store.destroyAllForUser('u1');
 
-      expect(db.sessions, hasLength(1));
-      expect(await store.load(other.id), isNotNull);
-    });
+        expect(db.sessions, hasLength(1));
+        expect(await store.load(other.id), isNotNull);
+      },
+    );
   });
 }

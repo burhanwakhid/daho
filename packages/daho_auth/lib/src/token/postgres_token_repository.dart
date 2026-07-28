@@ -12,11 +12,7 @@ class PostgresTokenRepository implements TokenRepository {
     await db.execute(
       '''INSERT INTO refresh_tokens (jti, user_id, expires_at) 
          VALUES (@jti, @uid, @exp)''',
-      {
-        'jti': jti,
-        'uid': userId,
-        'exp': expiresAt,
-      },
+      {'jti': jti, 'uid': userId, 'exp': expiresAt},
     );
     return jti;
   }

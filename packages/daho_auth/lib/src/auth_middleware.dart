@@ -25,7 +25,9 @@ class AuthMiddleware {
       final authHeader = req.header('authorization');
       if (authHeader == null || !authHeader.startsWith('Bearer ')) {
         if (required) {
-          res.unauthorized({'error': 'Missing or invalid Authorization header'});
+          res.unauthorized({
+            'error': 'Missing or invalid Authorization header',
+          });
           return;
         }
         await next();
@@ -46,10 +48,9 @@ class AuthMiddleware {
       }
 
       final userId = claims['sub'] as String;
-      final userRow = await db.queryOne(
-        'SELECT * FROM users WHERE id = @id',
-        {'id': userId},
-      );
+      final userRow = await db.queryOne('SELECT * FROM users WHERE id = @id', {
+        'id': userId,
+      });
       if (userRow == null) {
         res.unauthorized({'error': 'User not found'});
         return;
@@ -81,10 +82,9 @@ class AuthMiddleware {
         return;
       }
 
-      final userRow = await db.queryOne(
-        'SELECT * FROM users WHERE id = @id',
-        {'id': session.userId},
-      );
+      final userRow = await db.queryOne('SELECT * FROM users WHERE id = @id', {
+        'id': session.userId,
+      });
       if (userRow == null) {
         await sessionManager.destroySession(req, res);
         res.unauthorized({'error': 'User not found'});

@@ -87,7 +87,10 @@ class ExpressionEvaluator {
       final opIdx = _findOperator(expr, op);
       if (opIdx != null) {
         final left = evaluate(expr.substring(0, opIdx).trim(), context);
-        final right = evaluate(expr.substring(opIdx + op.length).trim(), context);
+        final right = evaluate(
+          expr.substring(opIdx + op.length).trim(),
+          context,
+        );
         return _compare(left, right, op);
       }
     }
@@ -212,13 +215,20 @@ class ExpressionEvaluator {
 
   static dynamic _compare(dynamic left, dynamic right, String op) {
     switch (op) {
-      case '==': return left == right;
-      case '!=': return left != right;
-      case '>': return _toNum(left) > _toNum(right);
-      case '<': return _toNum(left) < _toNum(right);
-      case '>=': return _toNum(left) >= _toNum(right);
-      case '<=': return _toNum(left) <= _toNum(right);
-      default: return false;
+      case '==':
+        return left == right;
+      case '!=':
+        return left != right;
+      case '>':
+        return _toNum(left) > _toNum(right);
+      case '<':
+        return _toNum(left) < _toNum(right);
+      case '>=':
+        return _toNum(left) >= _toNum(right);
+      case '<=':
+        return _toNum(left) <= _toNum(right);
+      default:
+        return false;
     }
   }
 

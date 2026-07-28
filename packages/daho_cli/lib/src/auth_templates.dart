@@ -248,7 +248,8 @@ GITHUB_CLIENT_SECRET=
 GITHUB_REDIRECT_URI=http://localhost:8080/auth/oauth/github/cb
 ''';
 
-String authServerTemplate(String name) => '''
+String authServerTemplate(String name) =>
+    '''
 import 'package:daho/daho.dart';
 import 'package:daho_auth/daho_auth.dart';
 import 'package:$name/routes.dart';
@@ -274,7 +275,8 @@ Future<void> main() async {
 }
 ''';
 
-String authRoutesTemplate(String name) => '''
+String authRoutesTemplate(String name) =>
+    '''
 import 'package:daho/daho.dart';
 import 'package:daho_auth/daho_auth.dart';
 import 'package:$name/auth.dart';
@@ -360,7 +362,8 @@ void setupRoutes(Daho app) {
 }
 ''';
 
-String dockerComposeTemplate(String name) => '''
+String dockerComposeTemplate(String name) =>
+    '''
 version: '3.8'
 
 services:
@@ -400,7 +403,8 @@ volumes:
   pgdata:
 ''';
 
-String authDockerfileTemplate(String name) => '''
+String authDockerfileTemplate(String name) =>
+    '''
 FROM dart:stable AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \\
@@ -422,7 +426,8 @@ EXPOSE 8080
 CMD ["sh", "-c", "dart run bin/migrate.dart && dart run bin/server.dart"]
 ''';
 
-String migrateTemplate(String name) => '''
+String migrateTemplate(String name) =>
+    '''
 import 'package:daho_auth/daho_auth.dart';
 import 'package:$name/auth.dart';
 

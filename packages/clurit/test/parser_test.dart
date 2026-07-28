@@ -65,7 +65,9 @@ void main() {
       });
 
       test('if with else', () {
-        final nodes = parse('@if(\$show)\n<p>Yes</p>\n@else\n<p>No</p>\n@endif');
+        final nodes = parse(
+          '@if(\$show)\n<p>Yes</p>\n@else\n<p>No</p>\n@endif',
+        );
         expect(nodes.length, 1);
         expect(nodes[0], isA<IfNode>());
         final ifNode = nodes[0] as IfNode;
@@ -77,7 +79,9 @@ void main() {
 
     group('foreach nodes', () {
       test('simple foreach', () {
-        final nodes = parse('@foreach(\$items as \$item)\n<p>{{ \$item }}</p>\n@endforeach');
+        final nodes = parse(
+          '@foreach(\$items as \$item)\n<p>{{ \$item }}</p>\n@endforeach',
+        );
         expect(nodes.length, 1);
         expect(nodes[0], isA<ForeachNode>());
         final foreach = nodes[0] as ForeachNode;
@@ -88,7 +92,9 @@ void main() {
       });
 
       test('foreach with key', () {
-        final nodes = parse('@foreach(\$items as \$key => \$value)\n<p>{{ \$key }}: {{ \$value }}</p>\n@endforeach');
+        final nodes = parse(
+          '@foreach(\$items as \$key => \$value)\n<p>{{ \$key }}: {{ \$value }}</p>\n@endforeach',
+        );
         expect(nodes.length, 1);
         expect(nodes[0], isA<ForeachNode>());
         final foreach = nodes[0] as ForeachNode;

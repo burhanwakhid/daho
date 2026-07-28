@@ -18,20 +18,26 @@ void main() {
       expect(() => ctx.requireUser(), throwsA(isA<UnauthorizedException>()));
     });
 
-    test('isAuthenticated is true and requireUser returns the user when set', () {
-      final ctx = AuthContext()..user = _user();
-      expect(ctx.isAuthenticated, isTrue);
-      expect(ctx.requireUser().id, 'u1');
-    });
+    test(
+      'isAuthenticated is true and requireUser returns the user when set',
+      () {
+        final ctx = AuthContext()..user = _user();
+        expect(ctx.isAuthenticated, isTrue);
+        expect(ctx.requireUser().id, 'u1');
+      },
+    );
   });
 
   group('AuthRequestExtension', () {
-    test('req.auth lazily creates and memoizes one AuthContext per request', () {
-      final req = buildRequest();
-      final first = req.auth;
-      final second = req.auth;
-      expect(identical(first, second), isTrue);
-    });
+    test(
+      'req.auth lazily creates and memoizes one AuthContext per request',
+      () {
+        final req = buildRequest();
+        final first = req.auth;
+        final second = req.auth;
+        expect(identical(first, second), isTrue);
+      },
+    );
 
     test('different requests get independent AuthContext instances', () {
       final reqA = buildRequest();

@@ -41,9 +41,13 @@ class AuthDatabase {
       Endpoint(
         host: uri.host,
         port: uri.port,
-        database: uri.pathSegments.isNotEmpty ? uri.pathSegments.first : 'postgres',
+        database: uri.pathSegments.isNotEmpty
+            ? uri.pathSegments.first
+            : 'postgres',
         username: uri.userInfo.split(':').first,
-        password: uri.userInfo.contains(':') ? uri.userInfo.split(':').last : null,
+        password: uri.userInfo.contains(':')
+            ? uri.userInfo.split(':').last
+            : null,
       ),
       settings: ConnectionSettings(sslMode: sslMode),
     );

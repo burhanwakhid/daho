@@ -33,6 +33,9 @@ jobs:
           dart format --output=none --set-exit-if-changed
           packages/daho/lib packages/daho/test
           packages/daho_cli/bin packages/daho_cli/lib
+          packages/daho_auth/lib
+          packages/clurit/lib
+          packages/clurit_daho/lib
 
       - name: Analyze
         run: >

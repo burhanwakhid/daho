@@ -75,7 +75,10 @@ void main() {
       });
 
       test('renders foreach', () {
-        createTemplate('foreach.clurit', '@foreach(\$items as \$item)\n{{ \$item }}\n@endforeach');
+        createTemplate(
+          'foreach.clurit',
+          '@foreach(\$items as \$item)\n{{ \$item }}\n@endforeach',
+        );
         final engine = CluritEngine(viewsPath: tempDir.path, debug: true);
         final result = engine.render('foreach', {
           'items': ['A', 'B', 'C'],
@@ -115,7 +118,9 @@ void main() {
     group('renderSource', () {
       test('renders from source string', () {
         final engine = CluritEngine(viewsPath: tempDir.path, debug: true);
-        final result = engine.renderSource('Hello, {{ \$name }}!', {'name': 'World'});
+        final result = engine.renderSource('Hello, {{ \$name }}!', {
+          'name': 'World',
+        });
         expect(result, 'Hello, World!');
       });
 
@@ -126,7 +131,10 @@ void main() {
 @endif
 ''';
         final engine = CluritEngine(viewsPath: tempDir.path, debug: true);
-        final result = engine.renderSource(source, {'show': true, 'message': 'Test'});
+        final result = engine.renderSource(source, {
+          'show': true,
+          'message': 'Test',
+        });
         expect(result, contains('<p>Test</p>'));
       });
     });

@@ -26,7 +26,11 @@ void main() {
     });
 
     test('validate returns null for an expired token', () async {
-      await repo.store('u1', 'jti-expired', DateTime.now().subtract(const Duration(seconds: 1)));
+      await repo.store(
+        'u1',
+        'jti-expired',
+        DateTime.now().subtract(const Duration(seconds: 1)),
+      );
       expect(await repo.validate('jti-expired'), isNull);
     });
 
@@ -41,17 +45,20 @@ void main() {
       expect(await repo.validate('jti-b'), 'u1');
     });
 
-    test('revokeAllForUser revokes every token for that user, not others', () async {
-      final exp = DateTime.now().add(const Duration(days: 7));
-      await repo.store('u1', 'jti-1', exp);
-      await repo.store('u1', 'jti-2', exp);
-      await repo.store('u2', 'jti-3', exp);
+    test(
+      'revokeAllForUser revokes every token for that user, not others',
+      () async {
+        final exp = DateTime.now().add(const Duration(days: 7));
+        await repo.store('u1', 'jti-1', exp);
+        await repo.store('u1', 'jti-2', exp);
+        await repo.store('u2', 'jti-3', exp);
 
-      await repo.revokeAllForUser('u1');
+        await repo.revokeAllForUser('u1');
 
-      expect(await repo.validate('jti-1'), isNull);
-      expect(await repo.validate('jti-2'), isNull);
-      expect(await repo.validate('jti-3'), 'u2');
-    });
+        expect(await repo.validate('jti-1'), isNull);
+        expect(await repo.validate('jti-2'), isNull);
+        expect(await repo.validate('jti-3'), 'u2');
+      },
+    );
   });
 }

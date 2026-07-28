@@ -12,17 +12,20 @@ void main() {
   });
 
   group('SessionConfig defaults', () {
-    test('defaults are safe-by-default for local dev, not silently insecure', () {
-      const config = SessionConfig();
-      expect(config.cookieName, 'daho_session');
-      expect(config.lifetime, const Duration(days: 7));
-      expect(config.cookiePath, '/');
-      expect(config.sameSite, 'Lax');
-      // NOTE: `secure` defaults to false so the cookie works over plain
-      // HTTP in local dev. Deployments MUST override this to `true` once
-      // served over HTTPS — see reported finding.
-      expect(config.secure, isFalse);
-    });
+    test(
+      'defaults are safe-by-default for local dev, not silently insecure',
+      () {
+        const config = SessionConfig();
+        expect(config.cookieName, 'daho_session');
+        expect(config.lifetime, const Duration(days: 7));
+        expect(config.cookiePath, '/');
+        expect(config.sameSite, 'Lax');
+        // NOTE: `secure` defaults to false so the cookie works over plain
+        // HTTP in local dev. Deployments MUST override this to `true` once
+        // served over HTTPS — see reported finding.
+        expect(config.secure, isFalse);
+      },
+    );
   });
 
   group('OAuthConfig defaults', () {

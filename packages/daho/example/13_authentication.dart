@@ -57,7 +57,8 @@ final authConfig = AuthConfig(
   jwt: JwtConfig(
     secret: Platform.environment['JWT_SECRET'] ?? 'change-me-in-production',
   ),
-  databaseUrl: Platform.environment['DATABASE_URL'] ??
+  databaseUrl:
+      Platform.environment['DATABASE_URL'] ??
       'postgres://postgres:postgres@localhost:5432/daho_example',
   // session: SessionConfig(secure: true), // once served over HTTPS
   // For a remote/production Postgres, also pass:
@@ -70,7 +71,10 @@ Future<void> main() async {
   // worker Isolate starts.
   final migrationDb = AuthDatabase(authConfig.databaseUrl);
   await migrationDb.connect();
-  await MigrationRunner(migrationDb, migrationsDir: 'example/migrations').migrate();
+  await MigrationRunner(
+    migrationDb,
+    migrationsDir: 'example/migrations',
+  ).migrate();
   await migrationDb.close();
 
   final app = Daho();
@@ -101,7 +105,10 @@ void setupRoutes(Daho app) {
 
   final jwtService = JwtService(authConfig.jwt);
   final hasher = BcryptHasher();
-  final sessionManager = SessionManager(PostgresSessionStore(db), authConfig.session);
+  final sessionManager = SessionManager(
+    PostgresSessionStore(db),
+    authConfig.session,
+  );
   final authRoutes = AuthRoutes(
     config: authConfig,
     db: db,
@@ -147,7 +154,9 @@ void setupRoutes(Daho app) {
   api.get(
     '/admin',
     (req, res) => res.ok({'message': 'Welcome, admin ${req.auth.user!.email}'}),
-    use: [AuthMiddleware.requireRole(['admin'])],
+    use: [
+      AuthMiddleware.requireRole(['admin']),
+    ],
   );
 
   // ---- Optional auth route ----

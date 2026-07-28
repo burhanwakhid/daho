@@ -32,7 +32,8 @@ class _DeferredBodyNode extends Node {
 /// Parser that converts tokens into an AST of nodes.
 class Parser {
   final List<Token> tokens;
-  final Node Function(String template, Map<String, dynamic>? data) includeResolver;
+  final Node Function(String template, Map<String, dynamic>? data)
+  includeResolver;
   int _pos = 0;
   bool _insideSection = false;
 
@@ -179,7 +180,8 @@ class Parser {
     while (_pos < tokens.length) {
       if (_pos < tokens.length &&
           tokens[_pos].type == TokenType.openTag &&
-          (tokens[_pos].content == 'else' || tokens[_pos].content == 'elseif')) {
+          (tokens[_pos].content == 'else' ||
+              tokens[_pos].content == 'elseif')) {
         break;
       }
       if (_pos < tokens.length &&
@@ -271,11 +273,7 @@ class Parser {
       final node = _parseNode();
       if (node != null) body.add(node);
     }
-    return ForeachNode(
-      iterableExpr: '[]',
-      variable: 'i',
-      body: body,
-    );
+    return ForeachNode(iterableExpr: '[]', variable: 'i', body: body);
   }
 
   Node _parseWhile(Token token) {
@@ -291,10 +289,7 @@ class Parser {
       final node = _parseNode();
       if (node != null) body.add(node);
     }
-    return IfNode(
-      condition: condition,
-      thenBody: body,
-    );
+    return IfNode(condition: condition, thenBody: body);
   }
 
   Node _parseComponent(Token token) {
@@ -354,10 +349,7 @@ class Parser {
 
   Node _parseInclude(Token token) {
     final template = _extractString(token.args ?? '');
-    return IncludeNode(
-      template: template,
-      resolver: includeResolver,
-    );
+    return IncludeNode(template: template, resolver: includeResolver);
   }
 
   Node _parseYield(Token token) {
@@ -369,8 +361,7 @@ class Parser {
     final body = <Node>[];
 
     while (_pos < tokens.length) {
-      if (_pos < tokens.length &&
-          tokens[_pos].type == TokenType.sectionEnd) {
+      if (_pos < tokens.length && tokens[_pos].type == TokenType.sectionEnd) {
         _pos++;
         break;
       }
@@ -389,8 +380,7 @@ class Parser {
   Node _parsePush(Token token) {
     final body = <Node>[];
     while (_pos < tokens.length) {
-      if (_pos < tokens.length &&
-          tokens[_pos].type == TokenType.endPush) {
+      if (_pos < tokens.length && tokens[_pos].type == TokenType.endPush) {
         _pos++;
         break;
       }

@@ -25,7 +25,8 @@ class ParsedTemplate {
 /// Template compiler that converts Clurit template source to an AST.
 class Compiler {
   final String viewsPath;
-  final Node Function(String template, Map<String, dynamic>? data) includeResolver;
+  final Node Function(String template, Map<String, dynamic>? data)
+  includeResolver;
 
   Compiler({required this.viewsPath, required this.includeResolver});
 

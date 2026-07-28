@@ -46,7 +46,10 @@ void setupRoutes(Daho app) {
 
   // --- JSON response ---
   app.get('/json', (req, res) {
-    return res.json({'status': 'ok', 'items': [1, 2, 3]});
+    return res.json({
+      'status': 'ok',
+      'items': [1, 2, 3],
+    });
   });
 
   // --- Raw bytes response ---
@@ -56,10 +59,10 @@ void setupRoutes(Daho app) {
 
   // --- Fluent chaining ---
   app.post('/items', (req, res) {
-    return res
-        .status(201)
-        .header('X-Custom-Header', 'my-value')
-        .json({'created': true, 'data': req.body});
+    return res.status(201).header('X-Custom-Header', 'my-value').json({
+      'created': true,
+      'data': req.body,
+    });
   });
 
   // --- Status helpers ---
@@ -100,9 +103,7 @@ void setupRoutes(Daho app) {
   });
 
   app.get('/clear-cookie', (req, res) {
-    return res
-        .clearCookie('session')
-        .ok({'message': 'Cookie cleared'});
+    return res.clearCookie('session').ok({'message': 'Cookie cleared'});
   });
 }
 

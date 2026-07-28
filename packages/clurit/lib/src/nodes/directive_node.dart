@@ -4,7 +4,12 @@ import 'node.dart';
 class DirectiveNode extends Node {
   final String name;
   final List<String> args;
-  final String Function(String name, List<String> args, Map<String, dynamic> context) handler;
+  final String Function(
+    String name,
+    List<String> args,
+    Map<String, dynamic> context,
+  )
+  handler;
 
   DirectiveNode({
     required this.name,

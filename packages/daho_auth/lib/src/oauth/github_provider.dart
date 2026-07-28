@@ -19,12 +19,14 @@ class GitHubOAuthProvider implements OAuthProvider {
 
   @override
   String getAuthorizationUrl(String state) {
-    final params = Uri(queryParameters: {
-      'client_id': clientId,
-      'redirect_uri': redirectUri,
-      'scope': 'user:email',
-      'state': state,
-    });
+    final params = Uri(
+      queryParameters: {
+        'client_id': clientId,
+        'redirect_uri': redirectUri,
+        'scope': 'user:email',
+        'state': state,
+      },
+    );
     return 'https://github.com/login/oauth/authorize$params';
   }
 

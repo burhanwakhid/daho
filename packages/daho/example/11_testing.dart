@@ -94,5 +94,7 @@ library;
 /// Placeholder main (this file is a documentation example, not runnable).
 void main() {
   print('See the doc comment above for testing patterns.');
-  print('DahoTester will be available as package:daho/testing.dart in the future.');
+  print(
+    'DahoTester will be available as package:daho/testing.dart in the future.',
+  );
 }

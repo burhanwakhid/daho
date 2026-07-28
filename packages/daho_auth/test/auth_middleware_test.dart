@@ -90,22 +90,25 @@ void main() {
       expect(res.statusCode, 401);
     });
 
-    test('populates req.auth and calls next() for a valid access token', () async {
-      final row = db.seedUser(email: 'a@example.com');
-      final user = User.fromRow(row);
-      final pair = jwt.issueTokenPair(user);
+    test(
+      'populates req.auth and calls next() for a valid access token',
+      () async {
+        final row = db.seedUser(email: 'a@example.com');
+        final user = User.fromRow(row);
+        final pair = jwt.issueTokenPair(user);
 
-      final req = buildRequest(
-        headers: {'authorization': 'Bearer ${pair.accessToken}'},
-      );
-      final res = DahoResponse();
-      final result = await runMiddleware(mw, req, res);
+        final req = buildRequest(
+          headers: {'authorization': 'Bearer ${pair.accessToken}'},
+        );
+        final res = DahoResponse();
+        final result = await runMiddleware(mw, req, res);
 
-      expect(result.nextCalled, isTrue);
-      expect(req.auth.isAuthenticated, isTrue);
-      expect(req.auth.user!.email, 'a@example.com');
-      expect(req.auth.jwtClaims!['type'], 'access');
-    });
+        expect(result.nextCalled, isTrue);
+        expect(req.auth.isAuthenticated, isTrue);
+        expect(req.auth.user!.email, 'a@example.com');
+        expect(req.auth.jwtClaims!['type'], 'access');
+      },
+    );
 
     test('req.auth.user.role reflects the user\'s current DB role', () async {
       final row = db.seedUser(email: 'admin@example.com', role: 'admin');
@@ -177,22 +180,25 @@ void main() {
       expect(req.auth.session!.id, session.id);
     });
 
-    test('401s and destroys the session when its user no longer exists', () async {
-      final createRes = DahoResponse();
-      final session = await sessionManager.createSession(
-        buildRequest(),
-        createRes,
-        'deleted-user-id',
-      );
+    test(
+      '401s and destroys the session when its user no longer exists',
+      () async {
+        final createRes = DahoResponse();
+        final session = await sessionManager.createSession(
+          buildRequest(),
+          createRes,
+          'deleted-user-id',
+        );
 
-      final req = buildRequest(cookies: {'daho_session': session.id});
-      final res = DahoResponse();
-      final result = await runMiddleware(mw, req, res);
+        final req = buildRequest(cookies: {'daho_session': session.id});
+        final res = DahoResponse();
+        final result = await runMiddleware(mw, req, res);
 
-      expect(result.nextCalled, isFalse);
-      expect(res.statusCode, 401);
-      expect(store.isEmpty, isTrue);
-    });
+        expect(result.nextCalled, isFalse);
+        expect(res.statusCode, 401);
+        expect(store.isEmpty, isTrue);
+      },
+    );
   });
 
   group('AuthMiddleware.requireRole', () {
@@ -245,32 +251,29 @@ void main() {
       expect(result.nextCalled, isTrue);
     });
 
-    test(
-      'role is read from user.role (populated from the DB by jwt/session '
-      'middleware), not from JWT claims — so a role change in the database '
-      'takes effect immediately for both JWT and session auth, without '
-      'waiting for the access token to be reissued',
-      () async {
-        final req = buildRequest();
-        req.auth.user = User(
-          id: 'u1',
-          email: 'a@example.com',
-          role: 'admin',
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
-        // jwtClaims deliberately absent (as it always is for session auth,
-        // and never carries a role for JWT auth either) — the role must
-        // still resolve correctly from user.role alone.
-        req.auth.jwtClaims = null;
-        final res = DahoResponse();
-        final result = await runMiddleware(
-          AuthMiddleware.requireRole(['admin']),
-          req,
-          res,
-        );
-        expect(result.nextCalled, isTrue);
-      },
-    );
+    test('role is read from user.role (populated from the DB by jwt/session '
+        'middleware), not from JWT claims — so a role change in the database '
+        'takes effect immediately for both JWT and session auth, without '
+        'waiting for the access token to be reissued', () async {
+      final req = buildRequest();
+      req.auth.user = User(
+        id: 'u1',
+        email: 'a@example.com',
+        role: 'admin',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+      );
+      // jwtClaims deliberately absent (as it always is for session auth,
+      // and never carries a role for JWT auth either) — the role must
+      // still resolve correctly from user.role alone.
+      req.auth.jwtClaims = null;
+      final res = DahoResponse();
+      final result = await runMiddleware(
+        AuthMiddleware.requireRole(['admin']),
+        req,
+        res,
+      );
+      expect(result.nextCalled, isTrue);
+    });
   });
 }

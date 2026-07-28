@@ -28,10 +28,7 @@ void myErrorHandler(
 ) {
   stderr.writeln('[ERROR] ${req.method} ${req.path}: $error');
   stderr.writeln(stackTrace);
-  res.status(500).json({
-    'error': 'Internal Server Error',
-    'path': req.path,
-  });
+  res.status(500).json({'error': 'Internal Server Error', 'path': req.path});
 }
 
 /// Custom not-found handler — returns a JSON 404 with the requested path.

@@ -24,8 +24,10 @@ void main() {
     });
 
     test('escapes multiple characters', () {
-      expect(escapeHtml('<script>alert("xss")</script>'),
-          '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;');
+      expect(
+        escapeHtml('<script>alert("xss")</script>'),
+        '&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;',
+      );
     });
 
     test('returns empty string for null', () {

@@ -29,10 +29,7 @@ void setupRoutes(Daho app) {
   app.get('/search', (req, res) {
     final query = req.query['q'] ?? '';
     final limit = req.query['limit'] ?? '10';
-    return res.ok({
-      'query': query,
-      'limit': int.tryParse(limit) ?? 10,
-    });
+    return res.ok({'query': query, 'limit': int.tryParse(limit) ?? 10});
   });
 
   // GET with path parameter: /users/:id
@@ -44,10 +41,7 @@ void setupRoutes(Daho app) {
   // POST — create a resource (returns 201)
   app.post('/users', (req, res) {
     final body = req.body;
-    return res.status(201).json({
-      'message': 'User created',
-      'data': body,
-    });
+    return res.status(201).json({'message': 'User created', 'data': body});
   });
 
   // PUT — full update of a resource

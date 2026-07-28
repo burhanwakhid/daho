@@ -29,31 +29,51 @@ class CapturingGroup extends DahoGroup {
   }
 
   @override
-  void get(String path, RouteHandler handler, {List<Middleware> use = const []}) {
+  void get(
+    String path,
+    RouteHandler handler, {
+    List<Middleware> use = const [],
+  }) {
     handlers['GET $path'] = handler;
     middlewares['GET $path'] = use;
   }
 
   @override
-  void post(String path, RouteHandler handler, {List<Middleware> use = const []}) {
+  void post(
+    String path,
+    RouteHandler handler, {
+    List<Middleware> use = const [],
+  }) {
     handlers['POST $path'] = handler;
     middlewares['POST $path'] = use;
   }
 
   @override
-  void put(String path, RouteHandler handler, {List<Middleware> use = const []}) {
+  void put(
+    String path,
+    RouteHandler handler, {
+    List<Middleware> use = const [],
+  }) {
     handlers['PUT $path'] = handler;
     middlewares['PUT $path'] = use;
   }
 
   @override
-  void delete(String path, RouteHandler handler, {List<Middleware> use = const []}) {
+  void delete(
+    String path,
+    RouteHandler handler, {
+    List<Middleware> use = const [],
+  }) {
     handlers['DELETE $path'] = handler;
     middlewares['DELETE $path'] = use;
   }
 
   @override
-  void patch(String path, RouteHandler handler, {List<Middleware> use = const []}) {
+  void patch(
+    String path,
+    RouteHandler handler, {
+    List<Middleware> use = const [],
+  }) {
     handlers['PATCH $path'] = handler;
     middlewares['PATCH $path'] = use;
   }

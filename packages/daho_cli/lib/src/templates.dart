@@ -107,7 +107,8 @@ RUN git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.g
 
 /// A Linux Docker image: the recommended way to run Daho on Windows (or any
 /// host), since H2O has no native Windows build.
-String dockerfileTemplate(String name) => '''
+String dockerfileTemplate(String name) =>
+    '''
 # Daho runs on a native H2O server (Unix only). On Windows, build/run via this
 # Linux container (or WSL2).
 FROM dart:stable AS build

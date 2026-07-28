@@ -45,7 +45,11 @@ void main() {
 
       // Second run against the same (now-populated) tracking table.
       await runner.migrate();
-      expect(db.migrations, hasLength(1), reason: 'already-applied migration must not re-run');
+      expect(
+        db.migrations,
+        hasLength(1),
+        reason: 'already-applied migration must not re-run',
+      );
     });
 
     test('applies only newly-added migrations on a subsequent run', () async {

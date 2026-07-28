@@ -7,10 +7,7 @@ void main() {
   final scriptDir = p.dirname(Platform.script.toFilePath());
   final viewsPath = p.join(scriptDir, 'views');
 
-  final engine = CluritEngine(
-    viewsPath: viewsPath,
-    debug: true,
-  );
+  final engine = CluritEngine(viewsPath: viewsPath, debug: true);
 
   // Render the home page template
   final html = engine.render('pages/home', {

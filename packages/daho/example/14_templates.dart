@@ -61,7 +61,11 @@ void setupRoutes(Daho app) {
     final userId = req.params['id'];
     // Simulate user lookup
     final user = userId == '1'
-        ? {'name': 'Alice', 'email': 'alice@example.com', 'bio': 'Dart developer'}
+        ? {
+            'name': 'Alice',
+            'email': 'alice@example.com',
+            'bio': 'Dart developer',
+          }
         : null;
 
     return res.view('pages/profile', {

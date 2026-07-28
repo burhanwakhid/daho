@@ -67,7 +67,11 @@ void main() {
     test('creates a user and returns 201 with a token pair', () async {
       final req = buildJsonRequest(
         path: '/auth/register',
-        body: {'email': 'new@example.com', 'password': 'password123', 'name': 'New'},
+        body: {
+          'email': 'new@example.com',
+          'password': 'password123',
+          'name': 'New',
+        },
       );
       final res = DahoResponse();
       await routes['POST /register'](req, res);
@@ -82,7 +86,10 @@ void main() {
     });
 
     test('400s when email or password is missing', () async {
-      final req = buildJsonRequest(path: '/auth/register', body: {'email': 'a@b.com'});
+      final req = buildJsonRequest(
+        path: '/auth/register',
+        body: {'email': 'a@b.com'},
+      );
       final res = DahoResponse();
       await routes['POST /register'](req, res);
       expect(res.statusCode, 400);
@@ -199,50 +206,65 @@ void main() {
   });
 
   group('POST /refresh', () {
-    test('rotates the refresh token: old jti is revoked, new pair issued', () async {
-      final row = db.seedUser(email: 'a@example.com');
-      final user = User.fromRow(row);
-      final pair = jwt.issueTokenPair(user);
-      final oldJti = jwt.verify(pair.refreshToken)!['jti'] as String;
-      await tokenRepo.store(user.id, oldJti, DateTime.now().add(const Duration(days: 7)));
+    test(
+      'rotates the refresh token: old jti is revoked, new pair issued',
+      () async {
+        final row = db.seedUser(email: 'a@example.com');
+        final user = User.fromRow(row);
+        final pair = jwt.issueTokenPair(user);
+        final oldJti = jwt.verify(pair.refreshToken)!['jti'] as String;
+        await tokenRepo.store(
+          user.id,
+          oldJti,
+          DateTime.now().add(const Duration(days: 7)),
+        );
 
-      final req = buildJsonRequest(
-        path: '/auth/refresh',
-        body: {'refreshToken': pair.refreshToken},
-      );
-      final res = DahoResponse();
-      await routes['POST /refresh'](req, res);
+        final req = buildJsonRequest(
+          path: '/auth/refresh',
+          body: {'refreshToken': pair.refreshToken},
+        );
+        final res = DahoResponse();
+        await routes['POST /refresh'](req, res);
 
-      expect(res.statusCode, 200);
-      final json = jsonBodyOf(res) as Map;
-      expect(json['refreshToken'], isNot(equals(pair.refreshToken)));
-      expect(tokenRepo.isRevoked(oldJti), isTrue);
+        expect(res.statusCode, 200);
+        final json = jsonBodyOf(res) as Map;
+        expect(json['refreshToken'], isNot(equals(pair.refreshToken)));
+        expect(tokenRepo.isRevoked(oldJti), isTrue);
 
-      final newJti = jwt.verify(json['refreshToken'] as String)!['jti'] as String;
-      expect(tokenRepo.contains(newJti), isTrue);
-      expect(tokenRepo.isRevoked(newJti), isFalse);
-    });
+        final newJti =
+            jwt.verify(json['refreshToken'] as String)!['jti'] as String;
+        expect(tokenRepo.contains(newJti), isTrue);
+        expect(tokenRepo.isRevoked(newJti), isFalse);
+      },
+    );
 
-    test('401s for a token that was never stored (e.g. already used once)', () async {
-      final row = db.seedUser(email: 'a@example.com');
-      final pair = jwt.issueTokenPair(User.fromRow(row));
-      // Deliberately not stored in tokenRepo.
+    test(
+      '401s for a token that was never stored (e.g. already used once)',
+      () async {
+        final row = db.seedUser(email: 'a@example.com');
+        final pair = jwt.issueTokenPair(User.fromRow(row));
+        // Deliberately not stored in tokenRepo.
 
-      final req = buildJsonRequest(
-        path: '/auth/refresh',
-        body: {'refreshToken': pair.refreshToken},
-      );
-      final res = DahoResponse();
-      await routes['POST /refresh'](req, res);
-      expect(res.statusCode, 401);
-    });
+        final req = buildJsonRequest(
+          path: '/auth/refresh',
+          body: {'refreshToken': pair.refreshToken},
+        );
+        final res = DahoResponse();
+        await routes['POST /refresh'](req, res);
+        expect(res.statusCode, 401);
+      },
+    );
 
     test('401s for a revoked refresh token (replay protection)', () async {
       final row = db.seedUser(email: 'a@example.com');
       final user = User.fromRow(row);
       final pair = jwt.issueTokenPair(user);
       final jti = jwt.verify(pair.refreshToken)!['jti'] as String;
-      await tokenRepo.store(user.id, jti, DateTime.now().add(const Duration(days: 7)));
+      await tokenRepo.store(
+        user.id,
+        jti,
+        DateTime.now().add(const Duration(days: 7)),
+      );
       await tokenRepo.revoke(jti);
 
       final req = buildJsonRequest(
@@ -254,18 +276,21 @@ void main() {
       expect(res.statusCode, 401);
     });
 
-    test('401s when an access token is presented instead of a refresh token', () async {
-      final row = db.seedUser(email: 'a@example.com');
-      final pair = jwt.issueTokenPair(User.fromRow(row));
+    test(
+      '401s when an access token is presented instead of a refresh token',
+      () async {
+        final row = db.seedUser(email: 'a@example.com');
+        final pair = jwt.issueTokenPair(User.fromRow(row));
 
-      final req = buildJsonRequest(
-        path: '/auth/refresh',
-        body: {'refreshToken': pair.accessToken},
-      );
-      final res = DahoResponse();
-      await routes['POST /refresh'](req, res);
-      expect(res.statusCode, 401);
-    });
+        final req = buildJsonRequest(
+          path: '/auth/refresh',
+          body: {'refreshToken': pair.accessToken},
+        );
+        final res = DahoResponse();
+        await routes['POST /refresh'](req, res);
+        expect(res.statusCode, 401);
+      },
+    );
 
     test('400s when refreshToken is missing from the body', () async {
       final req = buildJsonRequest(path: '/auth/refresh', body: {});
@@ -281,7 +306,11 @@ void main() {
       final user = User.fromRow(row);
       final pair = jwt.issueTokenPair(user);
       final jti = jwt.verify(pair.refreshToken)!['jti'] as String;
-      await tokenRepo.store(user.id, jti, DateTime.now().add(const Duration(days: 7)));
+      await tokenRepo.store(
+        user.id,
+        jti,
+        DateTime.now().add(const Duration(days: 7)),
+      );
 
       final req = buildJsonRequest(
         path: '/auth/logout',
@@ -347,29 +376,38 @@ void main() {
   });
 
   group('GET /oauth/google', () {
-    test('redirects to the provider authorization URL with a state param', () async {
-      final req = buildRequest(path: '/auth/oauth/google');
-      final res = DahoResponse();
-      await routes['GET /oauth/google'](req, res);
+    test(
+      'redirects to the provider authorization URL with a state param',
+      () async {
+        final req = buildRequest(path: '/auth/oauth/google');
+        final res = DahoResponse();
+        await routes['GET /oauth/google'](req, res);
 
-      expect(res.statusCode, 302);
-      final location = res.headers['Location']!;
-      expect(location, startsWith('https://fake-provider.example.com/authorize'));
-      expect(Uri.parse(location).queryParameters['state'], isNotEmpty);
-    });
+        expect(res.statusCode, 302);
+        final location = res.headers['Location']!;
+        expect(
+          location,
+          startsWith('https://fake-provider.example.com/authorize'),
+        );
+        expect(Uri.parse(location).queryParameters['state'], isNotEmpty);
+      },
+    );
 
-    test('sets a short-lived, HttpOnly state cookie matching the URL state', () async {
-      final req = buildRequest(path: '/auth/oauth/google');
-      final res = DahoResponse();
-      await routes['GET /oauth/google'](req, res);
+    test(
+      'sets a short-lived, HttpOnly state cookie matching the URL state',
+      () async {
+        final req = buildRequest(path: '/auth/oauth/google');
+        final res = DahoResponse();
+        await routes['GET /oauth/google'](req, res);
 
-      expect(res.setCookies, hasLength(1));
-      final cookie = res.setCookies.single;
-      expect(cookie, startsWith('oauth_state_google='));
-      expect(cookie, contains('HttpOnly'));
-      final location = Uri.parse(res.headers['Location']!);
-      expect(_cookieValue(cookie), location.queryParameters['state']);
-    });
+        expect(res.setCookies, hasLength(1));
+        final cookie = res.setCookies.single;
+        expect(cookie, startsWith('oauth_state_google='));
+        expect(cookie, contains('HttpOnly'));
+        final location = Uri.parse(res.headers['Location']!);
+        expect(_cookieValue(cookie), location.queryParameters['state']);
+      },
+    );
   });
 
   group('GET /oauth/google/cb', () {
@@ -380,24 +418,25 @@ void main() {
       expect(res.statusCode, 400);
     });
 
-    test(
-      'redirects to the failure page when the state param does not match '
-      'the cookie set by /oauth/google (CSRF protection)',
-      () async {
-        final req = buildRequest(
-          path: '/auth/oauth/google/cb',
-          query: {'code': 'auth-code-123', 'state': 'forged-by-attacker'},
-          cookies: {'oauth_state_google': 'the-real-state'},
-        );
-        final res = DahoResponse();
-        await routes['GET /oauth/google/cb'](req, res);
+    test('redirects to the failure page when the state param does not match '
+        'the cookie set by /oauth/google (CSRF protection)', () async {
+      final req = buildRequest(
+        path: '/auth/oauth/google/cb',
+        query: {'code': 'auth-code-123', 'state': 'forged-by-attacker'},
+        cookies: {'oauth_state_google': 'the-real-state'},
+      );
+      final res = DahoResponse();
+      await routes['GET /oauth/google/cb'](req, res);
 
-        expect(res.statusCode, 302);
-        expect(res.headers['Location'], '/login');
-        expect(db.users, isEmpty, reason: 'must not proceed past state validation');
-        expect(google.lastCodeExchanged, isNull);
-      },
-    );
+      expect(res.statusCode, 302);
+      expect(res.headers['Location'], '/login');
+      expect(
+        db.users,
+        isEmpty,
+        reason: 'must not proceed past state validation',
+      );
+      expect(google.lastCodeExchanged, isNull);
+    });
 
     test(
       'redirects to the failure page when no state cookie was set at all '
@@ -415,33 +454,30 @@ void main() {
       },
     );
 
-    test(
-      'creates a new user + oauth_account and redirects with a one-time '
-      'exchange code (not the tokens themselves)',
-      () async {
-        final state = await _startOAuthFlow(routes);
+    test('creates a new user + oauth_account and redirects with a one-time '
+        'exchange code (not the tokens themselves)', () async {
+      final state = await _startOAuthFlow(routes);
 
-        final req = buildRequest(
-          path: '/auth/oauth/google/cb',
-          query: {'code': 'auth-code-123', 'state': state},
-          cookies: {'oauth_state_google': state},
-        );
-        final res = DahoResponse();
-        await routes['GET /oauth/google/cb'](req, res);
+      final req = buildRequest(
+        path: '/auth/oauth/google/cb',
+        query: {'code': 'auth-code-123', 'state': state},
+        cookies: {'oauth_state_google': state},
+      );
+      final res = DahoResponse();
+      await routes['GET /oauth/google/cb'](req, res);
 
-        expect(res.statusCode, 302);
-        expect(db.users, hasLength(1));
-        expect(db.users.first['email'], 'oauth-user@example.com');
-        expect(db.oauthAccounts, hasLength(1));
-        expect(google.lastCodeExchanged, 'auth-code-123');
+      expect(res.statusCode, 302);
+      expect(db.users, hasLength(1));
+      expect(db.users.first['email'], 'oauth-user@example.com');
+      expect(db.oauthAccounts, hasLength(1));
+      expect(google.lastCodeExchanged, 'auth-code-123');
 
-        final location = Uri.parse(res.headers['Location']!);
-        expect(location.queryParameters.containsKey('accessToken'), isFalse);
-        expect(location.queryParameters.containsKey('refreshToken'), isFalse);
-        expect(location.queryParameters['code'], isNotEmpty);
-        expect(db.oauthExchangeCodes, hasLength(1));
-      },
-    );
+      final location = Uri.parse(res.headers['Location']!);
+      expect(location.queryParameters.containsKey('accessToken'), isFalse);
+      expect(location.queryParameters.containsKey('refreshToken'), isFalse);
+      expect(location.queryParameters['code'], isNotEmpty);
+      expect(db.oauthExchangeCodes, hasLength(1));
+    });
 
     test('clears the state cookie after a successful callback', () async {
       final state = await _startOAuthFlow(routes);
@@ -457,44 +493,57 @@ void main() {
       expect(res.setCookies.single, contains('Max-Age=0'));
     });
 
-    test('links to an existing user found by email on first OAuth login', () async {
-      final existing = db.seedUser(email: 'oauth-user@example.com');
-      final state = await _startOAuthFlow(routes);
+    test(
+      'links to an existing user found by email on first OAuth login',
+      () async {
+        final existing = db.seedUser(email: 'oauth-user@example.com');
+        final state = await _startOAuthFlow(routes);
 
-      final req = buildRequest(
-        path: '/auth/oauth/google/cb',
-        query: {'code': 'auth-code-123', 'state': state},
-        cookies: {'oauth_state_google': state},
-      );
-      final res = DahoResponse();
-      await routes['GET /oauth/google/cb'](req, res);
+        final req = buildRequest(
+          path: '/auth/oauth/google/cb',
+          query: {'code': 'auth-code-123', 'state': state},
+          cookies: {'oauth_state_google': state},
+        );
+        final res = DahoResponse();
+        await routes['GET /oauth/google/cb'](req, res);
 
-      expect(db.users, hasLength(1), reason: 'should link, not duplicate the user');
-      expect(db.oauthAccounts.single['user_id'], existing['id']);
-    });
+        expect(
+          db.users,
+          hasLength(1),
+          reason: 'should link, not duplicate the user',
+        );
+        expect(db.oauthAccounts.single['user_id'], existing['id']);
+      },
+    );
 
-    test('reuses the existing oauth_account on a returning OAuth login', () async {
-      final state1 = await _startOAuthFlow(routes);
-      final req1 = buildRequest(
-        path: '/auth/oauth/google/cb',
-        query: {'code': 'first-code', 'state': state1},
-        cookies: {'oauth_state_google': state1},
-      );
-      await routes['GET /oauth/google/cb'](req1, DahoResponse());
-      expect(db.oauthAccounts, hasLength(1));
+    test(
+      'reuses the existing oauth_account on a returning OAuth login',
+      () async {
+        final state1 = await _startOAuthFlow(routes);
+        final req1 = buildRequest(
+          path: '/auth/oauth/google/cb',
+          query: {'code': 'first-code', 'state': state1},
+          cookies: {'oauth_state_google': state1},
+        );
+        await routes['GET /oauth/google/cb'](req1, DahoResponse());
+        expect(db.oauthAccounts, hasLength(1));
 
-      final state2 = await _startOAuthFlow(routes);
-      final req2 = buildRequest(
-        path: '/auth/oauth/google/cb',
-        query: {'code': 'second-code', 'state': state2},
-        cookies: {'oauth_state_google': state2},
-      );
-      await routes['GET /oauth/google/cb'](req2, DahoResponse());
+        final state2 = await _startOAuthFlow(routes);
+        final req2 = buildRequest(
+          path: '/auth/oauth/google/cb',
+          query: {'code': 'second-code', 'state': state2},
+          cookies: {'oauth_state_google': state2},
+        );
+        await routes['GET /oauth/google/cb'](req2, DahoResponse());
 
-      expect(db.users, hasLength(1));
-      expect(db.oauthAccounts, hasLength(1));
-      expect(db.oauthAccounts.single['access_token'], google.tokens.accessToken);
-    });
+        expect(db.users, hasLength(1));
+        expect(db.oauthAccounts, hasLength(1));
+        expect(
+          db.oauthAccounts.single['access_token'],
+          google.tokens.accessToken,
+        );
+      },
+    );
 
     test('redirects to the failure URL when token exchange fails', () async {
       google.exchangeError = Exception('provider rejected the code');
@@ -530,7 +579,10 @@ void main() {
     test('returns the user + token pair for a valid code', () async {
       final code = await completeOAuthFlow();
 
-      final req = buildJsonRequest(path: '/auth/oauth/exchange', body: {'code': code});
+      final req = buildJsonRequest(
+        path: '/auth/oauth/exchange',
+        body: {'code': code},
+      );
       final res = DahoResponse();
       await routes['POST /oauth/exchange'](req, res);
 
@@ -541,23 +593,30 @@ void main() {
       expect(json['refreshToken'], isNotEmpty);
     });
 
-    test('the issued refresh token is usable at /refresh (regression guard: '
-        'OAuth logins used to skip storing the refresh token jti entirely)', () async {
-      final code = await completeOAuthFlow();
-      final exchangeReq = buildJsonRequest(path: '/auth/oauth/exchange', body: {'code': code});
-      final exchangeRes = DahoResponse();
-      await routes['POST /oauth/exchange'](exchangeReq, exchangeRes);
-      final refreshToken = (jsonBodyOf(exchangeRes) as Map)['refreshToken'] as String;
+    test(
+      'the issued refresh token is usable at /refresh (regression guard: '
+      'OAuth logins used to skip storing the refresh token jti entirely)',
+      () async {
+        final code = await completeOAuthFlow();
+        final exchangeReq = buildJsonRequest(
+          path: '/auth/oauth/exchange',
+          body: {'code': code},
+        );
+        final exchangeRes = DahoResponse();
+        await routes['POST /oauth/exchange'](exchangeReq, exchangeRes);
+        final refreshToken =
+            (jsonBodyOf(exchangeRes) as Map)['refreshToken'] as String;
 
-      final refreshReq = buildJsonRequest(
-        path: '/auth/refresh',
-        body: {'refreshToken': refreshToken},
-      );
-      final refreshRes = DahoResponse();
-      await routes['POST /refresh'](refreshReq, refreshRes);
+        final refreshReq = buildJsonRequest(
+          path: '/auth/refresh',
+          body: {'refreshToken': refreshToken},
+        );
+        final refreshRes = DahoResponse();
+        await routes['POST /refresh'](refreshReq, refreshRes);
 
-      expect(refreshRes.statusCode, 200);
-    });
+        expect(refreshRes.statusCode, 200);
+      },
+    );
 
     test('400s for an unknown code', () async {
       final req = buildJsonRequest(
@@ -572,10 +631,16 @@ void main() {
     test('a code can only be exchanged once (single-use)', () async {
       final code = await completeOAuthFlow();
 
-      final firstReq = buildJsonRequest(path: '/auth/oauth/exchange', body: {'code': code});
+      final firstReq = buildJsonRequest(
+        path: '/auth/oauth/exchange',
+        body: {'code': code},
+      );
       await routes['POST /oauth/exchange'](firstReq, DahoResponse());
 
-      final secondReq = buildJsonRequest(path: '/auth/oauth/exchange', body: {'code': code});
+      final secondReq = buildJsonRequest(
+        path: '/auth/oauth/exchange',
+        body: {'code': code},
+      );
       final secondRes = DahoResponse();
       await routes['POST /oauth/exchange'](secondReq, secondRes);
       expect(secondRes.statusCode, 400);

@@ -1,15 +1,3 @@
-## 0.1.0
-
-- Initial release.
-- `daho create <name>` — scaffold a new Daho server project.
-- `daho build` — compile the native H2O wrapper via CMake.
-- `daho run` — build if needed, then start the server.
-- `daho doctor` — verify toolchain (Dart, CMake, H2O).
-
-## 0.1.1
-
-- Add daho auth commands
-
 ## 0.1.2
 
 - Fix: generated Dockerfiles (`daho create --auth`/non-auth) apt-installed `libh2o-evloop-dev`, which does not exist on Debian/Ubuntu — every Docker build failed with "Unable to locate package". Both templates now build H2O's `libh2o-evloop` target from source instead, matching what `brew install h2o` provides on macOS.
@@ -22,3 +10,16 @@
 - Fix: generated routes configured Google/GitHub `OAuthConfig` (from `--provider`) but never actually instantiated `GoogleOAuthProvider`/`GitHubOAuthProvider` or passed them to `AuthRoutes` — the OAuth routes were never registered regardless of `--provider`. Providers are now created automatically whenever their client id/secret are set.
 - Fix: migration templates were stale (only 4 of the 6 `daho_auth` migrations) — added `005_create_oauth_exchange_codes.sql` and `006_add_role_to_users.sql`.
 - `daho doctor`'s H2O install hint no longer points at the nonexistent `libh2o-evloop-dev` package; it now prints the from-source build command.
+
+## 0.1.1
+
+- Add daho auth commands
+
+## 0.1.0
+
+- Initial release.
+- `daho create <name>` — scaffold a new Daho server project.
+- `daho build` — compile the native H2O wrapper via CMake.
+- `daho run` — build if needed, then start the server.
+- `daho doctor` — verify toolchain (Dart, CMake, H2O).
+

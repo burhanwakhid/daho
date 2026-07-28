@@ -42,9 +42,9 @@ void setupRoutes(Daho app) {
 
   // Clear the session cookie
   app.get('/logout', (req, res) {
-    return res
-        .clearCookie('session_id')
-        .ok({'message': 'Logged out — cookie cleared'});
+    return res.clearCookie('session_id').ok({
+      'message': 'Logged out — cookie cleared',
+    });
   });
 
   // Set multiple cookies at once

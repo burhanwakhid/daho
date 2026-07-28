@@ -151,11 +151,29 @@ void main() {
 @endif
 ''';
         final tokens = Lexer.tokenize(source);
-        expect(tokens.any((t) => t.type == TokenType.openTag && t.content == 'if'), isTrue);
-        expect(tokens.any((t) => t.type == TokenType.openTag && t.content == 'foreach'), isTrue);
+        expect(
+          tokens.any((t) => t.type == TokenType.openTag && t.content == 'if'),
+          isTrue,
+        );
+        expect(
+          tokens.any(
+            (t) => t.type == TokenType.openTag && t.content == 'foreach',
+          ),
+          isTrue,
+        );
         expect(tokens.any((t) => t.type == TokenType.echoEscaped), isTrue);
-        expect(tokens.any((t) => t.type == TokenType.closeTag && t.content == 'endforeach'), isTrue);
-        expect(tokens.any((t) => t.type == TokenType.closeTag && t.content == 'endif'), isTrue);
+        expect(
+          tokens.any(
+            (t) => t.type == TokenType.closeTag && t.content == 'endforeach',
+          ),
+          isTrue,
+        );
+        expect(
+          tokens.any(
+            (t) => t.type == TokenType.closeTag && t.content == 'endif',
+          ),
+          isTrue,
+        );
       });
     });
   });

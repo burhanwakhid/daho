@@ -21,15 +21,12 @@ class CluritEngine {
   final Compiler _compiler;
   final Map<String, Directive> _directives = {};
 
-  CluritEngine({
-    required this.viewsPath,
-    String? cachePath,
-    bool debug = false,
-  })  : _cache = TemplateCache(cachePath: cachePath, debug: debug),
-        _compiler = Compiler(
-          viewsPath: viewsPath,
-          includeResolver: _createResolver(viewsPath),
-        ) {
+  CluritEngine({required this.viewsPath, String? cachePath, bool debug = false})
+    : _cache = TemplateCache(cachePath: cachePath, debug: debug),
+      _compiler = Compiler(
+        viewsPath: viewsPath,
+        includeResolver: _createResolver(viewsPath),
+      ) {
     // Register core directives
     _directives.addAll(CoreDirectives.all());
   }
@@ -61,7 +58,10 @@ class CluritEngine {
   /// available to the layout's `@stack` calls (see [StackNode]) — nested
   /// `@extends` (a layout that itself extends another layout) isn't
   /// supported.
-  String _renderTemplate(ParsedTemplate template, Map<String, dynamic> context) {
+  String _renderTemplate(
+    ParsedTemplate template,
+    Map<String, dynamic> context,
+  ) {
     final layoutName = template.extendsLayout;
     if (layoutName == null) {
       return Renderer.render(template.nodes, context);
@@ -84,14 +84,19 @@ class CluritEngine {
   }
 
   /// Registers a custom directive as a function.
-  void directiveFn(String name, String Function(List<String> args, Map<String, dynamic> context) handler) {
+  void directiveFn(
+    String name,
+    String Function(List<String> args, Map<String, dynamic> context) handler,
+  ) {
     _directives[name] = _FunctionDirective(name, handler);
   }
 
   /// Clears the template cache.
   void clearCache() => _cache.clear();
 
-  static Node Function(String, Map<String, dynamic>?) _createResolver(String viewsPath) {
+  static Node Function(String, Map<String, dynamic>?) _createResolver(
+    String viewsPath,
+  ) {
     return (template, data) {
       final relativePath = template.replaceAll('.', p.separator);
       final fullPath = p.join(viewsPath, '$relativePath.clurit');
@@ -127,24 +132,18 @@ class _TemplateProxyNode extends Node {
     var result = source;
 
     // Replace {{ expr }} with values
-    result = result.replaceAllMapped(
-      RegExp(r'\{\{\s*(.+?)\s*\}\}'),
-      (match) {
-        final expr = match.group(1)!;
-        final value = _evaluateSimple(expr, context);
-        return _escapeHtml(value?.toString() ?? '');
-      },
-    );
+    result = result.replaceAllMapped(RegExp(r'\{\{\s*(.+?)\s*\}\}'), (match) {
+      final expr = match.group(1)!;
+      final value = _evaluateSimple(expr, context);
+      return _escapeHtml(value?.toString() ?? '');
+    });
 
     // Replace {!! expr !!} with raw values
-    result = result.replaceAllMapped(
-      RegExp(r'\{!!\s*(.+?)\s*!!\}'),
-      (match) {
-        final expr = match.group(1)!;
-        final value = _evaluateSimple(expr, context);
-        return value?.toString() ?? '';
-      },
-    );
+    result = result.replaceAllMapped(RegExp(r'\{!!\s*(.+?)\s*!!\}'), (match) {
+      final expr = match.group(1)!;
+      final value = _evaluateSimple(expr, context);
+      return value?.toString() ?? '';
+    });
 
     return result;
   }
@@ -172,7 +171,8 @@ class _TemplateProxyNode extends Node {
 class _FunctionDirective implements Directive {
   @override
   final String name;
-  final String Function(List<String> args, Map<String, dynamic> context) handler;
+  final String Function(List<String> args, Map<String, dynamic> context)
+  handler;
 
   _FunctionDirective(this.name, this.handler);
 

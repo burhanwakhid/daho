@@ -7,11 +7,7 @@ class IfNode extends Node {
   final List<Node> thenBody;
   final List<Node>? elseBody;
 
-  IfNode({
-    required this.condition,
-    required this.thenBody,
-    this.elseBody,
-  });
+  IfNode({required this.condition, required this.thenBody, this.elseBody});
 
   @override
   String compile(Map<String, dynamic> context) {

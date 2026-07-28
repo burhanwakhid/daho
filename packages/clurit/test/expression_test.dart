@@ -41,14 +41,14 @@ void main() {
 
       test('nested variable', () {
         final context = {
-          'user': {'name': 'Alice'}
+          'user': {'name': 'Alice'},
         };
         expect(ExpressionEvaluator.evaluate('\$user.name', context), 'Alice');
       });
 
       test('array access', () {
         final context = {
-          'items': ['a', 'b', 'c']
+          'items': ['a', 'b', 'c'],
         };
         expect(ExpressionEvaluator.evaluate('\$items[0]', context), 'a');
         expect(ExpressionEvaluator.evaluate('\$items[2]', context), 'c');
@@ -56,7 +56,7 @@ void main() {
 
       test('map access via dot notation', () {
         final context = {
-          'data': {'key': 'value'}
+          'data': {'key': 'value'},
         };
         expect(ExpressionEvaluator.evaluate('\$data.key', context), 'value');
       });
@@ -105,23 +105,24 @@ void main() {
 
       test('string concatenation', () {
         final context = {'a': 'Hello', 'b': ' World'};
-        expect(ExpressionEvaluator.evaluate('\$a + \$b', context), 'Hello World');
+        expect(
+          ExpressionEvaluator.evaluate('\$a + \$b', context),
+          'Hello World',
+        );
       });
     });
 
     group('property access', () {
       test('list length', () {
         final context = {
-          'items': [1, 2, 3]
+          'items': [1, 2, 3],
         };
         expect(ExpressionEvaluator.evaluate('\$items.length', context), 3);
       });
 
       test('list isEmpty', () {
         expect(
-          ExpressionEvaluator.evaluate('\$items.isEmpty', {
-            'items': <int>[],
-          }),
+          ExpressionEvaluator.evaluate('\$items.isEmpty', {'items': <int>[]}),
           true,
         );
         expect(
@@ -147,8 +148,14 @@ void main() {
       });
 
       test('string isEmpty', () {
-        expect(ExpressionEvaluator.evaluate('\$str.isEmpty', {'str': ''}), true);
-        expect(ExpressionEvaluator.evaluate('\$str.isEmpty', {'str': 'hello'}), false);
+        expect(
+          ExpressionEvaluator.evaluate('\$str.isEmpty', {'str': ''}),
+          true,
+        );
+        expect(
+          ExpressionEvaluator.evaluate('\$str.isEmpty', {'str': 'hello'}),
+          false,
+        );
       });
     });
 
@@ -181,7 +188,7 @@ void main() {
 
       test('null-safe on value', () {
         final context = {
-          'user': {'name': 'Alice'}
+          'user': {'name': 'Alice'},
         };
         expect(ExpressionEvaluator.evaluate('\$user?.name', context), 'Alice');
       });

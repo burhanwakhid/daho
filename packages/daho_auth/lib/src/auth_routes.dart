@@ -115,10 +115,9 @@ class AuthRoutes {
       {'id': userId, 'email': email, 'name': name, 'hash': hash},
     );
 
-    final user = await db.queryOne(
-      'SELECT * FROM users WHERE id = @id',
-      {'id': userId},
-    );
+    final user = await db.queryOne('SELECT * FROM users WHERE id = @id', {
+      'id': userId,
+    });
     final registeredUser = User.fromRow(user!);
     final tokenPair = jwt.issueTokenPair(registeredUser);
     await _storeRefreshToken(registeredUser.id, tokenPair);
@@ -140,10 +139,9 @@ class AuthRoutes {
       return res.badRequest({'error': 'email and password are required'});
     }
 
-    final row = await db.queryOne(
-      'SELECT * FROM users WHERE email = @email',
-      {'email': email},
-    );
+    final row = await db.queryOne('SELECT * FROM users WHERE email = @email', {
+      'email': email,
+    });
     if (row == null) {
       return res.unauthorized({'error': 'Invalid credentials'});
     }
@@ -161,10 +159,7 @@ class AuthRoutes {
     final tokenPair = jwt.issueTokenPair(user);
     await _storeRefreshToken(user.id, tokenPair);
 
-    return res.ok({
-      'user': user.toJson(),
-      ...tokenPair.toJson(),
-    });
+    return res.ok({'user': user.toJson(), ...tokenPair.toJson()});
   }
 
   // ---- Login (Session) ----
@@ -181,10 +176,9 @@ class AuthRoutes {
       return res.badRequest({'error': 'email and password are required'});
     }
 
-    final row = await db.queryOne(
-      'SELECT * FROM users WHERE email = @email',
-      {'email': email},
-    );
+    final row = await db.queryOne('SELECT * FROM users WHERE email = @email', {
+      'email': email,
+    });
     if (row == null) {
       return res.unauthorized({'error': 'Invalid credentials'});
     }
@@ -224,17 +218,14 @@ class AuthRoutes {
     final jti = claims['jti'] as String;
     final userId = await tokenRepo.validate(jti);
     if (userId == null) {
-      return res.unauthorized({
-        'error': 'Refresh token revoked or not found',
-      });
+      return res.unauthorized({'error': 'Refresh token revoked or not found'});
     }
 
     await tokenRepo.revoke(jti);
 
-    final userRow = await db.queryOne(
-      'SELECT * FROM users WHERE id = @id',
-      {'id': userId},
-    );
+    final userRow = await db.queryOne('SELECT * FROM users WHERE id = @id', {
+      'id': userId,
+    });
     if (userRow == null) {
       return res.unauthorized({'error': 'User not found'});
     }
@@ -276,7 +267,8 @@ class AuthRoutes {
 
   // ---- OAuth Start ----
 
-  String _stateCookieName(OAuthProvider provider) => 'oauth_state_${provider.name}';
+  String _stateCookieName(OAuthProvider provider) =>
+      'oauth_state_${provider.name}';
 
   RouteHandler _oauthStart(OAuthProvider provider) {
     return (DahoRequest req, DahoResponse res) async {
@@ -396,7 +388,10 @@ class AuthRoutes {
   /// Exchanges a one-time code (minted by [_oauthCallback]) for the actual
   /// access + refresh tokens. The code is deleted on first use, so a
   /// replayed or prefetched redirect can't obtain a second token pair.
-  FutureOr<DahoResponse> _oauthExchange(DahoRequest req, DahoResponse res) async {
+  FutureOr<DahoResponse> _oauthExchange(
+    DahoRequest req,
+    DahoResponse res,
+  ) async {
     final body = req.body as Map<String, dynamic>?;
     final code = body?['code'] as String?;
     if (code == null) {
@@ -408,10 +403,9 @@ class AuthRoutes {
       return res.status(400).json({'error': 'Invalid or expired code'});
     }
 
-    final userRow = await db.queryOne(
-      'SELECT * FROM users WHERE id = @id',
-      {'id': result.userId},
-    );
+    final userRow = await db.queryOne('SELECT * FROM users WHERE id = @id', {
+      'id': result.userId,
+    });
     if (userRow == null) {
       return res.unauthorized({'error': 'User not found'});
     }
@@ -427,7 +421,9 @@ class AuthRoutes {
   Future<void> _storeRefreshToken(String userId, TokenPair tokenPair) async {
     final claims = jwt.verify(tokenPair.refreshToken);
     final jti = claims!['jti'] as String;
-    final exp = DateTime.fromMillisecondsSinceEpoch((claims['exp'] as int) * 1000);
+    final exp = DateTime.fromMillisecondsSinceEpoch(
+      (claims['exp'] as int) * 1000,
+    );
     await tokenRepo.store(userId, jti, exp);
   }
 }

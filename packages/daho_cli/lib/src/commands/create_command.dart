@@ -102,7 +102,11 @@ class CreateCommand extends Command<int> {
 
     if (useAuth) {
       _write(targetDir, 'Dockerfile', authDockerfileTemplate(projectName));
-      _write(targetDir, 'docker-compose.yml', dockerComposeTemplate(projectName));
+      _write(
+        targetDir,
+        'docker-compose.yml',
+        dockerComposeTemplate(projectName),
+      );
       _write(targetDir, '.env.example', envTemplate);
       _write(targetDir, 'lib/env.dart', envLoaderTemplate());
       _write(targetDir, 'lib/auth.dart', authConfigTemplate('all'));
@@ -112,7 +116,8 @@ class CreateCommand extends Command<int> {
       final migrationsDir = Directory(p.join(targetDir.path, 'migrations'));
       migrationsDir.createSync(recursive: true);
       writeAuthMigrations(
-        (filename, content) => _write(targetDir, p.join('migrations', filename), content),
+        (filename, content) =>
+            _write(targetDir, p.join('migrations', filename), content),
       );
     } else {
       _write(targetDir, 'Dockerfile', dockerfileTemplate(projectName));

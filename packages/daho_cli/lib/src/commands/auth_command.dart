@@ -116,7 +116,9 @@ class AuthAddCommand extends Command<int> {
     stdout.writeln('  1. Copy .env.example to .env and fill in secrets');
     stdout.writeln('  2. Run: dart pub get');
     stdout.writeln('  3. Run: daho auth setup-db');
-    stdout.writeln('  4. Import lib/auth.dart in your server and use the middleware');
+    stdout.writeln(
+      '  4. Import lib/auth.dart in your server and use the middleware',
+    );
     return 0;
   }
 
@@ -145,7 +147,10 @@ class AuthAddCommand extends Command<int> {
     // matched dependencies block with the LITERAL text "$0...", destroying
     // every existing dependency. Matching just the header line and
     // prepending avoids that trap entirely.
-    content = content.replaceFirst('dependencies:\n', 'dependencies:\n$dependencyLine');
+    content = content.replaceFirst(
+      'dependencies:\n',
+      'dependencies:\n$dependencyLine',
+    );
     pubspec.writeAsStringSync(content);
     stdout.writeln('  updated pubspec.yaml');
     if (dahoAuthPath == null) {

@@ -40,7 +40,9 @@ class Lexer {
       if (source.startsWith('{{--', pos)) {
         final endIdx = source.indexOf('--}}', pos + 4);
         if (endIdx != -1) {
-          tokens.add(Token(TokenType.comment, source.substring(pos + 4, endIdx)));
+          tokens.add(
+            Token(TokenType.comment, source.substring(pos + 4, endIdx)),
+          );
           pos = endIdx + 4;
           continue;
         }
@@ -50,7 +52,9 @@ class Lexer {
       if (source.startsWith('{!!', pos)) {
         final endIdx = source.indexOf('!!}', pos + 3);
         if (endIdx != -1) {
-          tokens.add(Token(TokenType.echoRaw, source.substring(pos + 3, endIdx).trim()));
+          tokens.add(
+            Token(TokenType.echoRaw, source.substring(pos + 3, endIdx).trim()),
+          );
           pos = endIdx + 3;
           continue;
         }
@@ -60,7 +64,12 @@ class Lexer {
       if (source.startsWith('{{', pos)) {
         final endIdx = source.indexOf('}}', pos + 2);
         if (endIdx != -1) {
-          tokens.add(Token(TokenType.echoEscaped, source.substring(pos + 2, endIdx).trim()));
+          tokens.add(
+            Token(
+              TokenType.echoEscaped,
+              source.substring(pos + 2, endIdx).trim(),
+            ),
+          );
           pos = endIdx + 2;
           continue;
         }
@@ -68,7 +77,9 @@ class Lexer {
 
       // Check for directives
       if (source[pos] == '@' && pos + 1 < source.length) {
-        final match = RegExp(r'^@([a-zA-Z_][a-zA-Z0-9_]*)').firstMatch(source.substring(pos));
+        final match = RegExp(
+          r'^@([a-zA-Z_][a-zA-Z0-9_]*)',
+        ).firstMatch(source.substring(pos));
         if (match != null) {
           final keyword = match.group(1)!;
           final fullMatch = match.group(0)!;
