@@ -29,18 +29,19 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Reference',
+        text: 'Ecosystem',
         items: [
-          { text: 'API Reference', link: '/api/' },
+          { text: 'Authentication', link: '/guide/authentication' },
+          { text: 'Templates (Clurit)', link: '/guide/templates' },
           { text: 'CLI', link: '/guide/cli' },
-          { text: 'Examples', link: '/guide/examples' },
         ],
       },
       {
-        text: 'Deploy',
+        text: 'Reference',
         items: [
+          { text: 'API Reference', link: '/api/' },
+          { text: 'Examples', link: '/guide/examples' },
           { text: 'Deployment', link: '/guide/deployment' },
-          { text: 'Performance', link: '/guide/performance' },
         ],
       },
     ],
@@ -64,6 +65,14 @@ export default defineConfig({
             { text: 'Request & Response', link: '/guide/request-response' },
             { text: 'Static Files', link: '/guide/static-files' },
             { text: 'Error Handling', link: '/guide/error-handling' },
+          ],
+        },
+        {
+          text: 'Ecosystem',
+          collapsed: false,
+          items: [
+            { text: 'Authentication', link: '/guide/authentication' },
+            { text: 'Templates (Clurit)', link: '/guide/templates' },
           ],
         },
         {

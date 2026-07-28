@@ -1,0 +1,33 @@
+@extends('layouts.main')
+
+@section('content')
+    <h1>User Profile</h1>
+
+    @if($user != null)
+        <div class="user-card">
+            <div class="avatar">{{ $user['name'][0] }}</div>
+            <div>
+                <h2>{{ $user['name'] }}</h2>
+                <p>{{ $user['email'] }}</p>
+            </div>
+        </div>
+
+        @if($user['bio'] != null)
+            <div class="card">
+                <h3>Bio</h3>
+                <p>{{ $user['bio'] }}</p>
+            </div>
+        @endif
+
+        <div class="alert alert-success">
+            Profile loaded successfully!
+        </div>
+    @else
+        <div class="alert alert-warning">
+            <h3>User Not Found</h3>
+            <p>No user found with ID: {{ $userId }}</p>
+        </div>
+
+        <a href="/users" class="btn">View All Users</a>
+    @endif
+@endsection

@@ -1,0 +1,5 @@
+<div class="card" style="text-align: center; margin-top: 2rem;">
+    <h3>Get Started with Daho</h3>
+    <p>Build fast, scalable web applications with Dart.</p>
+    <a href="https://github.com/burhanwakhid/daho" class="btn">View on GitHub</a>
+</div>

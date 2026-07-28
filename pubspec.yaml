@@ -8,3 +8,6 @@ environment:
 workspace:
   - packages/daho
   - packages/daho_cli
+  - packages/daho_auth
+  - packages/clurit
+  - packages/clurit_daho

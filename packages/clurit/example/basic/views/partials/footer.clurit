@@ -1,0 +1,1 @@
+<p>&copy; {{ DateTime.now().year }} Clurit Template Engine</p>
