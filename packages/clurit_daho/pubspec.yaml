@@ -13,10 +13,8 @@ environment:
   sdk: ^3.9.0
 
 dependencies:
-  daho:
-    path: ../daho
-  clurit:
-    path: ../clurit
+  daho: ^0.1.0
+  clurit: ^0.1.0
 
 dev_dependencies:
   lints: ^6.0.0
