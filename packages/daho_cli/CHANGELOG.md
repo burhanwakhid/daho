@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Fix: `daho build` ran its own `findH2oHeader()`/`findH2oLib()` pre-flight check *before* invoking CMake, and on Linux `findH2oLib()` only recognized a shared `libh2o-evloop.so` — never the static `libh2o-evloop.a` that the 0.1.2 from-source build (and generated Dockerfiles) actually produce. It reported "H2O not found" and bailed out before CMake — which finds `.a` files just fine — ever ran. `findH2oLib()` now also checks for `.a`, and `daho build` no longer duplicates this check at all; it lets CMake's own `find_library` (the single source of truth already used by `c_src/CMakeLists.txt`) decide, only printing the install hint if the actual `cmake` configure step fails.
+
 ## 0.1.2
 
 - Fix: generated Dockerfiles (`daho create --auth`/non-auth) apt-installed `libh2o-evloop-dev`, which does not exist on Debian/Ubuntu — every Docker build failed with "Unable to locate package". Both templates now build H2O's `libh2o-evloop` target from source instead, matching what `brew install h2o` provides on macOS.

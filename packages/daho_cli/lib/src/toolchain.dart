@@ -35,11 +35,13 @@ String? findH2oHeader() {
   return null;
 }
 
-/// Returns the path to the H2O evloop shared library if found.
+/// Returns the path to the H2O evloop library if found — shared or static.
+/// A from-source build (no Debian/Ubuntu package ships h2o) typically
+/// produces a static `.a`; Homebrew ships both a `.dylib` and an `.a`.
 String? findH2oLib() {
   final names = Platform.isMacOS
-      ? ['libh2o-evloop.dylib']
-      : ['libh2o-evloop.so'];
+      ? ['libh2o-evloop.dylib', 'libh2o-evloop.a']
+      : ['libh2o-evloop.so', 'libh2o-evloop.a'];
   for (final dir in h2oLibHints) {
     for (final name in names) {
       final f = p.join(dir, name);
@@ -156,17 +158,23 @@ Future<int> buildNative(String dahoDir, {bool force = false}) async {
     stderr.writeln('[daho] cmake not found. Install it and re-run.');
     return 1;
   }
-  if (findH2oHeader() == null || findH2oLib() == null) {
-    stderr.writeln('[daho] H2O not found.');
-    stderr.writeln('[daho] Try: ${h2oInstallHint()}');
-    return 1;
-  }
 
+  // No pre-flight findH2oHeader()/findH2oLib() gate here: CMake's own
+  // find_path/find_library (see c_src/CMakeLists.txt) is the single source
+  // of truth for locating H2O, and a duplicate Dart-side check drifts out
+  // of sync with it easily — it previously only recognized a shared
+  // libh2o-evloop.so on Linux, so a from-source static libh2o-evloop.a
+  // build (there is no Debian/Ubuntu package for H2O) was reported as "not
+  // found" even though CMake would have located it fine.
   Directory(buildDir).createSync(recursive: true);
 
   stdout.writeln('[daho] configuring (cmake)...');
   final configure = await _stream('cmake', ['..'], buildDir);
-  if (configure != 0) return configure;
+  if (configure != 0) {
+    stderr.writeln('[daho] cmake configure failed — is H2O installed?');
+    stderr.writeln('[daho] Try: ${h2oInstallHint()}');
+    return configure;
+  }
 
   stdout.writeln('[daho] building native library...');
   return _stream('cmake', ['--build', '.'], buildDir);
