@@ -95,7 +95,7 @@ void main() {
   <div class="daho-step">
     <span class="num">1</span>
     <h4>Install the toolchain</h4>
-    <p>Daho's core is native. On macOS: <code>brew install h2o cmake</code>. On Debian/Ubuntu: <code>apt-get install libh2o-evloop-dev cmake</code>.</p>
+    <p>Daho's core is native. On macOS: <code>brew install h2o cmake</code>. On Debian/Ubuntu, H2O isn't in the apt archive, so it's built from source — see <a href="/guide/getting-started">Getting Started</a>.</p>
   </div>
   <div class="daho-step">
     <span class="num">2</span>

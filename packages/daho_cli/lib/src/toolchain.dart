@@ -63,17 +63,31 @@ bool commandExists(String cmd) {
 ///
 /// H2O is a Unix server (epoll/kqueue); there is no native Windows build, so on
 /// Windows we point users at WSL2 or Docker instead of a package command.
+/// Command that builds just the `libh2o-evloop` target from source and
+/// installs it under /usr/local — there is no Debian/Ubuntu package for
+/// H2O (verified: no `libh2o-evloop-dev` in the Debian archive), so apt
+/// alone can't provide it. Needs cmake, git, libssl-dev, zlib1g-dev.
+/// Mirrors `h2oFromSourceInstallStep` in daho_cli's Dockerfile templates.
+const String h2oBuildFromSourceCommand =
+    'git clone --recursive --depth 1 --branch v2.2.6 '
+    'https://github.com/h2o/h2o.git /tmp/h2o && '
+    'cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release '
+    '-DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && '
+    'cmake --build /tmp/h2o/build --target libh2o-evloop && '
+    'sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a && '
+    'sudo cp -r /tmp/h2o/include/. /usr/local/include/ && rm -rf /tmp/h2o';
+
 String h2oInstallHint() {
   if (Platform.isMacOS) return 'brew install h2o';
   if (Platform.isLinux) {
-    // Package name varies by distro; Debian/Ubuntu ship libh2o-evloop-dev.
-    return 'sudo apt-get install -y libh2o-evloop-dev cmake '
-        '(or build h2o from source)';
+    return 'no libh2o-evloop apt package exists on Debian/Ubuntu — build '
+        'from source (needs cmake, git, libssl-dev, zlib1g-dev): '
+        '$h2oBuildFromSourceCommand';
   }
   if (Platform.isWindows) {
-    return 'H2O has no native Windows build. Use WSL2 '
-        '(then: sudo apt-get install -y libh2o-evloop-dev cmake) '
-        'or run in Docker (see the generated Dockerfile).';
+    return 'H2O has no native Windows build. Use WSL2 (see the Linux '
+        'guidance for building it from source) or run in Docker (see the '
+        'generated Dockerfile, which builds it from source already).';
   }
   return 'Install H2O (h2o-evloop) and CMake for your platform.';
 }

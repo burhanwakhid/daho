@@ -35,10 +35,20 @@ endif()
 message(STATUS "H2O headers: ${H2O_INCLUDE_DIR}")
 message(STATUS "H2O evloop lib: ${H2O_EVLOOP_LIB}")
 
+# libh2o-evloop itself depends on OpenSSL and zlib. Homebrew's package
+# happens to ship a *shared* libh2o-evloop.dylib, which records its own
+# transitive dependencies, so this was never needed on macOS — but a
+# from-source build (e.g. in Docker, since H2O has no Debian/Ubuntu
+# package) produces a *static* libh2o-evloop.a by default, which does not
+# carry transitive link deps, so they must be linked explicitly here or
+# the final link fails with undefined SSL_*/X509_*/deflate/inflate symbols.
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
+
 add_library(h2o_wrapper SHARED
     h2o_wrapper.c
     include/dart_api_dl.c
 )
 
 target_include_directories(h2o_wrapper PRIVATE include ${H2O_INCLUDE_DIR})
-target_link_libraries(h2o_wrapper ${H2O_EVLOOP_LIB})
+target_link_libraries(h2o_wrapper ${H2O_EVLOOP_LIB} OpenSSL::SSL OpenSSL::Crypto ZLIB::ZLIB)

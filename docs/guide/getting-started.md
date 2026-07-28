@@ -34,8 +34,16 @@ brew install h2o cmake
 
 ### Linux (Debian/Ubuntu)
 
+There is no `libh2o-evloop-dev` package — H2O isn't in the Debian/Ubuntu archive. Build it from source (this is exactly what the CLI's generated Dockerfile does):
+
 ```bash
-sudo apt-get install -y libh2o-evloop-dev cmake
+sudo apt-get install -y cmake build-essential git pkg-config libssl-dev zlib1g-dev
+git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o
+cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+cmake --build /tmp/h2o/build --target libh2o-evloop
+sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a
+sudo cp -r /tmp/h2o/include/. /usr/local/include/
+rm -rf /tmp/h2o
 ```
 
 ### Windows

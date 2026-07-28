@@ -84,6 +84,27 @@ pubspec.lock
 *.sqlite-wal
 ''';
 
+/// H2O has no Debian/Ubuntu package (there is no `libh2o-evloop-dev` — a
+/// prior version of this template assumed one existed, and `apt-get
+/// install` failed on every real Docker build). Build it from source
+/// instead, mirroring what `brew install h2o` provides on macOS. Pinned to
+/// a tag verified to build clean with these exact flags — bump deliberately.
+///
+/// Only the `libh2o-evloop` target is built (not the full `h2o` server
+/// binary), which keeps the dependency list to `git`, `libssl-dev`, and
+/// `zlib1g-dev`. It links as a *static* archive, which is why
+/// `packages/daho/c_src/CMakeLists.txt` explicitly links OpenSSL/zlib
+/// itself rather than assuming a shared `libh2o-evloop.so` will carry
+/// those transitively (which is what Homebrew's package happens to do).
+const String h2oFromSourceInstallStep = '''
+RUN git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o \\
+    && cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\
+    && cmake --build /tmp/h2o/build --target libh2o-evloop -- -j\$(nproc) \\
+    && install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a \\
+    && cp -r /tmp/h2o/include/. /usr/local/include/ \\
+    && rm -rf /tmp/h2o
+''';
+
 /// A Linux Docker image: the recommended way to run Daho on Windows (or any
 /// host), since H2O has no native Windows build.
 String dockerfileTemplate(String name) => '''
@@ -91,11 +112,11 @@ String dockerfileTemplate(String name) => '''
 # Linux container (or WSL2).
 FROM dart:stable AS build
 
-# Native toolchain + H2O (Debian/Ubuntu package names).
 RUN apt-get update && apt-get install -y --no-install-recommends \\
-    cmake build-essential libh2o-evloop-dev \\
+    cmake build-essential git pkg-config libssl-dev zlib1g-dev \\
     && rm -rf /var/lib/apt/lists/*
 
+$h2oFromSourceInstallStep
 WORKDIR /app
 COPY pubspec.* ./
 RUN dart pub get
@@ -117,8 +138,12 @@ A server built with the [Daho](https://pub.dev/packages/daho) HTTP framework.
 
 ## Run locally (macOS / Linux / WSL2)
 
-Requires H2O and CMake (`brew install h2o cmake`, or
-`sudo apt-get install -y libh2o-evloop-dev cmake`).
+Requires H2O and CMake:
+- macOS: `brew install h2o cmake`
+- Debian/Ubuntu: there's no `libh2o-evloop-dev` package — H2O isn't in the apt
+  archive. Build it from source instead — see the "Native toolchain" step in
+  this project's Dockerfile, or the
+  [Daho getting-started guide](https://github.com/burhanwakhid/daho/blob/master/docs/guide/getting-started.md).
 
 ```bash
 dart pub get

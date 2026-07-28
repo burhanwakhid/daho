@@ -17,7 +17,18 @@ A fast, minimal HTTP framework for Dart, backed by a native [H2O](https://h2o.ex
 
 ```bash
 brew install h2o cmake                          # macOS
-sudo apt-get install -y libh2o-evloop-dev cmake # Debian/Ubuntu
+```
+
+Debian/Ubuntu has no `libh2o-evloop-dev` package — H2O isn't in the apt archive. Build it from source instead (this is what the CLI's generated Dockerfile does):
+
+```bash
+sudo apt-get install -y cmake build-essential git pkg-config libssl-dev zlib1g-dev
+git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o
+cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+cmake --build /tmp/h2o/build --target libh2o-evloop
+sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a
+sudo cp -r /tmp/h2o/include/. /usr/local/include/
+rm -rf /tmp/h2o
 ```
 
 Build it with the CLI (`daho build`) or manually:

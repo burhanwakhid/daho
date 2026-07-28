@@ -1,5 +1,7 @@
 // Auth-related templates for `daho auth add` and `daho create --auth`.
 
+import 'templates.dart' show h2oFromSourceInstallStep;
+
 /// The `daho` dependency line. When [localPath] is given, a path dependency is
 /// emitted (for local development before publishing); otherwise a hosted one.
 String _dahoDependency(String? localPath) {
@@ -402,9 +404,10 @@ String authDockerfileTemplate(String name) => '''
 FROM dart:stable AS build
 
 RUN apt-get update && apt-get install -y --no-install-recommends \\
-    cmake build-essential libh2o-evloop-dev \\
+    cmake build-essential git pkg-config libssl-dev zlib1g-dev \\
     && rm -rf /var/lib/apt/lists/*
 
+$h2oFromSourceInstallStep
 WORKDIR /app
 COPY pubspec.* ./
 RUN dart pub get

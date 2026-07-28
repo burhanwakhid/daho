@@ -42,10 +42,19 @@ dart compile exe bin/server.dart -o build/server
 # ---- build stage ----
 FROM dart:stable AS build
 
-# Native toolchain for the H2O wrapper
+# Native toolchain. There is no `libh2o-evloop-dev`/`libh2o-evloop0.13`
+# package — H2O isn't in the Debian/Ubuntu archive — so it's built from
+# source below instead of apt-installed.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libh2o-evloop-dev cmake build-essential && \
+    cmake build-essential git pkg-config libssl-dev zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
+
+RUN git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o \
+    && cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    && cmake --build /tmp/h2o/build --target libh2o-evloop -- -j$(nproc) \
+    && install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a \
+    && cp -r /tmp/h2o/include/. /usr/local/include/ \
+    && rm -rf /tmp/h2o
 
 WORKDIR /app
 COPY pubspec.* ./
@@ -58,8 +67,11 @@ RUN dart run daho_cli:daho build
 
 # ---- runtime stage ----
 FROM debian:stable-slim
+# H2O itself is statically linked into libh2o_wrapper.so at build time, so
+# the runtime image only needs the shared libs that wrapper dynamically
+# links against (OpenSSL, zlib) — not an H2O package.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    libh2o-evloop0.13 && \
+    libssl3 zlib1g && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
