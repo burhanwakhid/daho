@@ -91,36 +91,34 @@ jobs:
 
           echo "Linux build + simple endpoint check passed."
 
-      - name: Compile Daho example
+      - name: Compile example AOT
         working-directory: packages/daho
         run: |
-          dart compile exe example/01_hello_world.dart \
+          mkdir -p build
+
+          dart compile exe \
+            example/01_hello_world.dart \
             -o build/hello_world
 
-      - name: Run benchmark with wrk
+          file build/hello_world
+
+      - name: Benchmark
         working-directory: packages/daho
         run: |
+          export LD_LIBRARY_PATH=$PWD/c_src/build:$LD_LIBRARY_PATH
+
           ./build/hello_world > /tmp/server.log 2>&1 &
           SRV=$!
 
-          echo "Waiting server..."
+          sleep 2
 
-          for i in $(seq 1 30); do
-            if curl -sf http://127.0.0.1:8080/ > /dev/null; then
-              break
-            fi
-            sleep 1
-          done
-
-
-          echo "Benchmark:"
+          curl http://127.0.0.1:8080/
 
           wrk \
-            -t8 \
+            -t$(nproc) \
             -c256 \
             -d30s \
             --latency \
             http://127.0.0.1:8080/
 
-
-          kill -9 "$SRV" || true
+          kill $SRV
