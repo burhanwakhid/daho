@@ -5,9 +5,11 @@ name: Benchmark
 # shared:true so it isn't a strawman single-core comparison) and Go Fiber
 # (a commonly cited fast HTTP framework). All three serve an identical
 # `/json` route with an identical response body, no logging/extra middleware
-# on any of them, so the comparison is about framework dispatch overhead, not
-# app-level differences. See packages/daho/benchmark/{shelf,fiber} for the
-# comparison servers themselves.
+# on any of them. Daho and shelf are both AOT-compiled (`dart compile exe`)
+# before benchmarking, the same way `linux-build-smoke-test.yml` compiles its
+# own example, so neither Dart target has a JIT-vs-AOT disadvantage against
+# Fiber's compiled Go binary. See packages/daho/benchmark/{shelf,fiber} for
+# the comparison servers themselves.
 on:
   # Manual run (only available once this file is on the default branch).
   workflow_dispatch:
@@ -29,11 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install H2O, CMake and ab
+      - name: Install H2O, CMake and wrk
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            libh2o-evloop-dev cmake apache2-utils
+            libh2o-evloop-dev cmake wrk
 
       - uses: dart-lang/setup-dart@v1
         with:
@@ -50,16 +52,32 @@ jobs:
         working-directory: packages/daho/benchmark/shelf
         run: dart pub get
 
-      - name: Build Fiber comparison server
-        working-directory: packages/daho/benchmark/fiber
-        run: go build -o fiber_server .
-
       - name: Build Daho native library
         run: |
           cd packages/daho/c_src
           mkdir -p build && cd build
           cmake ..
           cmake --build .
+
+      # Same pattern as linux-build-smoke-test.yml's "Compile example AOT"
+      # step: compiled (not `dart run`/JIT'd) into packages/daho/build/, run
+      # with `working-directory: packages/daho` so Dart's own native-library
+      # lookup (which walks up from the current working directory) finds
+      # c_src/build without needing the package's source layout at runtime.
+      - name: Compile Daho benchmark target (AOT)
+        working-directory: packages/daho
+        run: |
+          mkdir -p build
+          dart compile exe example/daho_example.dart -o build/daho_example
+          file build/daho_example
+
+      - name: Compile shelf benchmark target (AOT)
+        working-directory: packages/daho/benchmark/shelf
+        run: dart compile exe bin/server.dart -o bin/shelf_server_bin
+
+      - name: Build Fiber comparison server
+        working-directory: packages/daho/benchmark/fiber
+        run: go build -o fiber_server .
 
       - name: Run comparison benchmark
         env:
@@ -72,11 +90,29 @@ jobs:
 
           echo "Cores: $CORES | connections: $CONN | duration: ${DUR}s per target"
 
-          # Runs `ab` against $1 (a name) at $2 (a port), writing results to
-          # /tmp/ab-$1.log and appending a Markdown row to /tmp/rows.md.
-          # $3 is a shell command that starts the server (backgrounded here).
+          # Resident memory in MB for a PID, via /proc — framework-agnostic
+          # (works identically for the Dart VM process running Daho/shelf and
+          # for Fiber's Go binary), unlike each server self-reporting its own
+          # RSS internally. Linux-only (matches ubuntu-latest); prints 0 if
+          # /proc isn't available or the process already exited.
+          get_rss_mb() {
+            local pid=$1
+            if [ -f "/proc/$pid/status" ]; then
+              awk '/VmRSS/ { printf "%.1f", $2/1024 }' "/proc/$pid/status"
+            else
+              echo "0"
+            fi
+          }
+
+          # Runs `wrk` against $1 (a name) at $2 (a port), writing results to
+          # /tmp/wrk-$1.log and appending a Markdown row to /tmp/rows.md. $3
+          # starts the server (backgrounded here). $4 is a plain substring
+          # (not $3 itself, which may be a `(cd ... && ...)` subshell for
+          # Daho's LD_LIBRARY_PATH/cwd needs) used to `pkill -f` every process
+          # this target spawned, since killing just $3's own backgrounded PID
+          # wouldn't reach a child process started inside a subshell.
           run_target() {
-            local name="$1" port="$2" start_cmd="$3"
+            local name="$1" port="$2" start_cmd="$3" kill_pattern="$4"
             echo "::group::$name"
 
             eval "$start_cmd" > "/tmp/server-$name.log" 2>&1 &
@@ -94,24 +130,28 @@ jobs:
               echo "$name never became ready:"
               cat "/tmp/server-$name.log"
               kill -9 "$pid" 2>/dev/null || true
+              pkill -9 -f "$kill_pattern" 2>/dev/null || true
               echo "::endgroup::"
               return 1
             fi
 
-            ab -k -c "$CONN" -n 5000000 -t "$DUR" \
-              "http://127.0.0.1:$port/json" > "/tmp/ab-$name.log" 2>&1 || true
+            local rss_before=$(get_rss_mb "$pid")
 
-            sleep 1
+            wrk -t"$CORES" -c"$CONN" -d"${DUR}s" --latency \
+              "http://127.0.0.1:$port/json" > "/tmp/wrk-$name.log" 2>&1 || true
+
+            local rss_after=$(get_rss_mb "$pid")
+
             kill -9 "$pid" 2>/dev/null || true
-            pkill -9 -f "$start_cmd" 2>/dev/null || true
+            pkill -9 -f "$kill_pattern" 2>/dev/null || true
             # Let the port free up before the next target binds it.
             sleep 2
 
-            local rps=$(grep 'Requests per second' "/tmp/ab-$name.log" | grep -o '[0-9.]*' | head -1)
-            local p50=$(grep -A10 'Percentage of the requests' "/tmp/ab-$name.log" | awk '/50%/{print $2}')
-            local p99=$(grep -A10 'Percentage of the requests' "/tmp/ab-$name.log" | awk '/99%/{print $2}')
-            local failed=$(grep 'Failed requests' "/tmp/ab-$name.log" | grep -o '[0-9]*$')
-            echo "| $name | ${rps:-n/a} | ${p50:-n/a} | ${p99:-n/a} | ${failed:-n/a} |" >> /tmp/rows.md
+            local rps=$(grep 'Requests/sec:' "/tmp/wrk-$name.log" | awk '{print $2}')
+            local p50=$(grep -A4 'Latency Distribution' "/tmp/wrk-$name.log" | awk '/50%/{print $2}')
+            local p99=$(grep -A4 'Latency Distribution' "/tmp/wrk-$name.log" | awk '/99%/{print $2}')
+            local failed=$(grep 'Non-2xx or 3xx responses' "/tmp/wrk-$name.log" | grep -o '[0-9]*$')
+            echo "| $name | ${rps:-n/a} | ${p50:-n/a} | ${p99:-n/a} | ${failed:-0} | ${rss_before:-n/a} -> ${rss_after:-n/a} |" >> /tmp/rows.md
 
             echo "::endgroup::"
           }
@@ -119,23 +159,35 @@ jobs:
           rm -f /tmp/rows.md
           touch /tmp/rows.md
 
-          run_target daho     8081 "dart run packages/daho/example/daho_example.dart"
-          run_target shelf    8082 "dart run packages/daho/benchmark/shelf/bin/server.dart"
-          run_target fiber    8083 "packages/daho/benchmark/fiber/fiber_server"
+          run_target daho 8081 \
+            '(cd packages/daho && export LD_LIBRARY_PATH=$PWD/c_src/build:$LD_LIBRARY_PATH && ./build/daho_example)' \
+            'build/daho_example'
+          run_target shelf 8082 \
+            'packages/daho/benchmark/shelf/bin/shelf_server_bin' \
+            'shelf_server_bin'
+          run_target fiber 8083 \
+            'packages/daho/benchmark/fiber/fiber_server' \
+            'fiber_server'
 
           {
             echo "## Daho vs. shelf vs. Fiber (Linux, ubuntu-latest, $CORES cores)"
             echo ""
             echo "Identical \`/json\` route + response body on all three, no logging/extra"
-            echo "middleware. All three are clustered across cores, matching Daho's"
-            echo "default one-worker-per-core model: \`shelf\` via \`shared: true\`"
-            echo "isolates, Fiber via \`Prefork: true\` (forked OS processes) — none of"
-            echo "the three is stuck on a single core."
+            echo "middleware. Daho and shelf are both AOT-compiled (\`dart compile exe\`),"
+            echo "matching Fiber's compiled Go binary — none of the three is JIT'd."
+            echo "All three are clustered across cores, matching Daho's default"
+            echo "one-worker-per-core model: \`shelf\` via \`shared: true\` isolates,"
+            echo "Fiber via \`Prefork: true\` (forked OS processes)."
             echo ""
             echo "- Connections: $CONN, duration: ${DUR}s per target"
+            echo "- RSS is read from \`/proc/\$pid/status\` right after the server is"
+            echo "  ready and again right after the load test — framework-agnostic,"
+            echo "  not self-reported. **Caveat for Fiber**: \`Prefork\` forks separate"
+            echo "  OS processes: the measured PID is the supervisor process only, so"
+            echo "  Fiber's real total (across all forked children) is higher than shown."
             echo ""
-            echo "| Target | Requests/sec | p50 (ms) | p99 (ms) | Failed requests |"
-            echo "| --- | --- | --- | --- | --- |"
+            echo "| Target | Requests/sec | p50 | p99 | Failed requests | RSS MB (before -> after) |"
+            echo "| --- | --- | --- | --- | --- | --- |"
             cat /tmp/rows.md
             echo ""
             echo "### Daho server-side profiler (per worker, tail)"

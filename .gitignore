@@ -49,3 +49,8 @@ node_modules/
 # Compiled Go binary from the benchmark comparison server — build with
 # `go build -o fiber_server .` inside packages/daho/benchmark/fiber, never commit.
 packages/daho/benchmark/fiber/fiber_server
+
+# AOT-compiled Dart benchmark binaries — build with `dart compile exe`
+# (see .github/workflows/benchmark.yml), never commit.
+packages/daho/build/
+packages/daho/benchmark/shelf/bin/shelf_server_bin
