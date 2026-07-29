@@ -1,0 +1,84 @@
+name: Linux Build Smoke Test
+
+# Manually-triggered check that Daho actually builds and serves traffic on
+# Linux following the README's documented from-source H2O build path (Debian/
+# Ubuntu has no `libh2o-evloop-dev` apt package, unlike what `benchmark.yml`
+# assumes — that workflow installs H2O via apt and is a load-test, not a
+# build-from-source regression check). This workflow exists to catch the
+# from-source instructions silently breaking (H2O tag moving, cmake flags
+# changing, etc.), which nothing else in CI currently exercises.
+on:
+  workflow_dispatch:
+
+jobs:
+  linux-build-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            cmake build-essential git pkg-config libssl-dev zlib1g-dev
+
+      # Mirrors packages/daho/README.md's "Requirements" section verbatim —
+      # if this step starts failing, the README's documented Linux setup is
+      # broken for real users, not just for CI.
+      - name: Build H2O from source
+        run: |
+          git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o
+          cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+          cmake --build /tmp/h2o/build --target libh2o-evloop
+          sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a
+          sudo cp -r /tmp/h2o/include/. /usr/local/include/
+          rm -rf /tmp/h2o
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies (workspace)
+        run: dart pub get
+
+      - name: Build native library
+        run: |
+          cd packages/daho/c_src
+          mkdir -p build && cd build
+          cmake ..
+          cmake --build .
+
+      - name: Run a simple endpoint and check it responds
+        working-directory: packages/daho
+        run: |
+          dart run example/01_hello_world.dart > /tmp/server.log 2>&1 &
+          SRV=$!
+
+          READY=""
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8080/ > /tmp/response.json; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ -z "$READY" ]; then
+            echo "Server never became ready:"
+            cat /tmp/server.log
+            exit 1
+          fi
+
+          echo "Response:"
+          cat /tmp/response.json
+          echo
+
+          if ! grep -q "Hello, Daho!" /tmp/response.json; then
+            echo "Unexpected response body"
+            exit 1
+          fi
+
+          kill -9 "$SRV" 2>/dev/null || true
+          pkill -9 -f 01_hello_world.dart 2>/dev/null || true
+
+          echo "Linux build + simple endpoint check passed."
