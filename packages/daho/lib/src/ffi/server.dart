@@ -82,6 +82,8 @@ Future<void> startNativeServer(
     fastPaths,
     config.requestTimeout.inMilliseconds,
     config.idleTimeout.inMilliseconds,
+    config.tlsCertPath,
+    config.tlsKeyPath,
   ]);
 }
 
@@ -97,6 +99,8 @@ void _runH2OBackgroundServer(List<dynamic> args) {
   final fastPaths = args[6] as List<NativeFastPath>;
   final reqTimeoutMs = args[7] as int;
   final idleTimeoutMs = args[8] as int;
+  final tlsCertPath = args[9] as String?;
+  final tlsKeyPath = args[10] as String?;
 
   final dylib = DynamicLibrary.open(libPath);
 
@@ -109,6 +113,12 @@ void _runH2OBackgroundServer(List<dynamic> args) {
   final cbPointer = Pointer<NativeFunction<DartRouteCallbackC>>.fromAddress(
     cbAddress,
   );
+
+  // NULL (not just an empty string) means "no TLS" on the C side, so only
+  // allocate a DahoStr when a path was actually configured.
+  final certPtr = tlsCertPath != null ? allocateDahoStr(tlsCertPath) : nullptr;
+  final keyPtr = tlsKeyPath != null ? allocateDahoStr(tlsKeyPath) : nullptr;
+
   startServer(
     port,
     cbPointer,
@@ -116,6 +126,8 @@ void _runH2OBackgroundServer(List<dynamic> args) {
     maxBodySize,
     reqTimeoutMs,
     idleTimeoutMs,
+    certPtr,
+    keyPtr,
   );
 }
 

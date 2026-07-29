@@ -117,7 +117,21 @@ expect(res.json['name'], 'ada');
 
 ## HTTPS / TLS
 
-Daho does not terminate TLS itself. Run it behind a TLS-terminating reverse proxy — the standard deployment for Dart/Node services:
+Daho can terminate TLS natively — H2O performs the handshake and negotiates `h2`/`http/1.1` via ALPN — by pointing `DahoConfig` at a certificate and private key (PEM):
+
+```dart
+final app = Daho(
+  config: const DahoConfig(
+    tlsCertPath: '/etc/ssl/example.crt',
+    tlsKeyPath: '/etc/ssl/example.key',
+  ),
+);
+app.listen(443, routes: setupRoutes);
+```
+
+Setting both switches *every* connection on that port to HTTPS — there is no automatic HTTP→HTTPS redirect or dual-port listener yet (run a second `Daho` on another port for that, or keep terminating at a proxy for that case). An invalid or missing cert/key logs to stderr and that worker falls back to plain HTTP rather than crashing, so double-check your logs after changing paths.
+
+If you'd rather not manage certificates in the app at all, terminating TLS at a reverse proxy still works exactly as before — the standard deployment for many Dart/Node services:
 
 ```nginx
 server {
@@ -163,7 +177,7 @@ Tooling planned to make Daho a batteries-included, zero-friction framework.
 
 ### Core
 
-- Native TLS (today: terminate at a reverse proxy).
+- HTTP→HTTPS redirect / serving both plaintext and TLS from one process (today: one `Daho` instance is either all-HTTP or all-HTTPS, based on `DahoConfig.tlsCertPath`/`tlsKeyPath`; run two instances on two ports for both).
 - Response streaming / chunked responses and WebSocket support.
 - Per-worker lifecycle hooks to manage worker-owned resources on shutdown.
 - Public `package:daho/testing.dart` testing library.

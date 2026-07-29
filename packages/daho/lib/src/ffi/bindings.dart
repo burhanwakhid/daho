@@ -107,6 +107,8 @@ typedef StartServerC =
       Int64 maxBodySize,
       Int64 reqTimeoutMs,
       Int64 idleTimeoutMs,
+      Pointer<DahoStr> tlsCertPath,
+      Pointer<DahoStr> tlsKeyPath,
     );
 typedef StartServerDart =
     void Function(
@@ -116,6 +118,8 @@ typedef StartServerDart =
       int maxBodySize,
       int reqTimeoutMs,
       int idleTimeoutMs,
+      Pointer<DahoStr> tlsCertPath,
+      Pointer<DahoStr> tlsKeyPath,
     );
 
 typedef RespondFromDartC =

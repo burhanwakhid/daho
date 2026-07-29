@@ -99,6 +99,23 @@ class DahoConfig {
   /// Suppresses the startup and shutdown log lines when true.
   final bool disableStartupMessage;
 
+  /// Path to a PEM certificate chain file. Set together with [tlsKeyPath] to
+  /// terminate TLS natively (H2O performs the handshake and negotiates
+  /// `h2`/`http/1.1` via ALPN) instead of running behind a reverse proxy —
+  /// see [tlsKeyPath] for the caveats.
+  final String? tlsCertPath;
+
+  /// Path to the PEM private key matching [tlsCertPath].
+  ///
+  /// Setting both switches this port from plain HTTP to HTTPS-only for
+  /// *every* connection — there is no automatic HTTP→HTTPS redirect or
+  /// dual-port listener (yet); if you need one, run a second `Daho` instance
+  /// on another port, or keep terminating TLS at a reverse proxy (see the
+  /// README's "HTTPS / TLS" section) which still works exactly as before.
+  /// An invalid/missing cert or key logs an error to stderr and that worker
+  /// falls back to plain HTTP rather than crashing.
+  final String? tlsKeyPath;
+
   const DahoConfig({
     this.bodyLimit = 4 * 1024 * 1024,
     this.concurrency,
@@ -109,5 +126,7 @@ class DahoConfig {
     this.notFoundHandler = defaultNotFoundHandler,
     this.trustProxy = false,
     this.disableStartupMessage = false,
+    this.tlsCertPath,
+    this.tlsKeyPath,
   });
 }

@@ -75,6 +75,7 @@ DART_EXPORT void h2o_respond_from_dart(
     int64_t req_ptr, int status_code,
     daho_str_t **header_keys, daho_str_t **header_values,
     int header_count, const uint8_t *body, int body_len, int worker_id);
-DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id, int64_t max_body_size, int64_t req_timeout_ms, int64_t idle_timeout_ms);
+DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id, int64_t max_body_size, int64_t req_timeout_ms, int64_t idle_timeout_ms,
+                                   daho_str_t *tls_cert_path, daho_str_t *tls_key_path);
 
 #endif // H2O_WRAPPER_H

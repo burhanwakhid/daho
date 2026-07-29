@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <time.h>
+#include <ctype.h>
 
 #ifndef SO_REUSEPORT
 #define SO_REUSEPORT 15
@@ -36,6 +37,41 @@ static uint32_t fnv1a(const char *s, size_t len)
         h = (h ^ (uint8_t)s[i]) * 16777619u;
     }
     return h;
+}
+
+// h2o_file_register() calls h2o_mimemap_create() internally whenever it is
+// passed NULL, which returns an EMPTY mimemap (no built-in extension table,
+// unlike e.g. nginx/Apache) — every static file then falls back to the
+// mimemap's default type, which is application/octet-stream. That's benign
+// for a classic `<script src>` (no MIME enforcement) but breaks ES module
+// scripts and WebAssembly.compileStreaming(), both of which enforce strict
+// MIME checking and reject octet-stream outright. Build one shared mimemap
+// with the common web extensions registered, reused for every static_dirs
+// entry across all workers.
+static h2o_mimemap_t *build_static_mimemap(void)
+{
+    h2o_mimemap_t *mimemap = h2o_mimemap_create();
+    h2o_mimemap_set_default_type(mimemap, "application/octet-stream", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "html", "text/html", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "htm", "text/html", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "css", "text/css", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "js", "text/javascript", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "mjs", "text/javascript", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "json", "application/json", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "wasm", "application/wasm", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "map", "application/json", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "svg", "image/svg+xml", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "png", "image/png", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "jpg", "image/jpeg", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "jpeg", "image/jpeg", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "gif", "image/gif", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "ico", "image/x-icon", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "webp", "image/webp", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "woff", "font/woff", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "woff2", "font/woff2", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "txt", "text/plain", NULL);
+    h2o_mimemap_define_mimetype(mimemap, "xml", "application/xml", NULL);
+    return mimemap;
 }
 
 // ---------------------------------------------------------
@@ -137,6 +173,15 @@ static void on_pipe_read(h2o_socket_t *sock, const char *err)
             // Copy the header strings into the request's H2O memory pool.
             h2o_iovec_t k = h2o_strdup(&res.req->pool, res.header_keys[i]->bytes, res.header_keys[i]->byte_len);
             h2o_iovec_t v = h2o_strdup(&res.req->pool, res.header_values[i]->bytes, res.header_values[i]->byte_len);
+
+            // DahoResponse writes header names as given by Dart (e.g.
+            // "Content-Type") — fine for HTTP/1.1 (case-insensitive there),
+            // but RFC 7540 §8.1.2 requires HTTP/2 response header *names* to
+            // be lowercase; a client sees this as PROTOCOL_ERROR otherwise.
+            // This was unreachable before TLS/ALPN existed (no h2 negotiation
+            // possible without a TLS handshake), so it never surfaced.
+            for (size_t j = 0; j < k.len; j++)
+                k.base[j] = (char)tolower((unsigned char)k.base[j]);
 
             h2o_add_header_by_str(
                 &res.req->pool, &res.req->res.headers,
@@ -318,7 +363,40 @@ static void on_accept(h2o_socket_t *listener, const char *err)
     }
 }
 
-DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id, int64_t max_body_size, int64_t req_timeout_ms, int64_t idle_timeout_ms)
+// Builds a TLS server context for this worker's listening socket: loads the
+// certificate chain and private key from disk, restricts to TLS 1.2+ (H2O's
+// HTTP/2 requires it anyway), and advertises both `h2` and `http/1.1` via
+// ALPN so the client and H2O negotiate the protocol during the handshake —
+// h2o_accept() then picks HTTP/1 or HTTP/2 framing based on that outcome.
+// Returns NULL (and logs to stderr) if the cert/key can't be loaded, so a
+// typo'd path degrades to "serves plaintext HTTP" rather than crashing.
+static SSL_CTX *build_tls_context(const char *cert_path, const char *key_path)
+{
+    SSL_CTX *ssl_ctx = SSL_CTX_new(TLS_server_method());
+    if (ssl_ctx == NULL)
+        return NULL;
+
+    SSL_CTX_set_min_proto_version(ssl_ctx, TLS1_2_VERSION);
+
+    if (SSL_CTX_use_certificate_chain_file(ssl_ctx, cert_path) != 1)
+    {
+        fprintf(stderr, "[daho] Failed to load TLS certificate: %s\n", cert_path);
+        SSL_CTX_free(ssl_ctx);
+        return NULL;
+    }
+    if (SSL_CTX_use_PrivateKey_file(ssl_ctx, key_path, SSL_FILETYPE_PEM) != 1)
+    {
+        fprintf(stderr, "[daho] Failed to load TLS private key: %s\n", key_path);
+        SSL_CTX_free(ssl_ctx);
+        return NULL;
+    }
+
+    h2o_ssl_register_alpn_protocols(ssl_ctx, h2o_alpn_protocols);
+    return ssl_ctx;
+}
+
+DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id, int64_t max_body_size, int64_t req_timeout_ms, int64_t idle_timeout_ms,
+                                   daho_str_t *tls_cert_path, daho_str_t *tls_key_path)
 {
     // Guard against an out-of-range worker index (arrays are sized MAX_WORKERS).
     if (worker_id < 0 || worker_id >= MAX_WORKERS)
@@ -343,12 +421,13 @@ DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id,
         configs[worker_id].http2.idle_timeout = (uint64_t)idle_timeout_ms;
     h2o_hostconf_t *hostconf = h2o_config_register_host(&configs[worker_id], h2o_iovec_init(H2O_STRLIT("default")), 65535);
 
+    h2o_mimemap_t *static_mimemap = num_static_dirs_arr[worker_id] > 0 ? build_static_mimemap() : NULL;
     for (int i = 0; i < num_static_dirs_arr[worker_id]; i++)
     {
         // H2O config requires the null-terminator for paths; luckily our bounded string strictly enforces \0 at the end!
         h2o_pathconf_t *static_path = h2o_config_register_path(hostconf, static_dirs_arr[worker_id][i].virtual_path->bytes, 0);
         static const char *index_files[] = {"index.html", "index.htm", NULL};
-        h2o_file_register(static_path, static_dirs_arr[worker_id][i].local_path->bytes, index_files, NULL, H2O_FILE_FLAG_SEND_COMPRESSED);
+        h2o_file_register(static_path, static_dirs_arr[worker_id][i].local_path->bytes, index_files, static_mimemap, H2O_FILE_FLAG_SEND_COMPRESSED);
     }
 
     h2o_pathconf_t *pathconf = h2o_config_register_path(hostconf, "/", 0);
@@ -365,6 +444,17 @@ DART_EXPORT void start_h2o_server(int port, DartRouteCallback cb, int worker_id,
     h2o_context_init(&ctxs[worker_id], loop, &configs[worker_id]);
     accept_ctxs[worker_id].ctx = &ctxs[worker_id];
     accept_ctxs[worker_id].hosts = configs[worker_id].hosts;
+
+    // h2o_accept() (called from on_accept, below) checks accept_ctxs[worker_id]
+    // .ssl_ctx: non-NULL means every connection on this socket performs a TLS
+    // handshake before HTTP framing begins; NULL means plaintext HTTP, exactly
+    // as before this option existed. tls_cert_path/tls_key_path are NULL (or
+    // empty) when the caller didn't configure TLS.
+    if (tls_cert_path != NULL && tls_cert_path->byte_len > 0 &&
+        tls_key_path != NULL && tls_key_path->byte_len > 0)
+    {
+        accept_ctxs[worker_id].ssl_ctx = build_tls_context(tls_cert_path->bytes, tls_key_path->bytes);
+    }
 
     h2o_socket_t *pipe_sock = h2o_evloop_socket_create(loop, response_pipes[worker_id][0], 0);
     pipe_sock->data = (void *)(intptr_t)worker_id;

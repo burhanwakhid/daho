@@ -30,13 +30,18 @@ node_modules/
 .vitepress/dist/
 .vitepress/cache/
 
-# Compiled clurit client JS bundles (`dart compile js`) — build output, not
-# source; regenerate with `dart compile js web/main.g.dart -o web/main.dart.js`.
+# Compiled clurit client bundles (`dart compile js`/`dart compile wasm`) —
+# build output, not source; regenerate with
+# `dart compile js web/main.g.dart -o web/main.dart.js` /
+# `dart compile wasm web/main.g.dart -o web/main.dart.wasm`.
 **/example/**/web/main.dart.js
 **/example/**/web/main.dart.js.deps
 **/example/**/web/main.dart.js.map
 **/example/**/web/main.dart.js_*.part.js
 **/example/**/web/main.dart.js_*.part.js.map
+**/example/**/web/main.dart.wasm
+**/example/**/web/main.dart.wasm.map
+**/example/**/web/main.dart.mjs
 
 # JetBrains IDE project files
 .idea/
