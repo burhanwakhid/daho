@@ -16,11 +16,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Show CPU info
+        run: |
+          echo "CPU cores:"
+          nproc
+
+          echo "CPU detail:"
+          lscpu
+
       - name: Install build tooling
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            cmake build-essential git pkg-config libssl-dev zlib1g-dev
+            cmake build-essential git pkg-config libssl-dev zlib1g-dev wrk
 
       # Mirrors packages/daho/README.md's "Requirements" section verbatim —
       # if this step starts failing, the README's documented Linux setup is
@@ -82,3 +90,37 @@ jobs:
           pkill -9 -f 01_hello_world.dart 2>/dev/null || true
 
           echo "Linux build + simple endpoint check passed."
+
+      - name: Compile Daho example
+        working-directory: packages/daho
+        run: |
+          dart compile exe example/01_hello_world.dart \
+            -o build/hello_world
+
+      - name: Run benchmark with wrk
+        working-directory: packages/daho
+        run: |
+          ./build/hello_world > /tmp/server.log 2>&1 &
+          SRV=$!
+
+          echo "Waiting server..."
+
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8080/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+
+          echo "Benchmark:"
+
+          wrk \
+            -t8 \
+            -c256 \
+            -d30s \
+            --latency \
+            http://127.0.0.1:8080/
+
+
+          kill -9 "$SRV" || true
