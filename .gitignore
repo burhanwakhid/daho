@@ -45,3 +45,7 @@ node_modules/
 
 # JetBrains IDE project files
 .idea/
+
+# Compiled Go binary from the benchmark comparison server — build with
+# `go build -o fiber_server .` inside packages/daho/benchmark/fiber, never commit.
+packages/daho/benchmark/fiber/fiber_server

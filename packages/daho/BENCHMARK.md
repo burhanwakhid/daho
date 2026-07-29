@@ -49,6 +49,31 @@ dart run tool/gc_probe.dart http://127.0.0.1:8181/ 20
 > Note: attaching the VM service perturbs latency; use it to study GC, and use
 > `wrk` alone for clean throughput/latency numbers.
 
+## 4. Comparison against `shelf` and Go Fiber — `.github/workflows/benchmark.yml`
+
+The manually-triggered `benchmark` GitHub Actions workflow (`workflow_dispatch`,
+also runs on PRs) benchmarks three servers on identical terms: an identical
+`/json` route, an identical JSON response body, no logging/extra middleware on
+any of them.
+
+- **Daho** — `example/daho_example.dart` (port 8081).
+- **`shelf`** (Dart) — `benchmark/shelf/bin/server.dart` (port 8082). `shelf`
+  has no built-in multi-isolate clustering, so this manually clusters across
+  `Platform.numberOfProcessors` isolates via `shelf_io.serve`'s `shared: true`
+  (SO_REUSEPORT) — otherwise it would be an unfair single-core comparison
+  against Daho's default one-worker-per-core model.
+- **Go Fiber** — `benchmark/fiber/main.go` (port 8083), with `Prefork: true`
+  (forks one OS process per core, also via SO_REUSEPORT) for the same reason.
+
+All three are load-tested with `ab` (not `wrk` — matches what this workflow
+already used before the comparison was added) using the same
+connections/duration inputs, one after another (not concurrently, so they
+don't compete for CPU), and the results land in the workflow run's step
+summary as a Markdown table.
+
+Run it from the Actions tab (`Benchmark` → "Run workflow") or let it run
+automatically on a PR.
+
 ## Baseline (2026-07, macOS, M-series, 10 cores, `/json` dynamic handler)
 
 | Metric | Value |

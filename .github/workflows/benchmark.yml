@@ -1,8 +1,13 @@
 name: Benchmark
 
-# Manual benchmark to check how Daho behaves on Linux — in particular whether
-# load is distributed across worker Isolates (SO_REUSEPORT load-balances in the
-# Linux kernel, unlike macOS where a single worker tends to receive everything).
+# Manual benchmark comparing Daho against two same-purpose baselines: Dart
+# `shelf` (same language, no built-in clustering — manually clustered here via
+# shared:true so it isn't a strawman single-core comparison) and Go Fiber
+# (a commonly cited fast HTTP framework). All three serve an identical
+# `/json` route with an identical response body, no logging/extra middleware
+# on any of them, so the comparison is about framework dispatch overhead, not
+# app-level differences. See packages/daho/benchmark/{shelf,fiber} for the
+# comparison servers themselves.
 on:
   # Manual run (only available once this file is on the default branch).
   workflow_dispatch:
@@ -11,7 +16,7 @@ on:
         description: 'Concurrent keep-alive connections'
         default: '100'
       duration:
-        description: 'Load duration (seconds)'
+        description: 'Load duration (seconds), per target'
         default: '15'
   # Also run on pull requests so the benchmark can be exercised from a feature
   # branch before it is merged to the default branch. Remove this if per-PR
@@ -34,18 +39,29 @@ jobs:
         with:
           sdk: stable
 
-      - name: Install dependencies
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install Dart dependencies
         run: dart pub get
 
-      - name: Build native library
+      - name: Install shelf comparison server dependencies
+        working-directory: packages/daho/benchmark/shelf
+        run: dart pub get
+
+      - name: Build Fiber comparison server
+        working-directory: packages/daho/benchmark/fiber
+        run: go build -o fiber_server .
+
+      - name: Build Daho native library
         run: |
           cd packages/daho/c_src
           mkdir -p build && cd build
           cmake ..
           cmake --build .
 
-      - name: Run benchmark
-        working-directory: packages/daho
+      - name: Run comparison benchmark
         env:
           DAHO_PROFILE: '1'
         run: |
@@ -54,49 +70,78 @@ jobs:
           DUR='${{ github.event.inputs.duration }}'; DUR="${DUR:-15}"
           CORES=$(nproc)
 
-          echo "Cores: $CORES | connections: $CONN | duration: ${DUR}s"
+          echo "Cores: $CORES | connections: $CONN | duration: ${DUR}s per target"
 
-          # Start the server (background) and wait for it to be ready.
-          dart run example/daho_example.dart > /tmp/server.log 2>&1 &
-          SRV=$!
-          for i in $(seq 1 30); do
-            curl -sf http://127.0.0.1:8081/json >/dev/null && break
+          # Runs `ab` against $1 (a name) at $2 (a port), writing results to
+          # /tmp/ab-$1.log and appending a Markdown row to /tmp/rows.md.
+          # $3 is a shell command that starts the server (backgrounded here).
+          run_target() {
+            local name="$1" port="$2" start_cmd="$3"
+            echo "::group::$name"
+
+            eval "$start_cmd" > "/tmp/server-$name.log" 2>&1 &
+            local pid=$!
+
+            local ready=""
+            for i in $(seq 1 30); do
+              if curl -sf "http://127.0.0.1:$port/json" >/dev/null; then
+                ready=1
+                break
+              fi
+              sleep 1
+            done
+            if [ -z "$ready" ]; then
+              echo "$name never became ready:"
+              cat "/tmp/server-$name.log"
+              kill -9 "$pid" 2>/dev/null || true
+              echo "::endgroup::"
+              return 1
+            fi
+
+            ab -k -c "$CONN" -n 5000000 -t "$DUR" \
+              "http://127.0.0.1:$port/json" > "/tmp/ab-$name.log" 2>&1 || true
+
             sleep 1
-          done
-          curl -s http://127.0.0.1:8081/json || { cat /tmp/server.log; exit 1; }
-          echo
+            kill -9 "$pid" 2>/dev/null || true
+            pkill -9 -f "$start_cmd" 2>/dev/null || true
+            # Let the port free up before the next target binds it.
+            sleep 2
 
-          # Load test (keep-alive).
-          ab -k -c "$CONN" -n 5000000 -t "$DUR" \
-            http://127.0.0.1:8081/json > /tmp/ab.log 2>&1 || true
+            local rps=$(grep 'Requests per second' "/tmp/ab-$name.log" | grep -o '[0-9.]*' | head -1)
+            local p50=$(grep -A10 'Percentage of the requests' "/tmp/ab-$name.log" | awk '/50%/{print $2}')
+            local p99=$(grep -A10 'Percentage of the requests' "/tmp/ab-$name.log" | awk '/99%/{print $2}')
+            local failed=$(grep 'Failed requests' "/tmp/ab-$name.log" | grep -o '[0-9]*$')
+            echo "| $name | ${rps:-n/a} | ${p50:-n/a} | ${p99:-n/a} | ${failed:-n/a} |" >> /tmp/rows.md
 
-          # Let the last profiler interval flush, then stop the server.
-          sleep 3
-          kill -9 "$SRV" 2>/dev/null || true
-          pkill -9 -f daho_example.dart 2>/dev/null || true
+            echo "::endgroup::"
+          }
 
-          WORKERS=$(grep -o 'daho-prof w[0-9]*' /tmp/server.log \
-            | sort -u | wc -l | tr -d ' ')
+          rm -f /tmp/rows.md
+          touch /tmp/rows.md
+
+          run_target daho     8081 "dart run packages/daho/example/daho_example.dart"
+          run_target shelf    8082 "dart run packages/daho/benchmark/shelf/bin/server.dart"
+          run_target fiber    8083 "packages/daho/benchmark/fiber/fiber_server"
 
           {
-            echo "## Daho benchmark (Linux)"
+            echo "## Daho vs. shelf vs. Fiber (Linux, ubuntu-latest, $CORES cores)"
             echo ""
-            echo "- Cores (nproc): **$CORES**"
-            echo "- Connections: $CONN, duration: ${DUR}s"
-            echo "- **Distinct workers that served traffic: $WORKERS / $CORES**"
+            echo "Identical \`/json\` route + response body on all three, no logging/extra"
+            echo "middleware. All three are clustered across cores, matching Daho's"
+            echo "default one-worker-per-core model: \`shelf\` via \`shared: true\`"
+            echo "isolates, Fiber via \`Prefork: true\` (forked OS processes) — none of"
+            echo "the three is stuck on a single core."
             echo ""
-            echo "If this is > 1, SO_REUSEPORT is distributing across workers on"
-            echo "Linux (the macOS single-worker limitation does not apply here)."
+            echo "- Connections: $CONN, duration: ${DUR}s per target"
             echo ""
-            echo "### Server-side profiler (per worker, tail)"
+            echo "| Target | Requests/sec | p50 (ms) | p99 (ms) | Failed requests |"
+            echo "| --- | --- | --- | --- | --- |"
+            cat /tmp/rows.md
+            echo ""
+            echo "### Daho server-side profiler (per worker, tail)"
             echo '```'
-            grep 'daho-prof' /tmp/server.log | tail -30
-            echo '```'
-            echo "### ab (client side)"
-            echo '```'
-            grep -E 'Requests per second|Time per request|Complete requests|Failed requests|Non-2xx' /tmp/ab.log
+            grep 'daho-prof' /tmp/server-daho.log | tail -30
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-          echo "Distinct workers that served: $WORKERS / $CORES"
-          grep -E 'Requests per second|Complete requests|Failed requests' /tmp/ab.log
+          cat /tmp/rows.md

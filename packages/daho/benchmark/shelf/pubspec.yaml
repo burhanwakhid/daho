@@ -1,0 +1,11 @@
+name: benchmark_shelf
+description: >-
+  Dart shelf equivalent of packages/daho/example/daho_example.dart, used
+  purely as a same-language comparison point in .github/workflows/benchmark.yml.
+publish_to: none
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  shelf: ^1.4.2
