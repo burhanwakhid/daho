@@ -37,8 +37,8 @@ Builder cluritRoutesBuilder(BuilderOptions options) => CluritRoutesBuilder();
 class CluritRoutesBuilder implements Builder {
   @override
   Map<String, List<String>> get buildExtensions => {
-    'clurit_routes.yaml': ['web/main.g.dart', 'clurit_components.g.dart'],
-  };
+        'clurit_routes.yaml': ['web/main.g.dart', 'clurit_components.g.dart'],
+      };
 
   @override
   Future<void> build(BuildStep buildStep) async {
@@ -76,7 +76,8 @@ class CluritRoutesBuilder implements Builder {
       emitClientBootstrap(pages),
     );
     await buildStep.writeAsString(
-      AssetId(triggerId.package, p.posix.join(appRoot, 'clurit_components.g.dart')),
+      AssetId(
+          triggerId.package, p.posix.join(appRoot, 'clurit_components.g.dart')),
       emitComponentRegistry(pages),
     );
   }
@@ -92,7 +93,8 @@ class CluritRoutesBuilder implements Builder {
     buf.writeln("import 'package:web/web.dart' as web;");
     buf.writeln();
     for (var i = 0; i < pages.length; i++) {
-      buf.writeln("import '${pages[i].component.clientImportPath}' deferred as _page$i;");
+      buf.writeln(
+          "import '${pages[i].component.clientImportPath}' deferred as _page$i;");
     }
     buf.writeln();
     buf.writeln('Future<void> hydrateCurrentPage(web.Element root) async {');
@@ -126,7 +128,8 @@ class CluritRoutesBuilder implements Builder {
     return buf.toString();
   }
 
-  void _emitClientCase(StringBuffer buf, int index, ComponentAnalyzerResult component) {
+  void _emitClientCase(
+      StringBuffer buf, int index, ComponentAnalyzerResult component) {
     buf.writeln('      await _page$index.loadLibrary();');
     final args = _fieldArgs(component, source: 'state');
     buf.writeln(
@@ -147,7 +150,8 @@ class CluritRoutesBuilder implements Builder {
       buf.writeln("import '${page.component.serverImportPath}';");
     }
     buf.writeln();
-    buf.writeln('final Map<String, CluritComponent Function(Map<String, dynamic>)> '
+    buf.writeln(
+        'final Map<String, CluritComponent Function(Map<String, dynamic>)> '
         'cluritComponents = {');
     for (final page in pages) {
       final args = _fieldArgs(page.component, source: 'data');
@@ -168,7 +172,8 @@ class CluritRoutesBuilder implements Builder {
   /// `Map<String, dynamic>` named [source] (`state` on the client,
   /// `data` on the server) — the same shape either side needs to
   /// reconstruct the component from its serialized fields.
-  List<String> _fieldArgs(ComponentAnalyzerResult component, {required String source}) {
+  List<String> _fieldArgs(ComponentAnalyzerResult component,
+      {required String source}) {
     return [
       // $state fields: the generated component's own constructor param is
       // nullable-optional-with-fallback (`int? count`, defaulted via `??`
@@ -192,7 +197,8 @@ class CluritRoutesBuilder implements Builder {
   /// `$state`/`$props` commonly hold; anything else falls back to a plain
   /// (dynamic) index. [nullable] controls whether the cast allows (and the
   /// caller's constructor parameter expects) a missing/null value.
-  String _extractExpr(String? type, String key, String source, {required bool nullable}) {
+  String _extractExpr(String? type, String key, String source,
+      {required bool nullable}) {
     final q = nullable ? '?' : '';
     switch (type) {
       case 'int':
@@ -209,7 +215,8 @@ class CluritRoutesBuilder implements Builder {
             ? '($list)?.cast<${listMatch.group(1)}>()'
             : '($list).cast<${listMatch.group(1)}>()';
       }
-      final mapMatch = RegExp(r'^Map<\s*String\s*,\s*(.+)>\??$').firstMatch(type);
+      final mapMatch =
+          RegExp(r'^Map<\s*String\s*,\s*(.+)>\??$').firstMatch(type);
       if (mapMatch != null) {
         final map = "$source['$key'] as Map$q";
         return nullable

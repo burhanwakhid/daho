@@ -232,7 +232,8 @@ String authConfigTemplate(String provider) {
 /// hardcoded default here previously caused `daho auth setup-db` to fail
 /// with `database "daho_app" does not exist` for any project not literally
 /// named `daho_app`.
-String envTemplate(String name) => '''
+String envTemplate(String name) =>
+    '''
 # Database
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/$name
 # For a remote/production Postgres, also set sslMode: SslMode.require on the

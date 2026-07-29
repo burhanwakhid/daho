@@ -27,7 +27,8 @@ import '../parser.dart';
 ///
 /// Nested `@extends` (a layout that itself extends another layout) isn't
 /// supported, matching `CluritEngine`'s own documented limitation.
-Future<List<Node>> resolveTemplateNodes(BuildStep buildStep, AssetId inputId) async {
+Future<List<Node>> resolveTemplateNodes(
+    BuildStep buildStep, AssetId inputId) async {
   final viewsRoot = _viewsRootFor(inputId.path);
   final source = await buildStep.readAsString(inputId);
   final tokens = Lexer.tokenize(source);
@@ -58,10 +59,13 @@ Future<List<Node>> resolveTemplateNodes(BuildStep buildStep, AssetId inputId) as
     resolvedPushes[entry.key] = combined;
   }
 
-  final layoutId = _assetForDottedName(inputId.package, viewsRoot, parser.extendsLayout!);
+  final layoutId =
+      _assetForDottedName(inputId.package, viewsRoot, parser.extendsLayout!);
   final layoutNodes = await _parseFile(buildStep, layoutId);
-  final resolvedLayoutNodes = await _resolveIncludesAndFlatten(buildStep, viewsRoot, layoutNodes);
-  final splicedLayoutNodes = _spliceYieldsAndStacks(resolvedLayoutNodes, resolvedSections, resolvedPushes);
+  final resolvedLayoutNodes =
+      await _resolveIncludesAndFlatten(buildStep, viewsRoot, layoutNodes);
+  final splicedLayoutNodes = _spliceYieldsAndStacks(
+      resolvedLayoutNodes, resolvedSections, resolvedPushes);
 
   // The child template's own top-level content that ISN'T a registered
   // @section/@push body (most commonly, an `@code { }` block declared
@@ -75,8 +79,10 @@ Future<List<Node>> resolveTemplateNodes(BuildStep buildStep, AssetId inputId) as
     ...parser.sections.values,
     for (final pushList in parser.pushes.values) ...pushList,
   };
-  final ownTopLevelNodes = nodes.where((n) => !registeredBodies.contains(n)).toList();
-  final resolvedOwnNodes = await _resolveIncludesAndFlatten(buildStep, viewsRoot, ownTopLevelNodes);
+  final ownTopLevelNodes =
+      nodes.where((n) => !registeredBodies.contains(n)).toList();
+  final resolvedOwnNodes =
+      await _resolveIncludesAndFlatten(buildStep, viewsRoot, ownTopLevelNodes);
 
   return [...resolvedOwnNodes, ...splicedLayoutNodes];
 }
@@ -94,7 +100,8 @@ String _viewsRootFor(String assetPath) {
   return p.posix.joinAll(segments.sublist(0, viewsIndex + 1));
 }
 
-AssetId _assetForDottedName(String package, String viewsRoot, String dottedName) {
+AssetId _assetForDottedName(
+    String package, String viewsRoot, String dottedName) {
   final relative = dottedName.replaceAll('.', '/');
   return AssetId(package, p.posix.join(viewsRoot, '$relative.clurit'));
 }
@@ -111,7 +118,8 @@ Future<List<Node>> _parseFile(BuildStep buildStep, AssetId assetId) async {
 /// need), and [_resolveIncludesAndFlatten] replaces it with the real,
 /// recursively-resolved content afterward.
 Node _includeMarkerResolver(String template, Map<String, dynamic>? data) {
-  return IncludeNode(template: template, data: data, resolver: (_, __) => TextNode(''));
+  return IncludeNode(
+      template: template, data: data, resolver: (_, __) => TextNode(''));
 }
 
 /// Recursively replaces every [IncludeNode] marker with its target file's
@@ -127,18 +135,23 @@ Future<List<Node>> _resolveIncludesAndFlatten(
   final result = <Node>[];
   for (final node in nodes) {
     if (node is DeferredBodyNode) {
-      result.addAll(await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.body));
+      result.addAll(
+          await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.body));
     } else if (node is IncludeNode) {
-      final assetId = _assetForDottedName(buildStep.inputId.package, viewsRoot, node.template);
+      final assetId = _assetForDottedName(
+          buildStep.inputId.package, viewsRoot, node.template);
       final includedNodes = await _parseFile(buildStep, assetId);
-      result.addAll(await _resolveIncludesAndFlatten(buildStep, viewsRoot, includedNodes));
+      result.addAll(await _resolveIncludesAndFlatten(
+          buildStep, viewsRoot, includedNodes));
     } else if (node is IfNode) {
       result.add(
         IfNode(
           condition: node.condition,
-          thenBody: await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.thenBody),
+          thenBody: await _resolveIncludesAndFlatten(
+              buildStep, viewsRoot, node.thenBody),
           elseBody: node.elseBody != null
-              ? await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.elseBody!)
+              ? await _resolveIncludesAndFlatten(
+                  buildStep, viewsRoot, node.elseBody!)
               : null,
         ),
       );
@@ -148,7 +161,8 @@ Future<List<Node>> _resolveIncludesAndFlatten(
           iterableExpr: node.iterableExpr,
           variable: node.variable,
           key: node.key,
-          body: await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.body),
+          body:
+              await _resolveIncludesAndFlatten(buildStep, viewsRoot, node.body),
         ),
       );
     } else {

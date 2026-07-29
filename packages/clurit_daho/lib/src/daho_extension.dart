@@ -9,7 +9,8 @@ typedef CluritStateProvider = Map<String, dynamic> Function(DahoRequest req);
 /// `$props` field, an id looked up from `data['id']`, etc.) into a
 /// component, without route handlers each needing to know that component's
 /// constructor shape.
-typedef CluritComponentFactory = CluritComponent Function(Map<String, dynamic> data);
+typedef CluritComponentFactory =
+    CluritComponent Function(Map<String, dynamic> data);
 
 /// Extension to add Clurit template engine support to Daho.
 extension CluritDahoExtension on Daho {
@@ -55,12 +56,14 @@ extension CluritDahoExtension on Daho {
   }
 
   /// Looks up a factory registered via [registerComponent].
-  CluritComponentFactory? cluritComponentFactory(String name) => _componentFactories[name];
+  CluritComponentFactory? cluritComponentFactory(String name) =>
+      _componentFactories[name];
 
   /// Same lookup as [cluritComponentFactory], callable without a [Daho]
   /// instance in hand (the registry is a single process-wide singleton,
   /// matching [CluritEngine.instance]) — used by
   /// `CluritResponseExtension.view` to check for a registered component
   /// before falling back to the Blade engine.
-  static CluritComponentFactory? factoryFor(String name) => _componentFactories[name];
+  static CluritComponentFactory? factoryFor(String name) =>
+      _componentFactories[name];
 }

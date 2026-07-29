@@ -15,7 +15,8 @@ import 'package:test/test.dart';
 /// logic to regression-test.
 CodeEmitter buildEmitter(String source, {String className = 'TestComponent'}) {
   final tokens = Lexer.tokenize(source);
-  final nodes = Parser(tokens, includeResolver: (_, __) => TextNode('')).parse();
+  final nodes =
+      Parser(tokens, includeResolver: (_, __) => TextNode('')).parse();
   final codeNodes = findCodeNodes(nodes);
   final component = CodeAnalyzer.analyze(codeNodes.first.code);
   final bindings = BindingResolver.resolve(nodes);
@@ -31,11 +32,13 @@ void main() {
   group('CluritGenerator pipeline', () {
     test('finds no @code nodes in a plain template', () {
       final tokens = Lexer.tokenize('<div>{{ \$title }}</div>');
-      final nodes = Parser(tokens, includeResolver: (_, __) => TextNode('')).parse();
+      final nodes =
+          Parser(tokens, includeResolver: (_, __) => TextNode('')).parse();
       expect(findCodeNodes(nodes), isEmpty);
     });
 
-    test('emitServer generates a component with state/derived/@if bindings', () {
+    test('emitServer generates a component with state/derived/@if bindings',
+        () {
       const source = r'''
 @code {
   var count = $state(0);
@@ -53,9 +56,11 @@ void main() {
 </div>
 ''';
 
-      final output = buildEmitter(source, className: 'CounterComponent').emitServer();
+      final output =
+          buildEmitter(source, className: 'CounterComponent').emitServer();
 
-      expect(output, contains('class CounterComponent extends CluritComponent'));
+      expect(
+          output, contains('class CounterComponent extends CluritComponent'));
       expect(output, contains('int _count;'));
       expect(output, contains('int get count => _count;'));
       expect(output, contains("markDirty('count')"));
@@ -70,7 +75,8 @@ void main() {
       expect(output, isNot(contains('package:web')));
     });
 
-    test('emitClient generates a hydration subclass with targeted DOM updates', () {
+    test('emitClient generates a hydration subclass with targeted DOM updates',
+        () {
       const source = r'''
 @code {
   var count = $state(0);
@@ -92,7 +98,8 @@ void main() {
         className: 'CounterComponent',
       ).emitClient('counter.clurit.dart');
 
-      expect(output, contains('class CounterComponentClient extends CounterComponent'));
+      expect(output,
+          contains('class CounterComponentClient extends CounterComponent'));
       expect(output, contains("import 'counter.clurit.dart';"));
       expect(output, contains('Future<void> hydrate(web.Element root) async'));
       expect(output, contains('_nodes = captureClNodes(root)'));
@@ -167,7 +174,8 @@ void main() {
       expect(output, isNot(contains('onInit')));
     });
 
-    test('emitServer renders an attribute-context echo without anchor comments', () {
+    test('emitServer renders an attribute-context echo without anchor comments',
+        () {
       const source = r'''
 @code {
   var name = $state('');
@@ -177,7 +185,8 @@ void main() {
 <p>{{ $name }}</p>
 ''';
 
-      final output = buildEmitter(source, className: 'FormComponent').emitServer();
+      final output =
+          buildEmitter(source, className: 'FormComponent').emitServer();
 
       expect(output, contains('<input cl-model="name" value="'));
       expect(output, contains('buf.write(escapeHtml(stringify(name)));'));
@@ -187,7 +196,8 @@ void main() {
       expect(output, contains('<!--cl:0-->'));
     });
 
-    test('emitClient wires cl-model two-way binding for a bound state field', () {
+    test('emitClient wires cl-model two-way binding for a bound state field',
+        () {
       const source = r'''
 @code {
   var name = $state('');
@@ -205,7 +215,8 @@ void main() {
       expect(output, contains("bindModels(_nodes, {'name': (v) => name = v})"));
       expect(
         output,
-        contains("registerUpdater('name', () => setModelValue(_nodes, 'name', name.toString()))"),
+        contains(
+            "registerUpdater('name', () => setModelValue(_nodes, 'name', name.toString()))"),
       );
     });
 
@@ -225,7 +236,8 @@ void main() {
 
       expect(
         output,
-        contains("bindModels(_nodes, {'age': (v) => age = int.tryParse(v) ?? age})"),
+        contains(
+            "bindModels(_nodes, {'age': (v) => age = int.tryParse(v) ?? age})"),
       );
     });
 
@@ -238,7 +250,8 @@ void main() {
 <h1>{{ $title }}</h1>
 ''';
 
-      final output = buildEmitter(source, className: 'HeadingComponent').emitServer();
+      final output =
+          buildEmitter(source, className: 'HeadingComponent').emitServer();
 
       expect(output, contains('final String title;'));
       expect(output, contains('required this.title'));
@@ -254,7 +267,8 @@ void main() {
 <h1>{{ $title }}: {{ $count }}</h1>
 ''';
 
-      final output = buildEmitter(source, className: 'HeadingComponent').emitServer();
+      final output =
+          buildEmitter(source, className: 'HeadingComponent').emitServer();
 
       expect(output, contains("'count': count,"));
       expect(output, contains("'title': title,"));

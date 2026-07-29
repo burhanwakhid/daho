@@ -42,7 +42,8 @@ class Lexer {
         final endIdx = source.indexOf('}}', pos + 3);
         if (endIdx != -1) {
           // Keep the {{ ... }} but drop the @
-          tokens.add(Token(TokenType.text, source.substring(pos + 1, endIdx + 2)));
+          tokens.add(
+              Token(TokenType.text, source.substring(pos + 1, endIdx + 2)));
           pos = endIdx + 2;
           continue;
         }
@@ -118,11 +119,15 @@ class Lexer {
           }
 
           // Handle @(...) for expressions/lambdas
-          if (keyword.isEmpty && source[pos] == '@' && pos + 1 < source.length && source[pos + 1] == '(') {
+          if (keyword.isEmpty &&
+              source[pos] == '@' &&
+              pos + 1 < source.length &&
+              source[pos + 1] == '(') {
             int closeParen = _findClosingParen(source, pos + 1);
             if (closeParen != -1) {
               final expression = source.substring(pos + 2, closeParen);
-              tokens.add(Token(TokenType.echoEscaped, expression)); // Reuse echoEscaped for now
+              tokens.add(Token(TokenType.echoEscaped,
+                  expression)); // Reuse echoEscaped for now
               pos = closeParen + 1;
               continue;
             }

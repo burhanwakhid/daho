@@ -28,9 +28,9 @@ class DerivedField {
     this.exprSource,
     this.blockBodySource,
   }) : assert(
-         (exprSource == null) != (blockBodySource == null),
-         'exactly one of exprSource/blockBodySource must be set',
-       );
+          (exprSource == null) != (blockBodySource == null),
+          'exactly one of exprSource/blockBodySource must be set',
+        );
 }
 
 /// A `$props()` field — a value sourced from the component's initial render
@@ -123,7 +123,8 @@ class ComponentModel {
 class CodeAnalyzer {
   static ComponentModel analyze(String codeBlockSource) {
     final wrapped = 'class _CluritComponent {\n$codeBlockSource\n}';
-    final parseResult = parseString(content: wrapped, throwIfDiagnostics: false);
+    final parseResult =
+        parseString(content: wrapped, throwIfDiagnostics: false);
     final classDecl =
         parseResult.unit.declarations.whereType<ClassDeclaration>().first;
 
@@ -189,7 +190,9 @@ class CodeAnalyzer {
       final name = variable.name.lexeme;
       final args = init.argumentList.arguments;
 
-      if (init.target == null && init.methodName.name == r'$state' && args.length == 1) {
+      if (init.target == null &&
+          init.methodName.name == r'$state' &&
+          args.length == 1) {
         final typeArg = init.typeArguments?.arguments;
         final type = declaredType ??
             (typeArg != null && typeArg.isNotEmpty
@@ -206,9 +209,14 @@ class CodeAnalyzer {
         continue;
       }
 
-      if (init.target == null && init.methodName.name == r'$derived' && args.length == 1) {
+      if (init.target == null &&
+          init.methodName.name == r'$derived' &&
+          args.length == 1) {
         derivedFields.add(
-          DerivedField(name: name, type: declaredType, exprSource: args.first.toSource()),
+          DerivedField(
+              name: name,
+              type: declaredType,
+              exprSource: args.first.toSource()),
         );
         anyRune = true;
         continue;
@@ -224,7 +232,8 @@ class CodeAnalyzer {
           DerivedField(
             name: name,
             type: declaredType,
-            blockBodySource: _functionBodySource(args.first as FunctionExpression),
+            blockBodySource:
+                _functionBodySource(args.first as FunctionExpression),
           ),
         );
         anyRune = true;
@@ -238,8 +247,11 @@ class CodeAnalyzer {
         }
         final typeArg = init.typeArguments?.arguments;
         final type = declaredType ??
-            (typeArg != null && typeArg.isNotEmpty ? typeArg.first.toSource() : 'dynamic');
-        propFields.add(PropField(name: name, type: type, overrideName: overrideName));
+            (typeArg != null && typeArg.isNotEmpty
+                ? typeArg.first.toSource()
+                : 'dynamic');
+        propFields
+            .add(PropField(name: name, type: type, overrideName: overrideName));
         anyRune = true;
         continue;
       }
@@ -260,8 +272,8 @@ class CodeAnalyzer {
   }) {
     final isLifecycleHook =
         (member.name.lexeme == 'onInit' || member.name.lexeme == 'onDestroy') &&
-        !member.isGetter &&
-        !member.isSetter;
+            !member.isGetter &&
+            !member.isSetter;
 
     if (!isLifecycleHook || member.body is! BlockFunctionBody) {
       if (isLifecycleHook) {
@@ -320,7 +332,8 @@ class CodeAnalyzer {
   /// `onDestroy()` (client-only themselves, e.g. a "retry" button
   /// re-running `onInit()`'s fetch) — either way, this member must be
   /// emitted client-only too, transitively.
-  static bool _usesClientOnlyApi(String source) => _clientOnlyApiPattern.hasMatch(source);
+  static bool _usesClientOnlyApi(String source) =>
+      _clientOnlyApiPattern.hasMatch(source);
 
   /// Returns the `$effect(() { ... })`'s closure, if [statement] is exactly
   /// an `$effect(...)` call expression statement.
@@ -353,7 +366,8 @@ class CodeAnalyzer {
   static String _functionBodySource(FunctionExpression fn) {
     final body = fn.body;
     if (body is BlockFunctionBody) return body.block.toSource();
-    if (body is ExpressionFunctionBody) return '=> ${body.expression.toSource()};';
+    if (body is ExpressionFunctionBody)
+      return '=> ${body.expression.toSource()};';
     return body.toSource();
   }
 }

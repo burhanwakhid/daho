@@ -16,8 +16,10 @@ void main() {
       expect(model.stateFields.single.type, 'double');
     });
 
-    test('reads the type argument off \$state<T>(...) when no declared type', () {
-      final model = CodeAnalyzer.analyze('var items = \$state<List<String>>([]);');
+    test('reads the type argument off \$state<T>(...) when no declared type',
+        () {
+      final model =
+          CodeAnalyzer.analyze('var items = \$state<List<String>>([]);');
       expect(model.stateFields.single.type, 'List<String>');
     });
 
@@ -40,7 +42,8 @@ final greeting = $derived.by(() {
 ''');
       expect(model.derivedFields, hasLength(1));
       expect(model.derivedFields.single.exprSource, isNull);
-      expect(model.derivedFields.single.blockBodySource, contains("return 'Hello"));
+      expect(model.derivedFields.single.blockBodySource,
+          contains("return 'Hello"));
     });
 
     test('classifies a \$props field with a generic type argument', () {
@@ -57,7 +60,8 @@ final greeting = $derived.by(() {
       expect(model.propFields.single.overrideName, 'title');
     });
 
-    test('extracts an \$effect call from onInit and strips it from the method', () {
+    test('extracts an \$effect call from onInit and strips it from the method',
+        () {
       final model = CodeAnalyzer.analyze(r'''
 var count = $state(0);
 
@@ -124,7 +128,8 @@ void doNothing() {}
       expect(model.eventHandlerNames, contains('doNothing'));
     });
 
-    test('handles multi-line signatures, generics, and doc comments '
+    test(
+        'handles multi-line signatures, generics, and doc comments '
         'that broke the old regex-based generator', () {
       final model = CodeAnalyzer.analyze(r'''
 /// A doc comment above a field.
@@ -145,7 +150,8 @@ Map<String, List<int>> buildIndex(
       );
     });
 
-    test('handles async onInit with awaited statements alongside an effect', () {
+    test('handles async onInit with awaited statements alongside an effect',
+        () {
       final model = CodeAnalyzer.analyze(r'''
 var count = $state(0);
 

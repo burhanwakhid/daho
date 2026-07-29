@@ -23,11 +23,11 @@ class CluritEngine {
   final Map<String, dynamic> _shared = {};
 
   CluritEngine({required this.viewsPath, String? cachePath, bool debug = false})
-    : _cache = TemplateCache(cachePath: cachePath, debug: debug),
-      _compiler = Compiler(
-        viewsPath: viewsPath,
-        includeResolver: _createResolver(viewsPath),
-      ) {
+      : _cache = TemplateCache(cachePath: cachePath, debug: debug),
+        _compiler = Compiler(
+          viewsPath: viewsPath,
+          includeResolver: _createResolver(viewsPath),
+        ) {
     // Register core directives
     _directives.addAll(CoreDirectives.all());
   }
@@ -189,7 +189,7 @@ class _FunctionDirective implements Directive {
   @override
   final String name;
   final String Function(List<String> args, Map<String, dynamic> context)
-  handler;
+      handler;
 
   _FunctionDirective(this.name, this.handler);
 

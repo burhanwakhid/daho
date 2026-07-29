@@ -133,7 +133,8 @@ void bindActions(CapturedNodes nodes, Map<String, void Function()> handlers) {
 /// binding. Pair with [setModelValue], registered as a normal field
 /// updater, for the "read" half (keeping the element in sync when the
 /// field changes from elsewhere, e.g. a reset button).
-void bindModels(CapturedNodes nodes, Map<String, void Function(String)> setters) {
+void bindModels(
+    CapturedNodes nodes, Map<String, void Function(String)> setters) {
   setters.forEach((field, setValue) {
     nodes.models[field]?.addEventListener(
       'input',
@@ -166,9 +167,12 @@ String _elementValue(web.EventTarget? target) {
 }
 
 void _setElementValue(web.Element el, String value) {
-  if (el.isA<web.HTMLInputElement>()) (el as web.HTMLInputElement).value = value;
-  if (el.isA<web.HTMLTextAreaElement>()) (el as web.HTMLTextAreaElement).value = value;
-  if (el.isA<web.HTMLSelectElement>()) (el as web.HTMLSelectElement).value = value;
+  if (el.isA<web.HTMLInputElement>())
+    (el as web.HTMLInputElement).value = value;
+  if (el.isA<web.HTMLTextAreaElement>())
+    (el as web.HTMLTextAreaElement).value = value;
+  if (el.isA<web.HTMLSelectElement>())
+    (el as web.HTMLSelectElement).value = value;
 }
 
 /// Parses an HTML fragment string into real DOM nodes via a `<template>`
@@ -176,7 +180,8 @@ void _setElementValue(web.Element el, String value) {
 /// `@if`/`@foreach` fragment-rebuild methods, which render their content to
 /// a string through the exact same code path as SSR.
 List<web.Node> parseFragment(String html) {
-  final template = web.document.createElement('template') as web.HTMLTemplateElement;
+  final template =
+      web.document.createElement('template') as web.HTMLTemplateElement;
   template.innerHTML = html.toJS;
   final nodes = <web.Node>[];
   final children = template.content.childNodes;

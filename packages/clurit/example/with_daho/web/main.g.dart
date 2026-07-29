@@ -14,15 +14,25 @@ Future<void> hydrateCurrentPage(web.Element root) async {
   switch (web.window.location.pathname) {
     case '/greeter':
       await _page1.loadLibrary();
-      _page1.GreeterComponentClient(greetIndex: state['greetIndex'] as int?).hydrate(root);
+      _page1.GreeterComponentClient(greetIndex: state['greetIndex'] as int?)
+          .hydrate(root);
       break;
     case '/posts':
       await _page2.loadLibrary();
-      _page2.PostsComponentClient(loading: state['loading'] as bool?, errorMessage: state['errorMessage'], posts: (state['posts'] as List?)?.cast<Map<String, dynamic>>()).hydrate(root);
+      _page2.PostsComponentClient(
+              loading: state['loading'] as bool?,
+              errorMessage: state['errorMessage'],
+              posts: (state['posts'] as List?)?.cast<Map<String, dynamic>>())
+          .hydrate(root);
       break;
     default:
       await _page0.loadLibrary();
-      _page0.IndexComponentClient(counter: state['counter'] as int?, items: (state['items'] as List?)?.cast<String>(), name: state['name'] as String?, message: state['message'] as String).hydrate(root);
+      _page0.IndexComponentClient(
+              counter: state['counter'] as int?,
+              items: (state['items'] as List?)?.cast<String>(),
+              name: state['name'] as String?,
+              message: state['message'] as String)
+          .hydrate(root);
       break;
   }
 }

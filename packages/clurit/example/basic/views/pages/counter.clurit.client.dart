@@ -14,7 +14,8 @@ class CounterComponentClient extends CounterComponent {
 
   Future<void> hydrate(web.Element root) async {
     _nodes = captureClNodes(root);
-    bindActions(_nodes, {'increment': increment, 'reset': reset, 'clearName': clearName});
+    bindActions(_nodes,
+        {'increment': increment, 'reset': reset, 'clearName': clearName});
 
     registerUpdater('count', _applyBinding0);
     registerUpdater('count', _applyBinding1);
@@ -24,8 +25,8 @@ class CounterComponentClient extends CounterComponent {
     registerUpdater('name', _applyBinding3);
     registerUpdater('logs', _applyBinding4);
     bindModels(_nodes, {'name': (v) => name = v});
-    registerUpdater('name', () => setModelValue(_nodes, 'name', name.toString()));
-
+    registerUpdater(
+        'name', () => setModelValue(_nodes, 'name', name.toString()));
   }
 
   void _applyBinding0() {
@@ -37,12 +38,15 @@ class CounterComponentClient extends CounterComponent {
   }
 
   void _applyBinding2() {
-    _nodes.anchors[2]!.setNodes(ExpressionEvaluator.isTruthy(count > 10) ? _fragment2Then() : _fragment2Else());
+    _nodes.anchors[2]!.setNodes(ExpressionEvaluator.isTruthy(count > 10)
+        ? _fragment2Then()
+        : _fragment2Else());
   }
 
   List<web.Node> _fragment2Then() {
     final buf = StringBuffer();
-     buf.write('\n            <p style="color: #16a34a; font-weight: 600;">Goal reached!</p>\n        ');
+    buf.write(
+        '\n            <p style="color: #16a34a; font-weight: 600;">Goal reached!</p>\n        ');
     return parseFragment(buf.toString());
   }
 
@@ -56,22 +60,26 @@ class CounterComponentClient extends CounterComponent {
   }
 
   void _applyBinding4() {
-    _nodes.anchors[4]!.setNodes(ExpressionEvaluator.isTruthy(logs.isNotEmpty) ? _fragment4Then() : _fragment4Else());
+    _nodes.anchors[4]!.setNodes(ExpressionEvaluator.isTruthy(logs.isNotEmpty)
+        ? _fragment4Then()
+        : _fragment4Else());
   }
 
   List<web.Node> _fragment4Then() {
     final buf = StringBuffer();
-     buf.write('\n        <div style="margin-top: 2rem;">\n            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Action Logs:</h3>\n            ');
-     buf.write('<!--cl-for:5-->');
-     for (final log in (logs)) {
-       buf.write('\n                <div style="font-size: 0.875rem; color: #6b7280; border-left: 2px solid #e5e7eb; padding-left: 0.5rem; margin-bottom: 0.25rem;">\n                    ');
-       buf.write('<!--cl:6-->');
-       buf.write(escapeHtml(stringify(log)));
-       buf.write('<!--/cl:6-->');
-       buf.write('\n                </div>\n            ');
-     }
-     buf.write('<!--/cl-for:5-->');
-     buf.write('\n        </div>\n    ');
+    buf.write(
+        '\n        <div style="margin-top: 2rem;">\n            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Action Logs:</h3>\n            ');
+    buf.write('<!--cl-for:5-->');
+    for (final log in (logs)) {
+      buf.write(
+          '\n                <div style="font-size: 0.875rem; color: #6b7280; border-left: 2px solid #e5e7eb; padding-left: 0.5rem; margin-bottom: 0.25rem;">\n                    ');
+      buf.write('<!--cl:6-->');
+      buf.write(escapeHtml(stringify(log)));
+      buf.write('<!--/cl:6-->');
+      buf.write('\n                </div>\n            ');
+    }
+    buf.write('<!--/cl-for:5-->');
+    buf.write('\n        </div>\n    ');
     return parseFragment(buf.toString());
   }
 
@@ -79,5 +87,4 @@ class CounterComponentClient extends CounterComponent {
     final buf = StringBuffer();
     return parseFragment(buf.toString());
   }
-
 }

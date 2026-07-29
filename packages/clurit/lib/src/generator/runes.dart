@@ -30,6 +30,6 @@ void $effect(void Function() fn) {}
 /// Marks a value sourced from the component's initial render data:
 /// `final title = $props<String>();`
 T $props<T>([String? name]) => throw UnsupportedError(
-  r'$props() is a compile-time marker resolved by the Clurit builder; '
-  'it must not be called at runtime.',
-);
+      r'$props() is a compile-time marker resolved by the Clurit builder; '
+      'it must not be called at runtime.',
+    );

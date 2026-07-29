@@ -13,7 +13,8 @@ void setupRoutes(Daho app) {
   // `cluritComponents` is generated from every @code-bearing .clurit file
   // under views/ — see clurit_routes.yaml / CluritRoutesBuilder — so no
   // per-page `app.registerComponent(...)` call is needed by hand.
-  app.configureClurit(viewsPath: viewsPath, debug: true, components: cluritComponents);
+  app.configureClurit(
+      viewsPath: viewsPath, debug: true, components: cluritComponents);
 
   // Serve static files (for the compiled client bundle). Mounted under
   // /js rather than '/' — daho's serveStatic and a `.get('/', ...)` route

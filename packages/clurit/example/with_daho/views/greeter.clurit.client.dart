@@ -22,5 +22,4 @@ class GreeterComponentClient extends GreeterComponent {
   void _applyBinding1() {
     _nodes.anchors[1]!.setText(escapeHtml(stringify(currentName)));
   }
-
 }

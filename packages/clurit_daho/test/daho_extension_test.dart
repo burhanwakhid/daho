@@ -27,14 +27,17 @@ void main() {
       expect(factory!({}), same(fake));
     });
 
-    test('registerComponent still works standalone (not a breaking change)', () {
-      final app = Daho();
-      final fake = _FakeComponent();
+    test(
+      'registerComponent still works standalone (not a breaking change)',
+      () {
+        final app = Daho();
+        final fake = _FakeComponent();
 
-      app.configureClurit(viewsPath: 'views');
-      app.registerComponent('manual', (data) => fake);
+        app.configureClurit(viewsPath: 'views');
+        app.registerComponent('manual', (data) => fake);
 
-      expect(CluritDahoExtension.factoryFor('manual')!({}), same(fake));
-    });
+        expect(CluritDahoExtension.factoryFor('manual')!({}), same(fake));
+      },
+    );
   });
 }

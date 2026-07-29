@@ -8,13 +8,19 @@ import 'package:web/web.dart' as web;
 import 'index.clurit.dart';
 
 class IndexComponentClient extends IndexComponent {
-  IndexComponentClient({super.counter, super.items, super.name, required super.message});
+  IndexComponentClient(
+      {super.counter, super.items, super.name, required super.message});
 
   late final CapturedNodes _nodes;
 
   Future<void> hydrate(web.Element root) async {
     _nodes = captureClNodes(root);
-    bindActions(_nodes, {'increment': increment, 'reset': reset, 'loadItems': loadItems, 'clearName': clearName});
+    bindActions(_nodes, {
+      'increment': increment,
+      'reset': reset,
+      'loadItems': loadItems,
+      'clearName': clearName
+    });
 
     registerUpdater('counter', _applyBinding2);
     registerUpdater('items', _applyBinding2);
@@ -24,7 +30,8 @@ class IndexComponentClient extends IndexComponent {
     registerUpdater('counter', _applyBinding5);
     registerUpdater('items', _applyBinding7);
     bindModels(_nodes, {'name': (v) => name = v});
-    registerUpdater('name', () => setModelValue(_nodes, 'name', name.toString()));
+    registerUpdater(
+        'name', () => setModelValue(_nodes, 'name', name.toString()));
 
     registerUpdater('counter', _effect0);
 
@@ -45,16 +52,19 @@ class IndexComponentClient extends IndexComponent {
   }
 
   void _applyBinding5() {
-    _nodes.anchors[5]!.setNodes(ExpressionEvaluator.isTruthy(counter > 5) ? _fragment5Then() : _fragment5Else());
+    _nodes.anchors[5]!.setNodes(ExpressionEvaluator.isTruthy(counter > 5)
+        ? _fragment5Then()
+        : _fragment5Else());
   }
 
   List<web.Node> _fragment5Then() {
     final buf = StringBuffer();
-     buf.write('\n            <div class="text-red-600 font-semibold">Wow! Counter reached ');
-     buf.write('<!--cl:6-->');
-     buf.write(escapeHtml(stringify(counter)));
-     buf.write('<!--/cl:6-->');
-     buf.write('!</div>\n        ');
+    buf.write(
+        '\n            <div class="text-red-600 font-semibold">Wow! Counter reached ');
+    buf.write('<!--cl:6-->');
+    buf.write(escapeHtml(stringify(counter)));
+    buf.write('<!--/cl:6-->');
+    buf.write('!</div>\n        ');
     return parseFragment(buf.toString());
   }
 
@@ -74,16 +84,17 @@ class IndexComponentClient extends IndexComponent {
 
   List<web.Node> _fragmentItem7(dynamic item) {
     final buf = StringBuffer();
-     buf.write('\n            <li>');
-     buf.write('<!--cl:8-->');
-     buf.write(escapeHtml(stringify(item)));
-     buf.write('<!--/cl:8-->');
-     buf.write('</li>\n        ');
+    buf.write('\n            <li>');
+    buf.write('<!--cl:8-->');
+    buf.write(escapeHtml(stringify(item)));
+    buf.write('<!--/cl:8-->');
+    buf.write('</li>\n        ');
     return parseFragment(buf.toString());
   }
 
-  void _effect0() {print('Clurit: counter is now $counter');}
+  void _effect0() {
+    print('Clurit: counter is now $counter');
+  }
 
-void onInit() {}
-
+  void onInit() {}
 }

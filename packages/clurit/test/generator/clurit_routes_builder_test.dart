@@ -20,8 +20,10 @@ ComponentAnalyzerResult _fixtureComponent({
       eventHandlerNames: const [],
     ),
     className: className,
-    clientImportPath: clientImportPath ?? '../views/${className.toLowerCase()}.clurit.client.dart',
-    serverImportPath: serverImportPath ?? 'views/${className.toLowerCase()}.clurit.dart',
+    clientImportPath: clientImportPath ??
+        '../views/${className.toLowerCase()}.clurit.client.dart',
+    serverImportPath:
+        serverImportPath ?? 'views/${className.toLowerCase()}.clurit.dart',
   );
 }
 
@@ -38,14 +40,16 @@ void main() {
     });
 
     test('maps any other filename to /<filename>', () {
-      expect(builder.routeFor(AssetId('app', 'views/greeter.clurit')), '/greeter');
+      expect(
+          builder.routeFor(AssetId('app', 'views/greeter.clurit')), '/greeter');
       expect(
         builder.routeFor(AssetId('app', 'views/pages/user_profile.clurit')),
         '/user_profile',
       );
     });
 
-    test('declares web/main.g.dart and clurit_components.g.dart as outputs', () {
+    test('declares web/main.g.dart and clurit_components.g.dart as outputs',
+        () {
       expect(
         builder.buildExtensions,
         {
@@ -62,7 +66,9 @@ void main() {
           '/',
           _fixtureComponent(
             className: 'IndexComponent',
-            stateFields: [StateField(name: 'count', type: 'int', initializerSource: '0')],
+            stateFields: [
+              StateField(name: 'count', type: 'int', initializerSource: '0')
+            ],
             propFields: [PropField(name: 'title', type: 'String')],
           ),
         ),
@@ -87,13 +93,18 @@ void main() {
       expect(output, contains("'greeter': (data) => GreeterComponent(),"));
     });
 
-    test('casts a nullable-optional \$state List<T> but a required non-null \$props List<T>', () {
+    test(
+        'casts a nullable-optional \$state List<T> but a required non-null \$props List<T>',
+        () {
       final pages = [
         PageRoute(
           '/',
           _fixtureComponent(
             className: 'X',
-            stateFields: [StateField(name: 'logs', type: 'List<String>', initializerSource: '[]')],
+            stateFields: [
+              StateField(
+                  name: 'logs', type: 'List<String>', initializerSource: '[]')
+            ],
             propFields: [PropField(name: 'tags', type: 'List<String>')],
           ),
         ),
@@ -113,7 +124,9 @@ void main() {
           '/',
           _fixtureComponent(
             className: 'IndexComponent',
-            stateFields: [StateField(name: 'count', type: 'int', initializerSource: '0')],
+            stateFields: [
+              StateField(name: 'count', type: 'int', initializerSource: '0')
+            ],
           ),
         ),
         PageRoute('/greeter', _fixtureComponent(className: 'GreeterComponent')),
@@ -121,12 +134,16 @@ void main() {
 
       final output = builder.emitClientBootstrap(pages);
 
-      expect(output, contains("import '../views/indexcomponent.clurit.client.dart' deferred as _page0;"));
+      expect(
+          output,
+          contains(
+              "import '../views/indexcomponent.clurit.client.dart' deferred as _page0;"));
       expect(output, contains("case '/greeter':"));
       expect(output, contains('await _page1.loadLibrary();'));
       expect(
         output,
-        contains("_page0.IndexComponentClient(count: state['count'] as int?).hydrate(root);"),
+        contains(
+            "_page0.IndexComponentClient(count: state['count'] as int?).hydrate(root);"),
       );
       expect(output, contains('CluritRouter('));
       expect(output, contains("contentSelector: '#app',"));

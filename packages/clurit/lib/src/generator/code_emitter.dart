@@ -97,7 +97,8 @@ class CodeEmitter {
       // Nullable-optional-with-fallback, rather than `Type name = <initializer>`,
       // since the initializer may be a non-const literal (e.g. `[]`), which
       // Dart's parameter-default-value position requires to be constant.
-      final paramType = (type == 'dynamic' || type.endsWith('?')) ? type : '$type?';
+      final paramType =
+          (type == 'dynamic' || type.endsWith('?')) ? type : '$type?';
       params.add('$paramType ${f.name}');
       inits.add('_${f.name} = ${f.name} ?? ${f.initializerSource}');
     }
@@ -145,9 +146,8 @@ class CodeEmitter {
         buf.writeln('$indent buf.write(${_dartStringLiteral(node.content)});');
       } else if (node is EchoNode) {
         final expr = toDartExpr(node.expression);
-        final valueExpr = node.escaped
-            ? 'escapeHtml(stringify($expr))'
-            : 'stringify($expr)';
+        final valueExpr =
+            node.escaped ? 'escapeHtml(stringify($expr))' : 'stringify($expr)';
         if (bindings.has(node)) {
           final id = bindings.idFor(node);
           buf.writeln("$indent buf.write('<!--cl:$id-->');");
@@ -202,10 +202,12 @@ class CodeEmitter {
       if (component.onDestroySource != null) component.onDestroySource!,
       ...component.clientOnlyMemberSources,
     ].join('\n');
-    if (clientOnlySource.contains('jsonDecode') || clientOnlySource.contains('jsonEncode')) {
+    if (clientOnlySource.contains('jsonDecode') ||
+        clientOnlySource.contains('jsonEncode')) {
       buf.writeln("import 'dart:convert';");
     }
-    if (clientOnlySource.contains('.toJS') || clientOnlySource.contains('.toDart')) {
+    if (clientOnlySource.contains('.toJS') ||
+        clientOnlySource.contains('.toDart')) {
       buf.writeln("import 'dart:js_interop';");
     }
     buf.writeln("import 'package:clurit/clurit.dart';");
@@ -256,9 +258,8 @@ class CodeEmitter {
     buf.writeln('  Future<void> hydrate(web.Element root) async {');
     buf.writeln('    _nodes = captureClNodes(root);');
 
-    final actionEntries = component.eventHandlerNames
-        .map((name) => "'$name': $name")
-        .join(', ');
+    final actionEntries =
+        component.eventHandlerNames.map((name) => "'$name': $name").join(', ');
     buf.writeln('    bindActions(_nodes, {$actionEntries});');
     buf.writeln();
 
@@ -285,7 +286,8 @@ class CodeEmitter {
     }
 
     for (var i = 0; i < component.effects.length; i++) {
-      for (final dep in _fieldsReferencedInDartSource(component.effects[i].bodySource)) {
+      for (final dep
+          in _fieldsReferencedInDartSource(component.effects[i].bodySource)) {
         buf.writeln("    registerUpdater('$dep', _effect$i);");
       }
     }
@@ -308,7 +310,8 @@ class CodeEmitter {
   }
 
   int? _topLevelId(Node node) {
-    if ((node is EchoNode || node is IfNode || node is ForeachNode) && bindings.has(node)) {
+    if ((node is EchoNode || node is IfNode || node is ForeachNode) &&
+        bindings.has(node)) {
       return bindings.idFor(node);
     }
     return null;
@@ -351,9 +354,8 @@ class CodeEmitter {
         if (_topLevelDeps(node).isEmpty) continue;
         final id = bindings.idFor(node);
         final expr = toDartExpr(node.expression);
-        final valueExpr = node.escaped
-            ? 'escapeHtml(stringify($expr))'
-            : 'stringify($expr)';
+        final valueExpr =
+            node.escaped ? 'escapeHtml(stringify($expr))' : 'stringify($expr)';
         buf.writeln('  void _applyBinding$id() {');
         buf.writeln("    _nodes.anchors[$id]!.setText($valueExpr);");
         buf.writeln('  }');
@@ -370,14 +372,14 @@ class CodeEmitter {
         buf.writeln('  }');
         buf.writeln();
         _emitFragmentMethod(buf, '_fragment${id}Then', node.thenBody, []);
-        _emitFragmentMethod(buf, '_fragment${id}Else', node.elseBody ?? const [], []);
+        _emitFragmentMethod(
+            buf, '_fragment${id}Else', node.elseBody ?? const [], []);
       } else if (node is ForeachNode) {
         if (_topLevelDeps(node).isEmpty) continue;
         final id = bindings.idFor(node);
         final iterable = toDartExpr(node.iterableExpr);
-        final itemArgs = node.key != null
-            ? '${node.variable}, ${node.key}'
-            : node.variable;
+        final itemArgs =
+            node.key != null ? '${node.variable}, ${node.key}' : node.variable;
         buf.writeln('  void _applyBinding$id() {');
         buf.writeln('    final _items$id = ($iterable);');
         buf.writeln('    final _built$id = <web.Node>[];');
@@ -395,7 +397,8 @@ class CodeEmitter {
         final params = node.key != null
             ? 'dynamic ${node.variable}, dynamic ${node.key}'
             : 'dynamic ${node.variable}';
-        _emitFragmentMethod(buf, '_fragmentItem$id', node.body, [], params: params);
+        _emitFragmentMethod(buf, '_fragmentItem$id', node.body, [],
+            params: params);
       }
     }
   }
@@ -433,7 +436,8 @@ class CodeEmitter {
     void visit(List<Node> nodes) {
       for (final node in nodes) {
         if (node is TextNode) {
-          names.addAll(pattern.allMatches(node.content).map((m) => m.group(1)!));
+          names
+              .addAll(pattern.allMatches(node.content).map((m) => m.group(1)!));
         } else if (node is IfNode) {
           visit(node.thenBody);
           if (node.elseBody != null) visit(node.elseBody!);
@@ -474,7 +478,8 @@ class CodeEmitter {
       ...component.derivedFields.map((f) => f.name),
     ];
     final refs = allNames.where(
-      (name) => RegExp(r'\b' + RegExp.escape(name) + r'\b').hasMatch(dartSource),
+      (name) =>
+          RegExp(r'\b' + RegExp.escape(name) + r'\b').hasMatch(dartSource),
     );
     return _classifyFieldRefs(refs);
   }

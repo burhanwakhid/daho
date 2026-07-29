@@ -26,7 +26,7 @@ class ParsedTemplate {
 class Compiler {
   final String viewsPath;
   final Node Function(String template, Map<String, dynamic>? data)
-  includeResolver;
+      includeResolver;
 
   Compiler({required this.viewsPath, required this.includeResolver});
 

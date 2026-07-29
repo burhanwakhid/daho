@@ -23,8 +23,8 @@ Builder cluritActionBuilder(BuilderOptions options) => CluritGenerator();
 class CluritGenerator implements Builder {
   @override
   Map<String, List<String>> get buildExtensions => {
-    '.clurit': ['.clurit.dart', '.clurit.client.dart'],
-  };
+        '.clurit': ['.clurit.dart', '.clurit.client.dart'],
+      };
 
   @override
   Future<void> build(BuildStep buildStep) async {

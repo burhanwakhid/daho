@@ -8,8 +8,7 @@ class DirectiveNode extends Node {
     String name,
     List<String> args,
     Map<String, dynamic> context,
-  )
-  handler;
+  ) handler;
 
   DirectiveNode({
     required this.name,

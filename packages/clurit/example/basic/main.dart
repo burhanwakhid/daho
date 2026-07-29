@@ -23,8 +23,7 @@ void main() {
   // A @code-bearing template's generated component is constructed and
   // rendered directly, bypassing the Blade engine.
   final counter = CounterComponent(count: 5);
-  final html =
-      '''
+  final html = '''
 <!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><title>Counter Demo</title></head>

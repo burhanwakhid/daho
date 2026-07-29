@@ -86,7 +86,8 @@ void main() {
       expect(model.has(echo), isFalse);
     });
 
-    test('still assigns an id to an echo in element content after an attribute', () {
+    test('still assigns an id to an echo in element content after an attribute',
+        () {
       final nodes = parse('<input value="{{ \$name }}">{{ \$other }}');
       final model = BindingResolver.resolve(nodes);
       final echoes = nodes.whereType<EchoNode>().toList();
@@ -95,7 +96,9 @@ void main() {
       expect(model.idFor(echoes[1]), 0);
     });
 
-    test('resumes attribute-value tracking correctly across multiple attributes', () {
+    test(
+        'resumes attribute-value tracking correctly across multiple attributes',
+        () {
       final nodes = parse(
         '<input value="{{ \$a }}" data-x="static" placeholder="{{ \$b }}">{{ \$c }}',
       );

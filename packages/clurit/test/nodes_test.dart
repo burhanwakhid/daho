@@ -236,11 +236,16 @@ void main() {
       expect(result, contains('-Y-'));
     });
 
-    test('does not inject cl-ssr-for markers or a hydration template block', () {
+    test('does not inject cl-ssr-for markers or a hydration template block',
+        () {
       final node = ForeachNode(
         iterableExpr: '\$items',
         variable: 'item',
-        body: [TextNode('<li>'), EchoNode('\$item', escaped: true), TextNode('</li>')],
+        body: [
+          TextNode('<li>'),
+          EchoNode('\$item', escaped: true),
+          TextNode('</li>')
+        ],
       );
       final result = node.compile({
         'items': ['A', 'B'],

@@ -34,7 +34,7 @@ class DeferredBodyNode extends Node {
 class Parser {
   final List<Token> tokens;
   final Node Function(String template, Map<String, dynamic>? data)
-  includeResolver;
+      includeResolver;
   int _pos = 0;
   bool _insideSection = false;
 
