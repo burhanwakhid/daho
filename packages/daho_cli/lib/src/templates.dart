@@ -96,9 +96,15 @@ pubspec.lock
 /// `packages/daho/c_src/CMakeLists.txt` explicitly links OpenSSL/zlib
 /// itself rather than assuming a shared `libh2o-evloop.so` will carry
 /// those transitively (which is what Homebrew's package happens to do).
+///
+/// `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` is required: without it this
+/// static archive isn't `-fPIC` and fails to link into `libh2o_wrapper.so`
+/// (`relocation R_X86_64_TPOFF32 ... can not be used when making a shared
+/// object`) — Homebrew's macOS package sidesteps this by shipping a
+/// pre-built *shared* `libh2o-evloop.dylib` instead.
 const String h2oFromSourceInstallStep = '''
 RUN git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o \\
-    && cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \\
+    && cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \\
     && cmake --build /tmp/h2o/build --target libh2o-evloop -- -j\$(nproc) \\
     && install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a \\
     && cp -r /tmp/h2o/include/. /usr/local/include/ \\

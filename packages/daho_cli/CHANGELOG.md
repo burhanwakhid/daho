@@ -1,3 +1,16 @@
+## 0.1.3+2
+
+- Fix: the from-source H2O build command (`h2oBuildFromSourceCommand` in
+  `toolchain.dart`, used by `daho doctor`'s install hint and `daho
+  build`/`run`'s auto-install path; and `h2oFromSourceInstallStep` in
+  `templates.dart`, baked into every `daho create`-generated Dockerfile)
+  produced a static `libh2o-evloop.a` without `-fPIC` — linking it into
+  `libh2o_wrapper.so` failed on Linux with `relocation R_X86_64_TPOFF32 ...
+  can not be used when making a shared object`. Never surfaced on macOS,
+  where Homebrew's package ships a pre-built *shared*
+  `libh2o-evloop.dylib` instead. Both commands now pass
+  `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` when configuring H2O's build.
+
 ## 0.1.3+1
 
 - Fix: `envTemplate`'s generated `.env.example` hardcoded `DATABASE_URL=.../daho_app`, but `dockerComposeTemplate` creates the Postgres database as `POSTGRES_DB: $name` (the actual project name) — for any project not literally named `daho_app`, `docker-compose up -d` created a database that `.env`'s `DATABASE_URL` didn't point at, so `daho auth setup-db` always failed with `database "<name>" does not exist`. `envTemplate` now takes the project name and uses it as the database name, matching `docker-compose.yml`.

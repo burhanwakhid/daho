@@ -25,12 +25,12 @@ A fast, minimal HTTP framework for Dart, backed by a native [H2O](https://h2o.ex
 brew install h2o cmake                          # macOS
 ```
 
-Debian/Ubuntu has no `libh2o-evloop-dev` package — H2O isn't in the apt archive. Build it from source instead (this is what the CLI's generated Dockerfile does):
+Debian/Ubuntu has no `libh2o-evloop-dev` package — H2O isn't in the apt archive. Build it from source instead (this is what the CLI's generated Dockerfile does). `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` is required — without it the resulting static archive isn't `-fPIC` and fails to link into `libh2o_wrapper.so` (`relocation R_X86_64_TPOFF32 ... can not be used when making a shared object`); this only affects Linux since Homebrew's macOS package ships a pre-built *shared* `libh2o-evloop.dylib` instead:
 
 ```bash
 sudo apt-get install -y cmake build-essential git pkg-config libssl-dev zlib1g-dev
 git clone --recursive --depth 1 --branch v2.2.6 https://github.com/h2o/h2o.git /tmp/h2o
-cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release -DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 cmake --build /tmp/h2o/build --target libh2o-evloop
 sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a
 sudo cp -r /tmp/h2o/include/. /usr/local/include/
@@ -162,31 +162,20 @@ See [`example/`](example/): basic routing, middleware/groups, multipart uploads,
 
 ## Roadmap
 
-Tooling planned to make Daho a batteries-included, zero-friction framework.
-
-### `daho` CLI
-
-- **`daho create <name>`** — scaffold a new Daho server project: directory
-  layout, example routes, `pubspec.yaml`, and the native/CMake wiring, ready to
-  run.
-- **`daho run`** — OS-aware runner. Detects the platform, checks whether H2O is
-  installed; if not, installs it (Homebrew / apt / …) and builds the native
-  library, then starts the Dart server. One command from clone to running.
-- **`daho build`** — compile the native library for the current platform.
-- **`daho doctor`** — verify the toolchain (Dart, CMake, H2O) and report what is
-  missing and how to fix it.
-
-### Developer experience
+Highlights of what's next:
 
 - **Hot reload** — watch source files during development and reload
   routes/handlers on change, without restarting the native server.
-
-### Core
-
-- HTTP→HTTPS redirect / serving both plaintext and TLS from one process (today: one `Daho` instance is either all-HTTP or all-HTTPS, based on `DahoConfig.tlsCertPath`/`tlsKeyPath`; run two instances on two ports for both).
-- Response streaming / chunked responses and WebSocket support.
+- **WebSocket, reverse proxy, virtual hosts** — H2O supports all of these
+  natively; Daho doesn't expose them yet.
+- **Response streaming / SSE** — `DahoResponse` currently only ever sends one
+  final body; no chunked/streaming write primitive exists yet.
 - Per-worker lifecycle hooks to manage worker-owned resources on shutdown.
 - Public `package:daho/testing.dart` testing library.
+
+See [ROADMAP.md](ROADMAP.md) for the full H2O-parity roadmap — what's
+already implemented, what's a small addition, what needs a new native
+dependency, and what's blocked on rebuilding H2O itself (Brotli, HTTP/3).
 
 ## License
 

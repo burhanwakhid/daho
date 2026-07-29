@@ -70,11 +70,19 @@ bool commandExists(String cmd) {
 /// H2O (verified: no `libh2o-evloop-dev` in the Debian archive), so apt
 /// alone can't provide it. Needs cmake, git, libssl-dev, zlib1g-dev.
 /// Mirrors `h2oFromSourceInstallStep` in daho_cli's Dockerfile templates.
+///
+/// `-DCMAKE_POSITION_INDEPENDENT_CODE=ON` is required: without it the
+/// resulting static archive isn't `-fPIC` and fails to link into
+/// `libh2o_wrapper.so` (`relocation R_X86_64_TPOFF32 ... can not be used
+/// when making a shared object`) — this only bites on Linux, since
+/// Homebrew's macOS package ships a pre-built *shared*
+/// `libh2o-evloop.dylib` instead.
 const String h2oBuildFromSourceCommand =
     'git clone --recursive --depth 1 --branch v2.2.6 '
     'https://github.com/h2o/h2o.git /tmp/h2o && '
     'cmake -S /tmp/h2o -B /tmp/h2o/build -DCMAKE_BUILD_TYPE=Release '
-    '-DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && '
+    '-DWITH_MRUBY=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 '
+    '-DCMAKE_POSITION_INDEPENDENT_CODE=ON && '
     'cmake --build /tmp/h2o/build --target libh2o-evloop && '
     'sudo install -Dm644 /tmp/h2o/build/libh2o-evloop.a /usr/local/lib/libh2o-evloop.a && '
     'sudo cp -r /tmp/h2o/include/. /usr/local/include/ && rm -rf /tmp/h2o';
