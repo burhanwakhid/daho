@@ -36,7 +36,7 @@ class ExpressionEvaluator {
     // Handle negation
     if (expr.startsWith('!')) {
       final inner = evaluate(expr.substring(1), context);
-      return !_isTruthy(inner);
+      return !isTruthy(inner);
     }
 
     // Handle ternary: condition ? trueExpr : falseExpr
@@ -49,7 +49,7 @@ class ExpressionEvaluator {
         final trueExpr = rest.substring(0, colonIdx).trim();
         final falseExpr = rest.substring(colonIdx + 1).trim();
         final condResult = evaluate(condition, context);
-        return _isTruthy(condResult)
+        return isTruthy(condResult)
             ? evaluate(trueExpr, context)
             : evaluate(falseExpr, context);
       }
@@ -69,8 +69,8 @@ class ExpressionEvaluator {
     if (andIdx != null) {
       final left = expr.substring(0, andIdx).trim();
       final right = expr.substring(andIdx + 2).trim();
-      return _isTruthy(evaluate(left, context)) &&
-          _isTruthy(evaluate(right, context));
+      return isTruthy(evaluate(left, context)) &&
+          isTruthy(evaluate(right, context));
     }
 
     // Handle logical OR: expr || expr
@@ -78,8 +78,8 @@ class ExpressionEvaluator {
     if (orIdx != null) {
       final left = expr.substring(0, orIdx).trim();
       final right = expr.substring(orIdx + 2).trim();
-      return _isTruthy(evaluate(left, context)) ||
-          _isTruthy(evaluate(right, context));
+      return isTruthy(evaluate(left, context)) ||
+          isTruthy(evaluate(right, context));
     }
 
     // Handle comparison operators
@@ -202,7 +202,7 @@ class ExpressionEvaluator {
     return null;
   }
 
-  static bool _isTruthy(dynamic value) {
+  static bool isTruthy(dynamic value) {
     if (value == null) return false;
     if (value is bool) return value;
     if (value is int) return value != 0;

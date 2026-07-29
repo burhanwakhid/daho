@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $pageTitle }} — Daho + Clurit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <nav class="bg-blue-600 text-white shadow">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex gap-6">
+            <a href="/" class="font-semibold hover:underline">Home</a>
+            <a href="/greeter" class="hover:underline">Greeter</a>
+            <a href="/posts" class="hover:underline">Posts</a>
+        </div>
+    </nav>
+
+    <main id="app" class="max-w-3xl mx-auto px-4 py-8">
+        @yield('content')
+    </main>
+
+    <footer class="max-w-3xl mx-auto px-4 py-6 text-sm text-slate-400">
+        Clurit — compile-time reactive components
+    </footer>
+
+    <script id="clurit-state" type="application/json"></script>
+    <script src="/js/main.dart.js" defer></script>
+    @stack('scripts')
+</body>
+</html>

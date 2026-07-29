@@ -29,31 +29,40 @@ void setupRoutes(Daho app) {
 
   // Home page — renders a template with data
   app.get('/', (req, res) {
-    return res.view('pages/home', {
-      'title': 'Home',
-      'name': 'Alice',
-      'items': ['Dart', 'Flutter', 'Daho', 'Clurit'],
-    });
+    return res.view(
+      'pages/home',
+      data: {
+        'title': 'Home',
+        'name': 'Alice',
+        'items': ['Dart', 'Flutter', 'Daho', 'Clurit'],
+      },
+    );
   });
 
   // Users page — demonstrates @foreach and @if
   app.get('/users', (req, res) {
-    return res.view('pages/users', {
-      'title': 'Users',
-      'users': [
-        {'name': 'Alice', 'email': 'alice@example.com', 'role': 'admin'},
-        {'name': 'Bob', 'email': 'bob@example.com', 'role': 'user'},
-        {'name': 'Charlie', 'email': 'charlie@example.com', 'role': 'user'},
-      ],
-    });
+    return res.view(
+      'pages/users',
+      data: {
+        'title': 'Users',
+        'users': [
+          {'name': 'Alice', 'email': 'alice@example.com', 'role': 'admin'},
+          {'name': 'Bob', 'email': 'bob@example.com', 'role': 'user'},
+          {'name': 'Charlie', 'email': 'charlie@example.com', 'role': 'user'},
+        ],
+      },
+    );
   });
 
   // About page — demonstrates template inheritance
   app.get('/about', (req, res) {
-    return res.view('pages/about', {
-      'title': 'About',
-      'description': 'Daho is a fast HTTP framework for Dart.',
-    });
+    return res.view(
+      'pages/about',
+      data: {
+        'title': 'About',
+        'description': 'Daho is a fast HTTP framework for Dart.',
+      },
+    );
   });
 
   // Profile page — demonstrates @if/@else
@@ -68,21 +77,20 @@ void setupRoutes(Daho app) {
           }
         : null;
 
-    return res.view('pages/profile', {
-      'title': 'Profile',
-      'user': user,
-      'userId': userId,
-    });
+    return res.view(
+      'pages/profile',
+      data: {'title': 'Profile', 'user': user, 'userId': userId},
+    );
   });
 }
 
 void main() {
   final app = Daho();
   app.listen(
-    8080,
+    8083,
     routes: setupRoutes,
     onStart: () {
-      print('Template example running at http://127.0.0.1:8080');
+      print('Template example running at http://127.0.0.1:8083');
       print('---');
       print('Pages: /, /users, /about, /profile/1, /profile/999');
     },

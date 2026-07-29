@@ -1,9 +1,8 @@
 import '../expression.dart';
+import '../renderer.dart';
 import 'node.dart';
 
-/// A node for @foreach/@endforeach loop rendering.
-///
-/// Provides a `$loop` variable with iteration metadata.
+/// A node representing a @foreach loop in Clurit.
 class ForeachNode extends Node {
   final String iterableExpr;
   final String variable;
@@ -19,40 +18,38 @@ class ForeachNode extends Node {
 
   @override
   String compile(Map<String, dynamic> context) {
-    final iterable = ExpressionEvaluator.evaluate(iterableExpr, context);
-    if (iterable is! Iterable) return '';
-
+    final items = ExpressionEvaluator.evaluate(iterableExpr, context);
     final buf = StringBuffer();
-    final items = iterable.toList();
-    final count = items.length;
 
-    for (int i = 0; i < count; i++) {
-      final item = items[i];
+    if (items is! Iterable) return buf.toString();
 
-      // Create loop context as a Map for easy property access
-      final loopData = {
-        'index': i,
-        'iteration': i + 1,
-        'remaining': count - i - 1,
-        'count': count,
-        'first': i == 0,
-        'last': i == count - 1,
-        'even': i % 2 == 0,
-        'odd': i % 2 != 0,
-        'depth': 1,
+    int index = 0;
+    final total = items.length;
+
+    for (final item in items) {
+      final loopContext = Map<String, dynamic>.from(context);
+      loopContext[variable] = item;
+      if (key != null) {
+        if (items is Map) {
+          loopContext[key!] = (items as Map).keys.elementAt(index);
+        } else {
+          loopContext[key!] = index;
+        }
+      }
+
+      loopContext['loop'] = {
+        'index': index,
+        'iteration': index + 1,
+        'remaining': total - (index + 1),
+        'count': total,
+        'first': index == 0,
+        'last': index == total - 1,
+        'even': index % 2 == 1,
+        'odd': index % 2 == 0,
       };
 
-      // Build item context
-      final itemContext = Map<String, dynamic>.from(context);
-      itemContext[variable] = item;
-      if (key != null && item is Map) {
-        itemContext[key!] = item.keys.first;
-      }
-      itemContext['loop'] = loopData;
-
-      for (final node in body) {
-        buf.write(node.compile(itemContext));
-      }
+      buf.write(Renderer.render(body, loopContext));
+      index++;
     }
 
     return buf.toString();

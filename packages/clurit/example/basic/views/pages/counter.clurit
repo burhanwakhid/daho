@@ -1,0 +1,67 @@
+@code {
+    var count = $state(0);
+    final doubled = $derived(count * 2);
+    List<String> logs = $state([]);
+    var name = $state('');
+
+    void increment() {
+        count = count + 1;
+        logs = [...logs, 'Incremented to $count'];
+    }
+
+    void reset() {
+        count = 0;
+        logs = [];
+    }
+
+    void clearName() {
+        name = '';
+    }
+}
+
+<div style="padding: 2rem; max-width: 600px; margin: 0 auto; font-family: sans-serif;">
+    <h1 style="font-size: 2rem; margin-bottom: 1rem;">Clurit Interactive Counter</h1>
+
+    <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <p style="font-size: 1.25rem;">
+            Current Count: <strong style="color: #2563eb;">{{ $count }}</strong>
+            (doubled: <strong>{{ $doubled }}</strong>)
+        </p>
+
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+            <button cl-click="increment"
+                    style="background: #2563eb; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                Increment
+            </button>
+
+            <button cl-click="reset"
+                    style="background: transparent; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                Reset
+            </button>
+        </div>
+
+        @if($count > 10)
+            <p style="color: #16a34a; font-weight: 600;">Goal reached!</p>
+        @endif
+
+        <div style="margin-top: 1rem;">
+            <label>
+                Your name:
+                <input cl-model="name" value="{{ $name }}" placeholder="Type here...">
+            </label>
+            <button cl-click="clearName">Clear</button>
+            <p>Hello, <strong>{{ $name }}</strong>!</p>
+        </div>
+    </div>
+
+    @if($logs.isNotEmpty)
+        <div style="margin-top: 2rem;">
+            <h3 style="font-weight: 600; margin-bottom: 0.5rem;">Action Logs:</h3>
+            @foreach($logs as $log)
+                <div style="font-size: 0.875rem; color: #6b7280; border-left: 2px solid #e5e7eb; padding-left: 0.5rem; margin-bottom: 0.25rem;">
+                    {{ $log }}
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>

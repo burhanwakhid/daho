@@ -1,0 +1,77 @@
+@code {
+    final pageTitle = 'Home';
+
+    // Sent by the backend route handler via `res.view('index', data: {...})`
+    // — see example/with_daho/main.dart.
+    final message = $props<String>();
+
+    var counter = $state(0);
+    final firstName = 'Clurit';
+    final lastName = 'Engine';
+    final fullName = $derived.by(() {
+        return '$firstName $lastName';
+    });
+    var items = $state<List<String>>([]);
+    var name = $state('');
+
+    void onInit() {
+        $effect(() {
+            print('Clurit: counter is now $counter');
+        });
+    }
+
+    void increment() {
+        counter = counter + 1;
+    }
+
+    void reset() {
+        counter = 0;
+    }
+
+    void loadItems() {
+        items = ['Dart WASM', 'Daho Server', 'Clurit Engine'];
+    }
+
+    void clearName() {
+        name = '';
+    }
+}
+
+@extends('layouts.main')
+
+@section('content')
+    <h1 class="text-2xl font-bold mb-4">Welcome to Daho + Clurit!</h1>
+    <p class="text-slate-500 mb-4">{{ $message }}</p>
+
+    <div class="bg-white rounded-lg shadow p-6 space-y-2">
+        <p>Full Name: <strong>{{ $fullName }}</strong></p>
+        <p>Counter: <strong>{{ $counter }}</strong></p>
+
+        <div class="flex items-center gap-2">
+            <label class="flex items-center gap-2">
+                Your name:
+                <input cl-model="name" value="{{ $name }}" placeholder="Type here..."
+                       class="border rounded px-2 py-1">
+            </label>
+            <button cl-click="clearName" class="px-3 py-1 rounded border">Clear</button>
+        </div>
+        <p>Hello, <strong>{{ $name }}</strong>!</p>
+
+        <div class="flex gap-2">
+            <button cl-click="increment" class="px-3 py-1 rounded bg-blue-600 text-white">Increment (+)</button>
+            <button cl-click="reset" class="px-3 py-1 rounded border">Reset</button>
+            <button cl-click="loadItems" class="px-3 py-1 rounded border">Load Items</button>
+        </div>
+
+        @if($counter > 5)
+            <div class="text-red-600 font-semibold">Wow! Counter reached {{ $counter }}!</div>
+        @endif
+    </div>
+
+    <h3 class="text-lg font-semibold mt-6 mb-2">Dynamic Items:</h3>
+    <ul class="list-disc list-inside space-y-1">
+        @foreach($items as $item)
+            <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+@endsection

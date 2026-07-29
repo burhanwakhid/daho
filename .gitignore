@@ -29,3 +29,14 @@ pubspec.lock
 node_modules/
 .vitepress/dist/
 .vitepress/cache/
+
+# Compiled clurit client JS bundles (`dart compile js`) — build output, not
+# source; regenerate with `dart compile js web/main.g.dart -o web/main.dart.js`.
+**/example/**/web/main.dart.js
+**/example/**/web/main.dart.js.deps
+**/example/**/web/main.dart.js.map
+**/example/**/web/main.dart.js_*.part.js
+**/example/**/web/main.dart.js_*.part.js.map
+
+# JetBrains IDE project files
+.idea/

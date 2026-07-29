@@ -1,0 +1,5 @@
+# Trigger file for CluritRoutesBuilder — its content isn't read, its mere
+# presence tells `build_runner` to generate `main.g.dart` alongside it,
+# aggregating every `.clurit` page under ../views into one router-driven
+# client bootstrap. Regenerate (dart run build_runner build) after adding,
+# removing, or changing the fields of a page.

@@ -1,0 +1,24 @@
+builders:
+  # `all_packages` rather than `root_package` (only applies when *clurit
+  # itself* is the build's root — never true for a downstream consumer) or
+  # `dependents` (never true when testing from *within* this repo, since
+  # clurit doesn't depend on itself) — `all_packages` is the one auto_apply
+  # value that covers both "clurit is the root package" (its own examples)
+  # and "some other package depends on clurit" (real consumers) without
+  # needing two builder definitions, which build_runner rejects outright as
+  # a potential-output collision even when their auto_apply conditions are
+  # mutually exclusive at runtime.
+  clurit_action_builder:
+    import: "package:clurit/src/generator/clurit_generator.dart"
+    builder_factories: ["cluritActionBuilder"]
+    build_extensions: { ".clurit": [".clurit.dart", ".clurit.client.dart"] }
+    auto_apply: all_packages
+    build_to: source
+
+  clurit_routes_builder:
+    import: "package:clurit/src/generator/clurit_routes_builder.dart"
+    builder_factories: ["cluritRoutesBuilder"]
+    build_extensions: { "clurit_routes.yaml": ["web/main.g.dart", "clurit_components.g.dart"] }
+    auto_apply: all_packages
+    build_to: source
+    required_inputs: [".clurit"]

@@ -2,7 +2,7 @@ name: _daho_workspace
 publish_to: none
 
 environment:
-  sdk: ^3.9.0
+  sdk: ^3.9.2
 
 # Pub workspace (monorepo). Members share a single lockfile.
 workspace:

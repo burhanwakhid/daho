@@ -20,6 +20,7 @@ class CluritEngine {
   final TemplateCache _cache;
   final Compiler _compiler;
   final Map<String, Directive> _directives = {};
+  final Map<String, dynamic> _shared = {};
 
   CluritEngine({required this.viewsPath, String? cachePath, bool debug = false})
     : _cache = TemplateCache(cachePath: cachePath, debug: debug),
@@ -31,9 +32,25 @@ class CluritEngine {
     _directives.addAll(CoreDirectives.all());
   }
 
+  /// Registers data to be shared across all templates.
+  void share(String key, dynamic value) => _shared[key] = value;
+
   /// Renders a template with the given data.
   String render(String template, [Map<String, dynamic>? data]) {
-    final context = data ?? {};
+    final context = <String, dynamic>{..._shared, ...?data};
+
+    // If 'state' is provided, we automatically make its keys available
+    // at the top level for easy access in templates via $variable.
+    if (context['state'] is Map<String, dynamic>) {
+      final state = context['state'] as Map<String, dynamic>;
+      for (final entry in state.entries) {
+        context.putIfAbsent(entry.key, () => entry.value);
+      }
+    }
+
+    // Initialize hydration flags
+    context['__clurit_state_rendered'] = false;
+
     return _renderTemplate(_compileCached(template), context);
   }
 

@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav>
-        <a href="/">Home</a> | <a href="/about">About</a>
+        <a href="/">Home</a> | <a href="/counter">Counter (Interactive)</a> | <a href="/about">About</a>
     </nav>
 
     <main>
@@ -19,6 +19,8 @@
         @yield('footer')
     </footer>
 
+    <!-- WASM Hydration Script -->
+    <script src="/main.dart.js" defer></script>
     @stack('scripts')
 </body>
 </html>

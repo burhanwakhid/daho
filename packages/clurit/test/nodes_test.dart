@@ -136,6 +136,41 @@ void main() {
       );
       expect(node.compile({'str': ''}), 'No string');
     });
+
+    test('does not inject any cl-if attribute (plain render only)', () {
+      final node = IfNode(
+        condition: '\$show',
+        thenBody: [TextNode('<div class="a">Visible</div>')],
+      );
+      expect(node.compile({'show': true}), '<div class="a">Visible</div>');
+    });
+
+    test('renders multi-root content unmodified', () {
+      final node = IfNode(
+        condition: '\$show',
+        thenBody: [TextNode('<p>One</p><p>Two</p>')],
+      );
+      expect(node.compile({'show': true}), '<p>One</p><p>Two</p>');
+    });
+
+    test('renders self-closing tags unmodified', () {
+      final node = IfNode(
+        condition: '\$show',
+        thenBody: [TextNode('<input type="text"/>')],
+      );
+      expect(node.compile({'show': true}), '<input type="text"/>');
+    });
+
+    test('renders content with > inside attributes unmodified', () {
+      final node = IfNode(
+        condition: '\$show',
+        thenBody: [TextNode('<div data-expr="1 > 0">Visible</div>')],
+      );
+      expect(
+        node.compile({'show': true}),
+        '<div data-expr="1 > 0">Visible</div>',
+      );
+    });
   });
 
   group('ForeachNode', () {
@@ -199,6 +234,32 @@ void main() {
       });
       expect(result, contains('-X-'));
       expect(result, contains('-Y-'));
+    });
+
+    test('does not inject cl-ssr-for markers or a hydration template block', () {
+      final node = ForeachNode(
+        iterableExpr: '\$items',
+        variable: 'item',
+        body: [TextNode('<li>'), EchoNode('\$item', escaped: true), TextNode('</li>')],
+      );
+      final result = node.compile({
+        'items': ['A', 'B'],
+      });
+      expect(result, '<li>A</li><li>B</li>');
+      expect(result, isNot(contains('cl-ssr-for')));
+      expect(result, isNot(contains('<template')));
+    });
+
+    test('renders multi-root item bodies with attributes containing >', () {
+      final node = ForeachNode(
+        iterableExpr: '\$items',
+        variable: 'item',
+        body: [TextNode('<div data-expr="1 > 0"></div><span></span>')],
+      );
+      final result = node.compile({
+        'items': ['A'],
+      });
+      expect(result, '<div data-expr="1 > 0"></div><span></span>');
     });
   });
 }

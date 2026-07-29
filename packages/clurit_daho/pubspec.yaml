@@ -2,7 +2,7 @@ name: clurit_daho
 description: >-
   Daho HTTP framework integration for Clurit template engine.
   Adds res.view() support for rendering templates.
-version: 0.1.0
+version: 0.1.0+1
 homepage: https://burhanwakhid.github.io/daho/
 repository: https://github.com/burhanwakhid/daho
 issue_tracker: https://github.com/burhanwakhid/daho/issues

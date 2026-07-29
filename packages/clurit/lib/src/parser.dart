@@ -8,6 +8,7 @@ import 'nodes/include_node.dart';
 import 'nodes/component_node.dart';
 import 'nodes/yield_node.dart';
 import 'nodes/stack_node.dart';
+import 'nodes/code_node.dart';
 
 /// A node holding a list of body nodes whose compilation is deferred to
 /// render time, used for `@section`/`@push` bodies. Compiling those bodies
@@ -15,9 +16,9 @@ import 'nodes/stack_node.dart';
 /// none) would bake the section's HTML in before any real request data
 /// exists; wrapping them in a node instead lets them compile normally
 /// against the real context when the tree is actually rendered.
-class _DeferredBodyNode extends Node {
+class DeferredBodyNode extends Node {
   final List<Node> body;
-  _DeferredBodyNode(this.body);
+  DeferredBodyNode(this.body);
 
   @override
   String compile(Map<String, dynamic> context) {
@@ -129,6 +130,9 @@ class Parser {
 
       case TokenType.verbatim:
         return _parseVerbatim();
+
+      case TokenType.code:
+        return _parseCodeBlock();
 
       case TokenType.endVerbatim:
         _pos++;
@@ -371,7 +375,7 @@ class Parser {
 
     _insideSection = false;
 
-    final sectionNode = _DeferredBodyNode(body);
+    final sectionNode = DeferredBodyNode(body);
     final name = _extractString(token.args ?? '');
     if (name.isNotEmpty) sections[name] = sectionNode;
     return sectionNode;
@@ -387,7 +391,7 @@ class Parser {
       final node = _parseNode();
       if (node != null) body.add(node);
     }
-    final pushNode = _DeferredBodyNode(body);
+    final pushNode = DeferredBodyNode(body);
     final name = _extractString(token.args ?? '');
     if (name.isNotEmpty) {
       pushes.putIfAbsent(name, () => []).add(pushNode);
@@ -406,6 +410,12 @@ class Parser {
       _pos++;
     }
     return TextNode(buf.toString());
+  }
+
+  Node _parseCodeBlock() {
+    final token = tokens[_pos];
+    _pos++;
+    return CodeNode(token.content.trim());
   }
 
   String _extractString(String args) {

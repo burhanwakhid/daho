@@ -17,6 +17,7 @@ enum TokenType {
   stack,
   verbatim,
   endVerbatim,
+  code,
 }
 
 /// A token produced by the lexer.
@@ -36,6 +37,17 @@ class Lexer {
     int pos = 0;
 
     while (pos < source.length) {
+      // 1. High-priority check for escaped echo @{{ ... }}
+      if (source.startsWith('@{{', pos)) {
+        final endIdx = source.indexOf('}}', pos + 3);
+        if (endIdx != -1) {
+          // Keep the {{ ... }} but drop the @
+          tokens.add(Token(TokenType.text, source.substring(pos + 1, endIdx + 2)));
+          pos = endIdx + 2;
+          continue;
+        }
+      }
+
       // Check for comments
       if (source.startsWith('{{--', pos)) {
         final endIdx = source.indexOf('--}}', pos + 4);
@@ -78,7 +90,7 @@ class Lexer {
       // Check for directives
       if (source[pos] == '@' && pos + 1 < source.length) {
         final match = RegExp(
-          r'^@([a-zA-Z_][a-zA-Z0-9_]*)',
+          r'^@([a-zA-Z_][a-zA-Z0-9_]+)', // Use + to avoid matching empty keyword at @{{
         ).firstMatch(source.substring(pos));
         if (match != null) {
           final keyword = match.group(1)!;
@@ -89,6 +101,31 @@ class Lexer {
             tokens.add(Token(TokenType.text, '@'));
             pos += 2;
             continue;
+          }
+
+          // Handle @code { ... } with brace matching
+          if (keyword == 'code') {
+            int openBrace = source.indexOf('{', pos + fullMatch.length);
+            if (openBrace != -1) {
+              int closeBrace = _findClosingBrace(source, openBrace);
+              if (closeBrace != -1) {
+                final codeContent = source.substring(openBrace + 1, closeBrace);
+                tokens.add(Token(TokenType.code, codeContent));
+                pos = closeBrace + 1;
+                continue;
+              }
+            }
+          }
+
+          // Handle @(...) for expressions/lambdas
+          if (keyword.isEmpty && source[pos] == '@' && pos + 1 < source.length && source[pos + 1] == '(') {
+            int closeParen = _findClosingParen(source, pos + 1);
+            if (closeParen != -1) {
+              final expression = source.substring(pos + 2, closeParen);
+              tokens.add(Token(TokenType.echoEscaped, expression)); // Reuse echoEscaped for now
+              pos = closeParen + 1;
+              continue;
+            }
           }
 
           // Parse optional arguments
@@ -172,6 +209,8 @@ class Lexer {
         return TokenType.verbatim;
       case 'endverbatim':
         return TokenType.endVerbatim;
+      case 'code':
+        return TokenType.code;
       default:
         return TokenType.directive;
     }
@@ -182,6 +221,18 @@ class Lexer {
     for (int i = openPos; i < source.length; i++) {
       if (source[i] == '(') depth++;
       if (source[i] == ')') {
+        depth--;
+        if (depth == 0) return i;
+      }
+    }
+    return -1;
+  }
+
+  static int _findClosingBrace(String source, int openPos) {
+    int depth = 0;
+    for (int i = openPos; i < source.length; i++) {
+      if (source[i] == '{') depth++;
+      if (source[i] == '}') {
         depth--;
         if (depth == 0) return i;
       }

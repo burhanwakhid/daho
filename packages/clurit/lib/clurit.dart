@@ -16,8 +16,15 @@ export 'src/context.dart' show TemplateContext;
 // Directives
 export 'src/directives/directive.dart' show Directive;
 
+// Expressions
+export 'src/expression.dart' show ExpressionEvaluator;
+
 // Nodes
 export 'src/nodes/node.dart' show Node;
+export 'src/nodes/code_node.dart' show CodeNode;
+
+// Interactive components
+export 'src/component.dart' show CluritComponent;
 
 // Helpers
 export 'src/helpers.dart' show escapeHtml, stringify;
