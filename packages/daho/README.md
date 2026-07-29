@@ -1,6 +1,12 @@
 # Daho
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e3b1c3d8-d1d2-4f9d-8852-379669e7a451" alt="Daho mascot" width="240">
+</p>
+
 A fast, minimal HTTP framework for Dart, backed by a native [H2O](https://h2o.examp1e.net/) server over FFI. Express/Fiber-style API, multi-core out of the box.
+
+📖 [Documentation](https://burhanwakhid.github.io/daho/)
 
 - **Native core** — request handling runs on H2O; one worker Isolate per CPU core sharing the socket via `SO_REUSEPORT`.
 - **Fast routing** — O(1) map for static paths, radix trie for parameterized ones.

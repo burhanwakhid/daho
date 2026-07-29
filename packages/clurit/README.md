@@ -1,6 +1,12 @@
 # Clurit
 
+<p align="center">
+<img src="https://github.com/user-attachments/assets/1ca85785-6bf6-42cc-b9a1-ab2eb7935694" alt="Clurit mascot" width="240">
+</p>
+
 A Blade-inspired template engine for Dart, with Svelte-style compile-time-reactive interactive components.
+
+📖 [Documentation](https://burhanwakhid.github.io/daho/)
 
 ## Features
 
