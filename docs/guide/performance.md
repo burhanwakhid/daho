@@ -37,6 +37,31 @@ On **Linux**, throughput scales close to linearly with core count because each c
 Numbers depend heavily on hardware, payload size, and what your handler does. Always benchmark your own workload before drawing conclusions.
 :::
 
+## How Daho compares
+
+A [manually-triggered CI benchmark](https://github.com/burhanwakhid/daho/blob/master/.github/workflows/benchmark.yml) load-tests Daho against Dart `shelf` and Go Fiber on identical terms — same `/json` route, same response body, no logging/extra middleware, all three AOT-compiled (not JIT'd), all three clustered across every core (Daho/`shelf` via one-Isolate-per-core, Fiber via `Prefork`). Latest run, GitHub Actions `ubuntu-latest` (4 cores), 250 connections, 15s per target:
+
+| Target | Requests/sec | p50 | p99 | RSS (before → after) | OS processes / threads |
+| --- | --- | --- | --- | --- | --- |
+| **Daho** | 124,149 | 1.78 ms | 4.98 ms | 10.1 → 25.2 MB | 1 / 15 |
+| `shelf` | 35,394 | 6.66 ms | 11.96 ms | 9.5 → 45.3 MB | 1 / 9 |
+| Go Fiber | 169,741 | 1.23 ms | 5.36 ms | 55.8 → 73.4 MB | 5 / 32 |
+
+Takeaways:
+
+- **~3.5× faster than `shelf`**, with roughly a third of the latency — Daho's native H2O core gives it a request-handling fast path pure-Dart frameworks don't have.
+- **Fiber is still faster in raw throughput** (~37% more req/s), consistent with fasthttp's maturity — but Daho reaches ~73% of Fiber's throughput while using **2–3× less resident memory** and a single OS process (15 threads) versus Fiber's 5 forked processes (`Prefork`, 32 threads total). Which matters more depends on your deployment — raw req/s, or memory/process footprint per container.
+
+Full methodology, RSS accounting details, and how to run it yourself: [`BENCHMARK.md`](https://github.com/burhanwakhid/daho/blob/master/packages/daho/BENCHMARK.md).
+
+### Same `SO_REUSEPORT` trick, cheaper execution model
+
+Go Fiber's `Prefork` mode forks one OS process per core, each binding the same port with `SO_REUSEPORT` — the kernel then load-balances incoming connections across all of them. Daho reaches for the exact same kernel feature (`c_src/h2o_wrapper.c`, `setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, ...)`), but applies it per **worker Isolate** instead of per **forked process**. `SO_REUSEPORT` doesn't care which of the two it's given — it load-balances across every socket registered on that port, whether they belong to separate processes or separate threads within one process.
+
+That's the whole story behind the benchmark table above: Daho gets Fiber's kernel-level connection distribution **without forking**. One OS process, N Isolates, N native H2O event loops sharing one listening socket — versus Fiber's N separate OS processes doing the same job. It's why Daho reaches ~73% of Fiber's throughput while using 2-3× less resident memory and a fifth of the OS process count: both are paying for the same mechanism, but Daho's unit cost per worker is lower.
+
+Nothing stops running Daho the Fiber way too — the socket-level plumbing already sets `SO_REUSEPORT`, so launching several separate `daho_example`-style binaries against the same port would coexist and load-balance identically. There's just no evidence yet that doing so would beat the current Isolate model, given it already gets the same kernel benefit for less.
+
 ## Native fast paths
 
 For responses that never change — health checks, status endpoints, fixed payloads — register a `fastPath`. It's served entirely in C and never enters the Dart pipeline (no routing, no middleware):
