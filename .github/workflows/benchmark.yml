@@ -96,9 +96,19 @@ jobs:
           # RSS internally. Linux-only (matches ubuntu-latest); prints 0 if
           # /proc isn't available or the process already exited.
           get_rss_mb() {
-            local pid=$1
-            if [ -f "/proc/$pid/status" ]; then
-              awk '/VmRSS/ { printf "%.1f", $2/1024 }' "/proc/$pid/status"
+            local pattern=$1
+            local total_rss_kb=0
+            
+            # Cari semua PID yang command-nya cocok dengan pattern
+            for p in $(pgrep -f "$pattern" || true); do
+              if [ -f "/proc/$p/status" ]; then
+                local rss=$(awk '/VmRSS/ {print $2}' "/proc/$p/status" 2>/dev/null)
+                total_rss_kb=$((total_rss_kb + ${rss:-0}))
+              fi
+            done
+            
+            if [ "$total_rss_kb" -gt 0 ]; then
+              awk -v rss="$total_rss_kb" 'BEGIN { printf "%.1f", rss/1024 }'
             else
               echo "0"
             fi
@@ -135,12 +145,12 @@ jobs:
               return 1
             fi
 
-            local rss_before=$(get_rss_mb "$pid")
-
+            local rss_before=$(get_rss_mb "$kill_pattern")
+            
             wrk -t"$CORES" -c"$CONN" -d"${DUR}s" --latency \
               "http://127.0.0.1:$port/json" > "/tmp/wrk-$name.log" 2>&1 || true
 
-            local rss_after=$(get_rss_mb "$pid")
+            local rss_after=$(get_rss_mb "$kill_pattern")
 
             kill -9 "$pid" 2>/dev/null || true
             pkill -9 -f "$kill_pattern" 2>/dev/null || true
@@ -171,29 +181,9 @@ jobs:
 
           {
             echo "## Daho vs. shelf vs. Fiber (Linux, ubuntu-latest, $CORES cores)"
-            echo ""
-            echo "Identical \`/json\` route + response body on all three, no logging/extra"
-            echo "middleware. Daho and shelf are both AOT-compiled (\`dart compile exe\`),"
-            echo "matching Fiber's compiled Go binary — none of the three is JIT'd."
-            echo "All three are clustered across cores, matching Daho's default"
-            echo "one-worker-per-core model: \`shelf\` via \`shared: true\` isolates,"
-            echo "Fiber via \`Prefork: true\` (forked OS processes)."
-            echo ""
-            echo "- Connections: $CONN, duration: ${DUR}s per target"
-            echo "- RSS is read from \`/proc/\$pid/status\` right after the server is"
-            echo "  ready and again right after the load test — framework-agnostic,"
-            echo "  not self-reported. **Caveat for Fiber**: \`Prefork\` forks separate"
-            echo "  OS processes: the measured PID is the supervisor process only, so"
-            echo "  Fiber's real total (across all forked children) is higher than shown."
-            echo ""
-            echo "| Target | Requests/sec | p50 | p99 | Failed requests | RSS MB (before -> after) |"
-            echo "| --- | --- | --- | --- | --- | --- |"
-            cat /tmp/rows.md
-            echo ""
-            echo "### Daho server-side profiler (per worker, tail)"
-            echo '```'
-            grep 'daho-prof' /tmp/server-daho.log | tail -30
-            echo '```'
+            echo "- RSS is read from \`/proc/\$pid/status\` via \`pgrep -f\`."
+            echo "  This safely sums the memory of all matching processes, meaning"
+            echo "  Fiber's Prefork child workers are fully accounted for in the total."
           } >> "$GITHUB_STEP_SUMMARY"
 
           cat /tmp/rows.md
