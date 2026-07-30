@@ -15,11 +15,11 @@ on:
   workflow_dispatch:
     inputs:
       connections:
-        description: 'Concurrent keep-alive connections'
-        default: '100'
+        description: "Concurrent keep-alive connections"
+        default: "100"
       duration:
-        description: 'Load duration (seconds), per target'
-        default: '15'
+        description: "Load duration (seconds), per target"
+        default: "15"
   # Also run on pull requests so the benchmark can be exercised from a feature
   # branch before it is merged to the default branch. Remove this if per-PR
   # benchmark runs become too noisy/expensive.
@@ -43,7 +43,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: 'stable'
+          go-version: "stable"
 
       - name: Install Dart dependencies
         run: dart pub get
@@ -81,7 +81,7 @@ jobs:
 
       - name: Run comparison benchmark
         env:
-          DAHO_PROFILE: '1'
+          DAHO_PROFILE: "0"
         run: |
           # inputs are only set on workflow_dispatch; default them otherwise.
           CONN='${{ github.event.inputs.connections }}'; CONN="${CONN:-100}"
