@@ -81,7 +81,7 @@ jobs:
 
       - name: Run comparison benchmark
         env:
-          DAHO_PROFILE: "0"
+          DAHO_PROFILE: "1"
         run: |
           # inputs are only set on workflow_dispatch; default them otherwise.
           CONN='${{ github.event.inputs.connections }}'; CONN="${CONN:-100}"
@@ -112,6 +112,30 @@ jobs:
             else
               echo "0"
             fi
+          }
+
+          # Menghitung jumlah OS Process (P) dan total OS Threads (T) secara dinamis
+          # tanpa mempedulikan framework apa yang sedang diuji.
+          get_workers_count() {
+            local pattern=$1
+            local pids=$(pgrep -f "$pattern" || true)
+            
+            if [ -z "$pids" ]; then
+              echo "0P / 0T"
+              return
+            fi
+            
+            # Hitung jumlah OS Process (PID)
+            local proc_count=$(echo "$pids" | wc -l)
+            local thread_count=0
+            
+            # Hitung total OS Threads dari seluruh PID tersebut
+            for p in $pids; do
+              local t=$(ps -o nlwp= -p "$p" 2>/dev/null | tr -d ' ')
+              thread_count=$((thread_count + ${t:-0}))
+            done
+            
+            echo "${proc_count} Procs / ${thread_count} Threads"
           }
 
           # Runs `wrk` against $1 (a name) at $2 (a port), writing results to
@@ -150,8 +174,9 @@ jobs:
             wrk -t"$CORES" -c"$CONN" -d"${DUR}s" --latency \
               "http://127.0.0.1:$port/json" > "/tmp/wrk-$name.log" 2>&1 || true
 
+            local workers_count=$(get_workers_count "$kill_pattern" "$name")
             local rss_after=$(get_rss_mb "$kill_pattern")
-
+            
             kill -9 "$pid" 2>/dev/null || true
             pkill -9 -f "$kill_pattern" 2>/dev/null || true
             # Let the port free up before the next target binds it.
@@ -161,7 +186,9 @@ jobs:
             local p50=$(grep -A4 'Latency Distribution' "/tmp/wrk-$name.log" | awk '/50%/{print $2}')
             local p99=$(grep -A4 'Latency Distribution' "/tmp/wrk-$name.log" | awk '/99%/{print $2}')
             local failed=$(grep 'Non-2xx or 3xx responses' "/tmp/wrk-$name.log" | grep -o '[0-9]*$')
-            echo "| $name | ${rps:-n/a} | ${p50:-n/a} | ${p99:-n/a} | ${failed:-0} | ${rss_before:-n/a} -> ${rss_after:-n/a} |" >> /tmp/rows.md
+            
+            # Tambahkan kolom workers_count ke dalam output tabel
+            echo "| $name | ${rps:-n/a} | ${p50:-n/a} | ${p99:-n/a} | ${failed:-0} | ${rss_before:-n/a} -> ${rss_after:-n/a} | $workers_count |" >> /tmp/rows.md
 
             echo "::endgroup::"
           }
@@ -181,9 +208,36 @@ jobs:
 
           {
             echo "## Daho vs. shelf vs. Fiber (Linux, ubuntu-latest, $CORES cores)"
+            echo ""
+            echo "Identical \`/json\` route + response body on all three, no logging/extra"
+            echo "middleware. Daho and shelf are both AOT-compiled (\`dart compile exe\`),"
+            echo "matching Fiber's compiled Go binary — none of the three is JIT'd."
+            echo "All three are clustered across cores, matching Daho's default"
+            echo "one-worker-per-core model: \`shelf\` via \`shared: true\` isolates,"
+            echo "Fiber via \`Prefork: true\` (forked OS processes)."
+            echo ""
+            echo "- Connections: $CONN, duration: ${DUR}s per target"
             echo "- RSS is read from \`/proc/\$pid/status\` via \`pgrep -f\`."
             echo "  This safely sums the memory of all matching processes, meaning"
             echo "  Fiber's Prefork child workers are fully accounted for in the total."
+            echo ""
+            # Header tabel diperbarui dengan kolom "Workers (OS Level)"
+            echo "| Target | Requests/sec | p50 | p99 | Failed | RSS MB (before -> after) | Workers (OS Level) |"
+            echo "| --- | --- | --- | --- | --- | --- | --- |"
+            cat /tmp/rows.md
+            echo ""
+            echo "### Bukti Daho Berjalan di Multi-Core (Unique Worker IDs)"
+            echo "Berikut adalah Worker ID unik yang tercatat memproses request di log Daho:"
+            echo '```'
+            # Ekstrak semua string yang mengandung kata "worker", "isolate", atau angka ID dari log profiler
+            # Catatan: Sesuaikan regex 'worker[^ ]*' ini jika format log Daho Anda berbeda
+            grep 'daho-prof' /tmp/server-daho.log | grep -i -o 'worker[_-]\?[0-9]\+' | sort | uniq -c || echo "Worker ID tidak ditemukan di format log."
+            echo '```'
+            echo ""
+            echo "### Daho server-side profiler (per worker, tail)"
+            echo '```'
+            grep 'daho-prof' /tmp/server-daho.log | tail -30 || true
+            echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
           cat /tmp/rows.md
